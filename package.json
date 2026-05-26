@@ -1,0 +1,16 @@
+{
+  "name": "heyjson",
+  "version": "1.0.0",
+  "description": "Jason Nastor — Shopify Storefront Developer portfolio",
+  "private": true,
+  "scripts": {
+    "build:css": "npx -y tailwindcss@3 -c tailwind.config.js -i css/tailwind.input.css -o css/tailwind.css --minify",
+    "watch:css": "npx -y tailwindcss@3 -c tailwind.config.js -i css/tailwind.input.css -o css/tailwind.css --watch",
+    "build:images": "node scripts/optimize-images.mjs",
+    "build": "npm run build:css && npm run build:images"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "sharp": "^0.33.0"
+  }
+}
