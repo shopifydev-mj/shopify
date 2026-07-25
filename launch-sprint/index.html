@@ -1,0 +1,3325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>48-Hour Shopify Launch Sprint | Mark Jason Nastor</title>
+  <meta
+    name="description"
+    content="Launch a conversion-ready Shopify store in 48 business hours with a senior Shopify developer and Shopify Select Partner."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --navy: #0b1220;
+      --navy-soft: #121b2e;
+      --blue: #2563ff;
+      --purple: #7c3aed;
+      --cyan: #06b6d4;
+      --green: #7ab55c;
+      --white: #ffffff;
+      --ink: #111827;
+      --muted: #667085;
+      --line: #e6eaf0;
+      --surface: #f7f8fc;
+      --surface-2: #eef2ff;
+      --success: #16a34a;
+      --warning: #f59e0b;
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 26px;
+      --shadow-sm: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 22px 60px rgba(15, 23, 42, 0.14);
+      --container: 1180px;
+      --header-height: 78px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--white);
+      font-family: "Montserrat", Arial, sans-serif;
+      line-height: 1.6;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.modal-open,
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    img,
+    svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 9999;
+      padding: 10px 14px;
+      color: var(--navy);
+      background: var(--white);
+      border-radius: 8px;
+      transform: translateY(-150%);
+      transition: transform 0.2s ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--container));
+      margin-inline: auto;
+    }
+
+    .section {
+      padding: 92px 0;
+    }
+
+    .section--tight {
+      padding: 64px 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--blue);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      max-width: 780px;
+      margin: 0 auto 16px;
+      color: var(--navy);
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 1.12;
+      text-align: center;
+      letter-spacing: -0.04em;
+    }
+
+    .section-copy {
+      max-width: 720px;
+      margin: 0 auto;
+      color: var(--muted);
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 22px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 1;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button:focus-visible,
+    .nav-link:focus-visible,
+    .faq-question:focus-visible,
+    .menu-toggle:focus-visible,
+    .modal-close:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible {
+      outline: 3px solid rgba(37, 99, 255, 0.35);
+      outline-offset: 3px;
+    }
+
+    .button--primary {
+      color: var(--white);
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      box-shadow: 0 14px 34px rgba(67, 56, 202, 0.26);
+    }
+
+    .button--secondary {
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .button--light {
+      color: var(--blue);
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .button--full {
+      width: 100%;
+    }
+
+    .button svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .site-header {
+      position: absolute;
+      inset: 0 0 auto;
+      z-index: 100;
+      height: var(--header-height);
+      color: var(--white);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .site-header__inner {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .brand__mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      border-radius: 11px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .brand__text strong,
+    .brand__text span {
+      display: block;
+      line-height: 1.15;
+    }
+
+    .brand__text strong {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand__text span {
+      margin-top: 3px;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: 0.59rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-left: auto;
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.79rem;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--white);
+    }
+
+    .header-cta {
+      min-height: 44px;
+      padding-inline: 18px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 45px;
+      height: 45px;
+      padding: 0;
+      place-items: center;
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .menu-toggle span,
+    .menu-toggle span::before,
+    .menu-toggle span::after {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 999px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .menu-toggle span {
+      position: relative;
+    }
+
+    .menu-toggle span::before,
+    .menu-toggle span::after {
+      position: absolute;
+      left: 0;
+      content: "";
+    }
+
+    .menu-toggle span::before {
+      top: -6px;
+    }
+
+    .menu-toggle span::after {
+      top: 6px;
+    }
+
+    .menu-open .menu-toggle span {
+      background: transparent;
+    }
+
+    .menu-open .menu-toggle span::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+
+    .menu-open .menu-toggle span::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 760px;
+      overflow: hidden;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 78% 30%, rgba(124, 58, 237, 0.34), transparent 28%),
+        radial-gradient(circle at 92% 72%, rgba(239, 68, 68, 0.22), transparent 24%),
+        linear-gradient(135deg, #07101e 0%, #0b1220 48%, #13102c 100%);
+    }
+
+    .hero::before {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      content: "";
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 85%);
+    }
+
+    .hero__inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      min-height: 700px;
+      grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
+      align-items: center;
+      gap: 64px;
+      padding-top: calc(var(--header-height) + 62px);
+      padding-bottom: 116px;
+    }
+
+    .hero__content {
+      max-width: 600px;
+    }
+
+    .hero .eyebrow {
+      color: #9da8ff;
+    }
+
+    .hero h1 {
+      max-width: 640px;
+      margin: 0;
+      font-size: clamp(2.9rem, 5.4vw, 5rem);
+      line-height: 1.02;
+      letter-spacing: -0.055em;
+    }
+
+    .hero h1 span {
+      color: #7868ff;
+    }
+
+    .hero__lead {
+      max-width: 560px;
+      margin: 24px 0 0;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: clamp(1rem, 1.7vw, 1.18rem);
+    }
+
+    .hero__checks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+      margin: 24px 0 0;
+      padding: 0;
+      list-style: none;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .hero__checks li {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .check-dot {
+      display: grid;
+      width: 17px;
+      height: 17px;
+      flex: 0 0 17px;
+      place-items: center;
+      color: #d8d4ff;
+      border: 1px solid rgba(157, 168, 255, 0.8);
+      border-radius: 50%;
+      font-size: 0.55rem;
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .hero__note {
+      display: flex;
+      max-width: 540px;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 24px 0 0;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.76rem;
+    }
+
+    .hero__note svg {
+      width: 17px;
+      height: 17px;
+      flex: 0 0 17px;
+      margin-top: 2px;
+    }
+
+    .device-scene {
+      position: relative;
+      min-height: 480px;
+    }
+
+    .glow {
+      position: absolute;
+      inset: 10% 6% auto auto;
+      width: 420px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(37, 99, 255, 0.33), transparent 66%);
+      filter: blur(22px);
+      pointer-events: none;
+    }
+
+    .laptop {
+      position: absolute;
+      top: 46px;
+      right: 10px;
+      width: min(100%, 560px);
+      transform: perspective(1300px) rotateY(-3deg) rotateX(1deg);
+      transform-origin: center;
+    }
+
+    .laptop__screen {
+      position: relative;
+      overflow: hidden;
+      min-height: 340px;
+      padding: 18px;
+      background: #05070b;
+      border: 5px solid #8a8f9a;
+      border-bottom-width: 12px;
+      border-radius: 18px 18px 12px 12px;
+      box-shadow: 0 36px 80px rgba(0, 0, 0, 0.44);
+    }
+
+    .laptop__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.54rem;
+      text-transform: uppercase;
+    }
+
+    .mini-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+    }
+
+    .mini-logo {
+      display: grid;
+      width: 22px;
+      height: 22px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 5px;
+      font-size: 0.46rem;
+    }
+
+    .mini-nav {
+      display: flex;
+      gap: 12px;
+    }
+
+    .store-hero {
+      position: relative;
+      display: grid;
+      min-height: 278px;
+      grid-template-columns: 1fr 1.08fr;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 18px 10px;
+    }
+
+    .store-copy {
+      position: relative;
+      z-index: 2;
+    }
+
+    .store-copy h3 {
+      margin: 0;
+      color: var(--white);
+      font-size: clamp(1.25rem, 2.4vw, 2.15rem);
+      line-height: 1.03;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    .store-copy p {
+      margin: 12px 0 16px;
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 0.58rem;
+    }
+
+    .store-copy span {
+      display: inline-flex;
+      min-height: 28px;
+      align-items: center;
+      padding: 0 12px;
+      color: var(--navy);
+      background: var(--white);
+      border-radius: 4px;
+      font-size: 0.53rem;
+      font-weight: 800;
+    }
+
+    .product-display {
+      position: relative;
+      height: 235px;
+    }
+
+    .bottle {
+      position: absolute;
+      bottom: 10px;
+      width: 76px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px 14px 9px 9px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.08), transparent 20%, transparent 75%, rgba(255,255,255,0.05)),
+        linear-gradient(180deg, #202326, #080a0c);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.5);
+    }
+
+    .bottle::before {
+      position: absolute;
+      top: -26px;
+      left: 15px;
+      width: 46px;
+      height: 30px;
+      background: linear-gradient(180deg, #181a1d, #050607);
+      border-radius: 7px 7px 2px 2px;
+      content: "";
+    }
+
+    .bottle::after {
+      position: absolute;
+      inset: 56% 9px auto;
+      height: 36px;
+      background: #d7d0c5;
+      border-radius: 2px;
+      box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.14);
+      content: "";
+    }
+
+    .bottle--one {
+      left: 12px;
+      height: 126px;
+    }
+
+    .bottle--two {
+      left: 97px;
+      width: 92px;
+      height: 182px;
+    }
+
+    .bottle--three {
+      right: 6px;
+      width: 82px;
+      height: 146px;
+    }
+
+    .laptop__base {
+      position: relative;
+      width: 112%;
+      height: 17px;
+      margin-left: -6%;
+      background: linear-gradient(180deg, #b7bbc2, #717784 52%, #979ca5);
+      border-radius: 2px 2px 18px 18px;
+      box-shadow: 0 20px 28px rgba(0, 0, 0, 0.3);
+    }
+
+    .laptop__base::after {
+      position: absolute;
+      top: 0;
+      left: 42%;
+      width: 16%;
+      height: 5px;
+      background: #7f8590;
+      border-radius: 0 0 5px 5px;
+      content: "";
+    }
+
+    .phone {
+      position: absolute;
+      right: 0;
+      bottom: 42px;
+      z-index: 3;
+      width: 148px;
+      height: 300px;
+      overflow: hidden;
+      color: var(--ink);
+      background: var(--white);
+      border: 6px solid #111318;
+      border-radius: 28px;
+      box-shadow: 0 30px 52px rgba(0, 0, 0, 0.4);
+    }
+
+    .phone::before {
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      z-index: 5;
+      width: 44px;
+      height: 7px;
+      background: #111318;
+      border-radius: 0 0 6px 6px;
+      content: "";
+      transform: translateX(-50%);
+    }
+
+    .phone__hero {
+      height: 106px;
+      background:
+        linear-gradient(rgba(0,0,0,0.12), rgba(0,0,0,0.12)),
+        linear-gradient(135deg, #40372f, #0a0b0d);
+    }
+
+    .phone__body {
+      padding: 10px;
+    }
+
+    .phone__body strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.62rem;
+    }
+
+    .phone-products {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+
+    .phone-card {
+      padding: 7px;
+      background: #f5f4f0;
+      border-radius: 6px;
+    }
+
+    .phone-card__img {
+      height: 55px;
+      margin-bottom: 5px;
+      background: linear-gradient(180deg, #17191c, #4f4438);
+      border-radius: 4px;
+    }
+
+    .phone-card span {
+      display: block;
+      color: #4b5563;
+      font-size: 0.42rem;
+      line-height: 1.35;
+    }
+
+    .trust-panel {
+      position: relative;
+      z-index: 4;
+      display: grid;
+      margin-top: -74px;
+      padding: 24px;
+      grid-template-columns: repeat(4, 1fr);
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 18px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .trust-stat {
+      display: grid;
+      min-height: 104px;
+      align-items: center;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      padding: 12px 28px;
+      border-right: 1px solid var(--line);
+    }
+
+    .trust-stat:last-child {
+      border-right: 0;
+    }
+
+    .trust-stat__icon {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      color: var(--blue);
+      background: var(--surface-2);
+      border-radius: 12px;
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+
+    .trust-stat--shopify .trust-stat__icon {
+      color: var(--white);
+      background: var(--green);
+    }
+
+    .trust-stat--rating .trust-stat__icon {
+      color: var(--warning);
+      background: #fff8e8;
+    }
+
+    .trust-stat strong,
+    .trust-stat span {
+      display: block;
+    }
+
+    .trust-stat strong {
+      color: var(--navy);
+      font-size: 1.55rem;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+    }
+
+    .trust-stat span {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.7rem;
+      line-height: 1.35;
+    }
+
+    .overview {
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 40%, rgba(37, 99, 255, 0.08), transparent 24%),
+        var(--white);
+    }
+
+    .overview__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      align-items: center;
+      gap: 78px;
+    }
+
+    .dashboard-visual {
+      position: relative;
+      min-height: 420px;
+    }
+
+    .dashboard-window {
+      position: absolute;
+      inset: 30px 46px 30px 0;
+      overflow: hidden;
+      padding: 22px;
+      background: linear-gradient(180deg, #f8faff, #eef2ff);
+      border: 1px solid #dde4f1;
+      border-radius: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .browser-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+
+    .browser-bar i {
+      width: 8px;
+      height: 8px;
+      background: #d5dbea;
+      border-radius: 50%;
+    }
+
+    .product-preview {
+      display: grid;
+      grid-template-columns: 135px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .product-preview__image {
+      position: relative;
+      height: 180px;
+      background: linear-gradient(145deg, #d6d1c8, #f9fafb);
+      border-radius: 14px;
+    }
+
+    .product-preview__image::before {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      width: 58px;
+      height: 100px;
+      background: linear-gradient(180deg, #22252a, #080a0c);
+      border-radius: 10px 10px 6px 6px;
+      content: "";
+      transform: translateX(-50%);
+      box-shadow: 0 16px 26px rgba(15, 23, 42, 0.2);
+    }
+
+    .product-preview__image::after {
+      position: absolute;
+      bottom: 64px;
+      left: 50%;
+      width: 43px;
+      height: 26px;
+      background: #ede8dd;
+      content: "";
+      transform: translateX(-50%);
+    }
+
+    .product-preview__content {
+      padding-top: 10px;
+    }
+
+    .product-preview__content small {
+      color: var(--blue);
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .product-preview__content h4 {
+      margin: 8px 0;
+      color: var(--navy);
+      font-size: 1.1rem;
+      line-height: 1.3;
+    }
+
+    .product-preview__content p {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .preview-price {
+      margin-bottom: 16px;
+      color: var(--navy);
+      font-weight: 800;
+    }
+
+    .preview-button {
+      display: inline-flex;
+      min-height: 34px;
+      align-items: center;
+      padding: 0 14px;
+      color: var(--white);
+      background: var(--navy);
+      border-radius: 7px;
+      font-size: 0.64rem;
+      font-weight: 700;
+    }
+
+    .settings-card {
+      position: absolute;
+      top: 104px;
+      right: 0;
+      width: 175px;
+      padding: 18px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .settings-card strong {
+      display: block;
+      margin-bottom: 13px;
+      color: var(--navy);
+      font-size: 0.78rem;
+    }
+
+    .settings-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .settings-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.67rem;
+    }
+
+    .settings-list b {
+      color: var(--success);
+    }
+
+    .hour-badge {
+      position: absolute;
+      bottom: 11px;
+      left: 120px;
+      z-index: 2;
+      display: grid;
+      min-width: 105px;
+      min-height: 48px;
+      place-items: center;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      border-radius: 10px;
+      box-shadow: 0 14px 30px rgba(67, 56, 202, 0.26);
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    .overview__copy h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(2rem, 3.7vw, 3.35rem);
+      line-height: 1.1;
+      letter-spacing: -0.045em;
+    }
+
+    .overview__copy > p:not(.eyebrow) {
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .benefit-list {
+      display: grid;
+      gap: 14px;
+      margin: 26px 0 30px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .benefit-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      color: #344054;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .benefit-list svg {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+      color: var(--blue);
+      margin-top: 2px;
+    }
+
+    .features {
+      padding-top: 44px;
+      background: var(--white);
+    }
+
+    .features-grid {
+      display: grid;
+      margin-top: 44px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .feature-card {
+      min-height: 138px;
+      padding: 20px 16px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .feature-icon {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 17px;
+      place-items: center;
+      color: var(--blue);
+      background: var(--surface-2);
+      border-radius: 12px;
+    }
+
+    .feature-icon svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    .feature-card h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .offer {
+      background:
+        radial-gradient(circle at 75% 50%, rgba(124, 58, 237, 0.08), transparent 28%),
+        var(--surface);
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 20px;
+    }
+
+    .pricing-card,
+    .roadmap-card {
+      border-radius: 20px;
+    }
+
+    .pricing-card {
+      position: relative;
+      overflow: hidden;
+      padding: 38px;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 100% 0, rgba(37, 99, 255, 0.38), transparent 30%),
+        linear-gradient(145deg, #07101e, #0b1220);
+      box-shadow: var(--shadow-md);
+    }
+
+    .pricing-card::after {
+      position: absolute;
+      right: -80px;
+      bottom: -90px;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.28), transparent 68%);
+      content: "";
+    }
+
+    .pricing-card__content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .pricing-card .eyebrow {
+      color: #9da8ff;
+    }
+
+    .pricing-card h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 3vw, 2.55rem);
+      letter-spacing: -0.04em;
+    }
+
+    .pricing-card__intro {
+      margin: 8px 0 24px;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 0.9rem;
+    }
+
+    .price {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .price strong {
+      font-size: clamp(2.8rem, 5vw, 4.3rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+    }
+
+    .price span {
+      padding-bottom: 7px;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: 0.74rem;
+    }
+
+    .pricing-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px 18px;
+      margin: 0 0 30px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .pricing-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.76rem;
+    }
+
+    .pricing-list svg {
+      width: 17px;
+      height: 17px;
+      flex: 0 0 17px;
+      color: #9da8ff;
+      margin-top: 1px;
+    }
+
+    .roadmap-card {
+      display: grid;
+      grid-template-columns: 1fr 245px;
+      align-items: center;
+      gap: 34px;
+      padding: 38px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .roadmap-card h3 {
+      margin: 0;
+      color: var(--blue);
+      font-size: 1.35rem;
+      letter-spacing: -0.025em;
+    }
+
+    .roadmap-card p {
+      margin: 14px 0 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .roadmap-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .roadmap-list li {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: #344054;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .roadmap-list b {
+      display: grid;
+      width: 17px;
+      height: 17px;
+      place-items: center;
+      color: var(--white);
+      background: var(--blue);
+      border-radius: 50%;
+      font-size: 0.54rem;
+    }
+
+    .audit-widget {
+      padding: 18px;
+      background: #fbfcff;
+      border: 1px solid #e5e9f4;
+      border-radius: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .audit-widget__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .audit-widget__header strong {
+      display: block;
+      color: var(--navy);
+      font-size: 0.75rem;
+    }
+
+    .audit-widget__header span {
+      color: var(--muted);
+      font-size: 0.58rem;
+    }
+
+    .audit-logo {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--green), var(--cyan));
+      border-radius: 10px;
+      font-size: 0.67rem;
+      font-weight: 800;
+    }
+
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .score-ring {
+      display: grid;
+      width: 78px;
+      height: 78px;
+      flex: 0 0 78px;
+      place-items: center;
+      color: var(--success);
+      background:
+        radial-gradient(circle at center, #fff 55%, transparent 56%),
+        conic-gradient(var(--green) 0 85%, #e8edf5 85% 100%);
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .score-items {
+      display: grid;
+      gap: 8px;
+    }
+
+    .score-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 0.54rem;
+    }
+
+    .score-item i {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+    }
+
+    .score-item:nth-child(1) i {
+      background: var(--green);
+    }
+
+    .score-item:nth-child(2) i {
+      background: var(--warning);
+    }
+
+    .score-item:nth-child(3) i {
+      background: #f97316;
+    }
+
+    .process {
+      background: var(--white);
+    }
+
+    .process-track {
+      position: relative;
+      display: grid;
+      margin-top: 54px;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 18px;
+    }
+
+    .process-track::before {
+      position: absolute;
+      top: 25px;
+      left: 7%;
+      right: 7%;
+      height: 2px;
+      background-image: linear-gradient(90deg, var(--blue) 50%, transparent 50%);
+      background-size: 10px 2px;
+      content: "";
+      opacity: 0.35;
+    }
+
+    .process-step {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .process-number {
+      display: grid;
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 18px;
+      place-items: center;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      border: 5px solid var(--white);
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px rgba(37, 99, 255, 0.14);
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .process-step h3 {
+      margin: 0 0 7px;
+      color: var(--navy);
+      font-size: 0.82rem;
+    }
+
+    .process-step p {
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 0.69rem;
+      line-height: 1.45;
+    }
+
+    .reviews {
+      background: var(--surface);
+    }
+
+    .reviews-grid {
+      display: grid;
+      margin-top: 42px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .review-card {
+      display: flex;
+      min-height: 260px;
+      flex-direction: column;
+      padding: 24px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+    }
+
+    .stars {
+      color: var(--warning);
+      font-size: 0.92rem;
+      letter-spacing: 0.08em;
+    }
+
+    .review-card blockquote {
+      margin: 18px 0 24px;
+      color: var(--navy);
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-top: auto;
+    }
+
+    .avatar {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      place-items: center;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      border-radius: 50%;
+      font-size: 0.66rem;
+      font-weight: 800;
+    }
+
+    .review-author strong,
+    .review-author span {
+      display: block;
+    }
+
+    .review-author strong {
+      color: var(--navy);
+      font-size: 0.72rem;
+    }
+
+    .review-author span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.59rem;
+    }
+
+    .reviews-link {
+      display: flex;
+      justify-content: center;
+      margin-top: 28px;
+    }
+
+    .reviews-link a {
+      color: var(--blue);
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    .faq {
+      background: var(--white);
+    }
+
+    .faq-list {
+      max-width: 880px;
+      margin: 42px auto 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq-question {
+      display: flex;
+      width: 100%;
+      min-height: 72px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 0;
+      color: var(--navy);
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .faq-icon {
+      position: relative;
+      width: 26px;
+      height: 26px;
+      flex: 0 0 26px;
+      background: var(--surface-2);
+      border-radius: 50%;
+    }
+
+    .faq-icon::before,
+    .faq-icon::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10px;
+      height: 2px;
+      background: var(--blue);
+      border-radius: 99px;
+      content: "";
+      transform: translate(-50%, -50%);
+      transition: transform 0.2s ease;
+    }
+
+    .faq-icon::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    .faq-question[aria-expanded="true"] .faq-icon::after {
+      transform: translate(-50%, -50%) rotate(0);
+    }
+
+    .faq-answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.25s ease;
+    }
+
+    .faq-answer > div {
+      overflow: hidden;
+    }
+
+    .faq-item.is-open .faq-answer {
+      grid-template-rows: 1fr;
+    }
+
+    .faq-answer p {
+      margin: 0;
+      padding: 0 44px 22px 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .final-cta {
+      background: var(--white);
+    }
+
+    .cta-panel {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 30px;
+      padding: 34px 38px;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 80% 40%, rgba(124, 58, 237, 0.35), transparent 28%),
+        linear-gradient(135deg, #07101e, #0b1220);
+      border-radius: 18px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .cta-panel h2 {
+      margin: 0;
+      font-size: clamp(1.65rem, 3vw, 2.45rem);
+      letter-spacing: -0.04em;
+    }
+
+    .cta-panel p {
+      margin: 8px 0 0;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .site-footer {
+      color: rgba(255, 255, 255, 0.72);
+      background: #07101e;
+    }
+
+    .footer-grid {
+      display: grid;
+      padding: 54px 0 38px;
+      grid-template-columns: 1.45fr 1fr 1fr 1fr;
+      gap: 54px;
+    }
+
+    .footer-brand p {
+      max-width: 320px;
+      margin: 18px 0 0;
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 0.75rem;
+    }
+
+    .footer-title {
+      margin: 0 0 16px;
+      color: var(--white);
+      font-size: 0.77rem;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 0.72rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 20px 0 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.44);
+      font-size: 0.65rem;
+    }
+
+    .mobile-sticky-cta {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      left: 12px;
+      z-index: 90;
+      display: none;
+      padding: 8px;
+      background: rgba(7, 16, 30, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      box-shadow: 0 14px 44px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(16px);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(3, 8, 18, 0.76);
+      backdrop-filter: blur(10px);
+    }
+
+    .modal.is-open {
+      display: grid;
+    }
+
+    .modal-dialog {
+      position: relative;
+      width: min(100%, 720px);
+      max-height: min(90vh, 900px);
+      overflow-y: auto;
+      padding: 34px;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.35);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      color: var(--navy);
+      background: var(--surface);
+      border: 0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .modal-dialog h2 {
+      margin: 0;
+      padding-right: 44px;
+      color: var(--navy);
+      font-size: clamp(1.6rem, 4vw, 2.35rem);
+      letter-spacing: -0.04em;
+    }
+
+    .modal-dialog > p {
+      margin: 10px 0 24px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .form-field--full {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      color: var(--navy);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      min-height: 48px;
+      padding: 11px 13px;
+      color: var(--ink);
+      background: var(--white);
+      border: 1px solid #d8deea;
+      border-radius: 10px;
+    }
+
+    .form-field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-note {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 0.65rem;
+    }
+
+    .form-success {
+      display: none;
+      padding: 20px;
+      color: #166534;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+    }
+
+    .form-success.is-visible {
+      display: block;
+    }
+
+    @media (max-width: 1100px) {
+      .hero__inner {
+        grid-template-columns: 1fr 0.95fr;
+        gap: 30px;
+      }
+
+      .laptop {
+        right: 0;
+      }
+
+      .phone {
+        right: -12px;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .roadmap-card {
+        grid-template-columns: 1fr 210px;
+        gap: 24px;
+        padding: 30px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1.4fr 1fr 1fr;
+      }
+
+      .footer-grid > div:last-child {
+        grid-column: 2 / 4;
+      }
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --header-height: 70px;
+      }
+
+      .container {
+        width: min(calc(100% - 28px), var(--container));
+      }
+
+      .section {
+        padding: 72px 0;
+      }
+
+      .site-nav {
+        position: fixed;
+        top: var(--header-height);
+        right: 14px;
+        left: 14px;
+        display: grid;
+        align-content: start;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        margin: 0;
+        color: var(--navy);
+        background: var(--white);
+        border-radius: 14px;
+        box-shadow: var(--shadow-md);
+        opacity: 0;
+        transform: translateY(-8px);
+        transition:
+          max-height 0.25s ease,
+          opacity 0.2s ease,
+          transform 0.2s ease;
+      }
+
+      .menu-open .site-nav {
+        max-height: 520px;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .nav-link {
+        padding: 15px 18px;
+        color: var(--navy);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav-link:last-child {
+        border-bottom: 0;
+      }
+
+      .header-cta {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: grid;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero__inner {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding-top: calc(var(--header-height) + 60px);
+        padding-bottom: 140px;
+      }
+
+      .hero__content {
+        max-width: 720px;
+      }
+
+      .hero__lead {
+        max-width: 660px;
+      }
+
+      .device-scene {
+        min-height: 430px;
+      }
+
+      .laptop {
+        top: 28px;
+        right: 4%;
+        width: 88%;
+      }
+
+      .phone {
+        right: 4%;
+        bottom: 18px;
+      }
+
+      .trust-panel {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: -86px;
+      }
+
+      .trust-stat:nth-child(2) {
+        border-right: 0;
+      }
+
+      .trust-stat:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .overview__grid,
+      .offer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .overview__grid {
+        gap: 50px;
+      }
+
+      .dashboard-visual {
+        order: 2;
+      }
+
+      .overview__copy {
+        order: 1;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .roadmap-card {
+        grid-template-columns: 1fr 220px;
+      }
+
+      .process-track {
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: 38px;
+      }
+
+      .process-track::before {
+        display: none;
+      }
+
+      .cta-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-grid > div:last-child {
+        grid-column: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding-bottom: 78px;
+      }
+
+      .container {
+        width: min(calc(100% - 24px), var(--container));
+      }
+
+      .section {
+        padding: 60px 0;
+      }
+
+      .brand__text {
+        display: none;
+      }
+
+      .hero__inner {
+        padding-top: calc(var(--header-height) + 44px);
+        padding-bottom: 124px;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.5rem, 12vw, 3.8rem);
+      }
+
+      .hero__checks {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 11px;
+      }
+
+      .hero__actions {
+        display: grid;
+      }
+
+      .hero__actions .button {
+        width: 100%;
+      }
+
+      .device-scene {
+        min-height: 355px;
+        margin-top: 6px;
+      }
+
+      .laptop {
+        top: 24px;
+        right: 0;
+        width: 96%;
+      }
+
+      .laptop__screen {
+        min-height: 252px;
+        padding: 12px;
+      }
+
+      .mini-nav {
+        display: none;
+      }
+
+      .store-hero {
+        min-height: 196px;
+        padding: 12px 7px 2px;
+      }
+
+      .store-copy h3 {
+        font-size: 1.2rem;
+      }
+
+      .store-copy p {
+        display: none;
+      }
+
+      .product-display {
+        height: 170px;
+      }
+
+      .bottle--one {
+        left: 4px;
+        width: 48px;
+        height: 90px;
+      }
+
+      .bottle--two {
+        left: 55px;
+        width: 61px;
+        height: 128px;
+      }
+
+      .bottle--three {
+        width: 54px;
+        height: 106px;
+      }
+
+      .bottle::before {
+        top: -18px;
+        left: 10px;
+        width: 30px;
+        height: 20px;
+      }
+
+      .bottle::after {
+        inset-inline: 6px;
+        height: 24px;
+      }
+
+      .phone {
+        right: 0;
+        bottom: 0;
+        width: 102px;
+        height: 213px;
+        border-width: 4px;
+        border-radius: 20px;
+      }
+
+      .phone__hero {
+        height: 72px;
+      }
+
+      .phone__body {
+        padding: 7px;
+      }
+
+      .phone__body strong {
+        font-size: 0.42rem;
+      }
+
+      .phone-products {
+        gap: 4px;
+      }
+
+      .phone-card {
+        padding: 4px;
+      }
+
+      .phone-card__img {
+        height: 37px;
+      }
+
+      .trust-panel {
+        grid-template-columns: 1fr;
+        margin-top: -72px;
+        padding: 10px 18px;
+      }
+
+      .trust-stat {
+        min-height: 92px;
+        padding: 13px 6px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .trust-stat:last-child {
+        border-bottom: 0;
+      }
+
+      .trust-stat:nth-child(2) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .dashboard-visual {
+        min-height: 360px;
+      }
+
+      .dashboard-window {
+        inset: 20px 24px 28px 0;
+      }
+
+      .product-preview {
+        grid-template-columns: 100px 1fr;
+      }
+
+      .product-preview__image {
+        height: 150px;
+      }
+
+      .settings-card {
+        top: 140px;
+        width: 150px;
+      }
+
+      .hour-badge {
+        left: 70px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .feature-card {
+        min-height: 145px;
+        padding: 16px 13px;
+      }
+
+      .offer {
+        padding-top: 42px;
+      }
+
+      .pricing-card,
+      .roadmap-card {
+        padding: 25px;
+      }
+
+      .pricing-list {
+        grid-template-columns: 1fr;
+      }
+
+      .roadmap-card {
+        grid-template-columns: 1fr;
+      }
+
+      .audit-widget {
+        max-width: 280px;
+      }
+
+      .process-track {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .process-step {
+        display: grid;
+        grid-template-columns: 50px 1fr;
+        column-gap: 15px;
+        padding-bottom: 26px;
+        text-align: left;
+      }
+
+      .process-number {
+        grid-row: 1 / 3;
+        margin: 0;
+      }
+
+      .process-step h3,
+      .process-step p {
+        margin-inline: 0;
+      }
+
+      .reviews-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 14px;
+        padding: 2px 2px 16px;
+      }
+
+      .review-card {
+        min-width: 86%;
+        scroll-snap-align: start;
+      }
+
+      .faq-answer p {
+        padding-right: 0;
+      }
+
+      .cta-panel {
+        padding: 28px 22px;
+        text-align: center;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 34px;
+      }
+
+      .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .mobile-sticky-cta {
+        display: block;
+      }
+
+      .modal {
+        padding: 8px;
+      }
+
+      .modal-dialog {
+        max-height: 94vh;
+        padding: 26px 18px;
+        border-radius: 16px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-field--full {
+        grid-column: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="#top" aria-label="Mark Jason Nastor home">
+        <span class="brand__mark">MJ</span>
+        <span class="brand__text">
+          <strong>Mark Jason Nastor</strong>
+          <span>Shopify Developer</span>
+        </span>
+      </a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a class="nav-link" href="#included">What's Included</a>
+        <a class="nav-link" href="#package">Package</a>
+        <a class="nav-link" href="#process">Process</a>
+        <a class="nav-link" href="#reviews">Reviews</a>
+        <a class="nav-link" href="#faq">FAQ</a>
+      </nav>
+
+      <button
+        class="button button--primary header-cta js-open-modal"
+        type="button"
+      >
+        Let's Build Your Store
+      </button>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-controls="site-nav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <p class="eyebrow">Shopify store setup service</p>
+
+          <h1>
+            Launch Your Shopify Store in <span>48 Hours</span>
+          </h1>
+
+          <p class="hero__lead">
+            A professionally built, conversion-focused Shopify store from
+            A–Z—delivered in just 48 business hours.
+          </p>
+
+          <ul class="hero__checks" aria-label="Service highlights">
+            <li><span class="check-dot">✓</span> Fixed scope</li>
+            <li><span class="check-dot">✓</span> Clear pricing</li>
+            <li><span class="check-dot">✓</span> One revision round</li>
+            <li><span class="check-dot">✓</span> 14 days support</li>
+          </ul>
+
+          <div class="hero__actions">
+            <button class="button button--primary js-open-modal" type="button">
+              Check If Your Store Qualifies
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                />
+              </svg>
+            </button>
+
+            <a class="button button--secondary" href="#included">
+              See What's Included
+            </a>
+          </div>
+
+          <p class="hero__note">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle
+                cx="12"
+                cy="12"
+                r="9"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <path
+                d="M12 7v5l3 2"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-width="1.8"
+              />
+            </svg>
+            The 48-hour delivery window begins after onboarding is complete and
+            all required content, assets, and access are received.
+          </p>
+        </div>
+
+        <div class="device-scene" aria-label="Responsive Shopify store mockup">
+          <div class="glow"></div>
+
+          <div class="laptop" aria-hidden="true">
+            <div class="laptop__screen">
+              <div class="laptop__topbar">
+                <span class="mini-brand">
+                  <span class="mini-logo">MJ</span>
+                  Premium Store
+                </span>
+
+                <span class="mini-nav">
+                  <span>Shop</span>
+                  <span>Collections</span>
+                  <span>About</span>
+                  <span>Contact</span>
+                </span>
+              </div>
+
+              <div class="store-hero">
+                <div class="store-copy">
+                  <h3>Where wellness meets innovation</h3>
+                  <p>Clean formulas. Thoughtful routines. Everyday confidence.</p>
+                  <span>Shop now</span>
+                </div>
+
+                <div class="product-display">
+                  <span class="bottle bottle--one"></span>
+                  <span class="bottle bottle--two"></span>
+                  <span class="bottle bottle--three"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="laptop__base"></div>
+          </div>
+
+          <div class="phone" aria-hidden="true">
+            <div class="phone__hero"></div>
+
+            <div class="phone__body">
+              <strong>Daily Essentials</strong>
+
+              <div class="phone-products">
+                <div class="phone-card">
+                  <div class="phone-card__img"></div>
+                  <span>Renew Face Serum</span>
+                </div>
+
+                <div class="phone-card">
+                  <div class="phone-card__img"></div>
+                  <span>Restore Face Formula</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <section class="trust-panel" aria-label="Professional credentials">
+        <article class="trust-stat trust-stat--shopify">
+          <div class="trust-stat__icon">S</div>
+          <div>
+            <strong>Shopify</strong>
+            <span>Select Partner · Trusted Shopify specialist</span>
+          </div>
+        </article>
+
+        <article class="trust-stat trust-stat--rating">
+          <div class="trust-stat__icon">★</div>
+          <div>
+            <strong>5.0</strong>
+            <span>From 33 verified Shopify Partner reviews</span>
+          </div>
+        </article>
+
+        <article class="trust-stat">
+          <div class="trust-stat__icon">300+</div>
+          <div>
+            <strong>300+</strong>
+            <span>Shopify stores built and supported</span>
+          </div>
+        </article>
+
+        <article class="trust-stat">
+          <div class="trust-stat__icon">10+</div>
+          <div>
+            <strong>10+</strong>
+            <span>Years of web development experience</span>
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <section class="section overview">
+      <div class="container overview__grid">
+        <div class="dashboard-visual" aria-hidden="true">
+          <div class="dashboard-window">
+            <div class="browser-bar">
+              <i></i><i></i><i></i>
+            </div>
+
+            <div class="product-preview">
+              <div class="product-preview__image"></div>
+
+              <div class="product-preview__content">
+                <small>Featured product</small>
+                <h4>Premium Organic Skincare Set</h4>
+                <p>Complete daily skincare routine</p>
+                <div class="preview-price">$69.00</div>
+                <span class="preview-button">Add to cart</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <strong>Store Settings</strong>
+
+            <ul class="settings-list">
+              <li><span>Products</span><b>✓</b></li>
+              <li><span>Collections</span><b>✓</b></li>
+              <li><span>Payments</span><b>✓</b></li>
+              <li><span>Shipping</span><b>✓</b></li>
+              <li><span>Pages</span><b>✓</b></li>
+              <li><span>Theme</span><b>✓</b></li>
+            </ul>
+          </div>
+
+          <div class="hour-badge">48 HOURS</div>
+        </div>
+
+        <div class="overview__copy">
+          <p class="eyebrow">Fast. Professional. Conversion-focused.</p>
+
+          <h2>Your Shopify Store, Launch-Ready in 48 Hours</h2>
+
+          <p>
+            We build a fully configured, mobile-optimized, and conversion-focused
+            Shopify store so you can start selling faster.
+          </p>
+
+          <ul class="benefit-list">
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                <path
+                  d="m7.5 12 3 3 6-7"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                />
+              </svg>
+              Built by a senior Shopify developer and Shopify Select Partner
+            </li>
+
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                <path
+                  d="m7.5 12 3 3 6-7"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                />
+              </svg>
+              Conversion-focused structure and user experience
+            </li>
+
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                <path
+                  d="m7.5 12 3 3 6-7"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                />
+              </svg>
+              Essential settings, pages, and integrations configured correctly
+            </li>
+
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                <path
+                  d="m7.5 12 3 3 6-7"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                />
+              </svg>
+              Handover, testing, launch support, and post-launch assistance included
+            </li>
+          </ul>
+
+          <button class="button button--primary js-open-modal" type="button">
+            Check If Your Store Qualifies
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section features" id="included">
+      <div class="container">
+        <p class="eyebrow" style="text-align:center;">What's included</p>
+        <h2 class="section-title">Everything You Need to Launch</h2>
+        <p class="section-copy">
+          A complete Shopify store setup package so you can start selling with confidence.
+        </p>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="4" y="3" width="16" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M8 7h8M8 11h8M8 15h5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <h3>Store Setup &amp; Configuration</h3>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 5h16v14H4z" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M8 9h8M8 13h5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <h3>Premium Theme Installation</h3>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 18 12 4l8 14H4Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"/>
+                <circle cx="12" cy="14" r="1" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3>Conversion-Focused Homepage</h3>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M7 15l3-3 2 2 3-4 2 3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <h3>Collection &amp; Product Templates</h3>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 7h10l1 13H6L7 7Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"/>
+                <path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <h3>Up to 10 Products &amp; 3 Collections</h3>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M3 10h18M7 15h3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <h3>Payment &amp; Shipping Configuration</h3>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 3h9l3 3v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"/>
+                <path d="M9 11h6M9 15h6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <h3>Essential Pages: About, Contact &amp; FAQ</h3>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="7" y="3" width="10" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M10 17h4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <h3>Mobile Optimization</h3>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 19V9M12 19V5M19 19v-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/>
+                <path d="m4 9 5-3 4 2 7-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <h3>Basic SEO &amp; Analytics Setup</h3>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <h3>Launch Support &amp; 14 Days Assistance</h3>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section offer" id="package">
+      <div class="container offer-grid">
+        <article class="pricing-card">
+          <div class="pricing-card__content">
+            <p class="eyebrow">Our flagship package</p>
+            <h2>Shopify Launch Sprint</h2>
+            <p class="pricing-card__intro">
+              A complete Shopify store delivered for review within 48 business hours.
+            </p>
+
+            <div class="price">
+              <strong>$1,495</strong>
+              <span>One-time project fee</span>
+            </div>
+
+            <ul class="pricing-list">
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                  <path d="m7.5 12 3 3 6-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Delivery for review within 48 business hours
+              </li>
+
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                  <path d="m7.5 12 3 3 6-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                One revision round
+              </li>
+
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                  <path d="m7.5 12 3 3 6-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Up to 10 products and 3 collections
+              </li>
+
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                  <path d="m7.5 12 3 3 6-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Essential pages and configurations
+              </li>
+
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                  <path d="m7.5 12 3 3 6-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                GA4 and Meta Pixel installation
+              </li>
+
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                  <path d="m7.5 12 3 3 6-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Cart and checkout testing
+              </li>
+
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                  <path d="m7.5 12 3 3 6-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                14 days of post-launch support
+              </li>
+
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                  <path d="m7.5 12 3 3 6-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                ShoptimizePro CRO roadmap
+              </li>
+            </ul>
+
+            <button class="button button--primary js-open-modal" type="button">
+              Check If Your Store Qualifies
+            </button>
+          </div>
+        </article>
+
+        <article class="roadmap-card">
+          <div>
+            <h3>Includes a ShoptimizePro CRO Roadmap</h3>
+
+            <p>
+              After launch, get a prioritized conversion roadmap with AI-powered
+              insights to help you grow.
+            </p>
+
+            <ul class="roadmap-list">
+              <li><b>✓</b> AI-powered storefront audit</li>
+              <li><b>✓</b> Conversion opportunities</li>
+              <li><b>✓</b> Prioritized action plan</li>
+              <li><b>✓</b> PDF report with recommendations</li>
+            </ul>
+          </div>
+
+          <div class="audit-widget" aria-hidden="true">
+            <div class="audit-widget__header">
+              <div>
+                <strong>ShoptimizePro</strong>
+                <span>CRO Roadmap</span>
+              </div>
+
+              <div class="audit-logo">SP</div>
+            </div>
+
+            <div class="score-row">
+              <div class="score-ring">85</div>
+
+              <div class="score-items">
+                <div class="score-item"><i></i> Improve product-page hero</div>
+                <div class="score-item"><i></i> Add customer reviews</div>
+                <div class="score-item"><i></i> Optimize add-to-cart button</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section process" id="process">
+      <div class="container">
+        <p class="eyebrow" style="text-align:center;">Our 6-step process</p>
+        <h2 class="section-title">From Access to Launch in 48 Hours</h2>
+        <p class="section-copy">
+          A clear, simple process designed for speed and quality.
+        </p>
+
+        <div class="process-track">
+          <article class="process-step">
+            <div class="process-number">1</div>
+            <h3>Apply</h3>
+            <p>Tell us about your store and goals.</p>
+          </article>
+
+          <article class="process-step">
+            <div class="process-number">2</div>
+            <h3>Confirm Scope</h3>
+            <p>We review and confirm your project qualifies.</p>
+          </article>
+
+          <article class="process-step">
+            <div class="process-number">3</div>
+            <h3>Onboarding</h3>
+            <p>Provide access, content, products, and assets.</p>
+          </article>
+
+          <article class="process-step">
+            <div class="process-number">4</div>
+            <h3>Build</h3>
+            <p>We build your store within 48 business hours.</p>
+          </article>
+
+          <article class="process-step">
+            <div class="process-number">5</div>
+            <h3>Review</h3>
+            <p>You review and send one consolidated revision list.</p>
+          </article>
+
+          <article class="process-step">
+            <div class="process-number">6</div>
+            <h3>Launch</h3>
+            <p>We finalize, test, and help you go live.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reviews" id="reviews">
+      <div class="container">
+        <p class="eyebrow" style="text-align:center;">Verified reviews</p>
+        <h2 class="section-title">Trusted by Shopify Merchants</h2>
+        <p class="section-copy">
+          Real feedback from Shopify businesses that needed reliable delivery.
+        </p>
+
+        <div class="reviews-grid">
+          <article class="review-card">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“He gets the job done very efficiently.”</blockquote>
+            <div class="review-author">
+              <div class="avatar">FF</div>
+              <div>
+                <strong>Fiesta Furnishings</strong>
+                <span>Store build / redesign</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="review-card">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“Built my entire Shopify store from the ground up.”</blockquote>
+            <div class="review-author">
+              <div class="avatar">KG</div>
+              <div>
+                <strong>Kia and George</strong>
+                <span>Store build / redesign</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="review-card">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“Very responsive and finished the project fast.”</blockquote>
+            <div class="review-author">
+              <div class="avatar">BH</div>
+              <div>
+                <strong>Bold &amp; Hansen</strong>
+                <span>Store build / redesign</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="review-card">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“Mark is exceptionally talented and reliable.”</blockquote>
+            <div class="review-author">
+              <div class="avatar">IB</div>
+              <div>
+                <strong>IBOS Beauty</strong>
+                <span>Shopify development</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="reviews-link">
+          <a
+            href="https://www.shopify.com/partners/directory/partner/mark54"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View all Shopify Partner reviews →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq" id="faq">
+      <div class="container">
+        <p class="eyebrow" style="text-align:center;">Frequently asked questions</p>
+        <h2 class="section-title">Before You Apply</h2>
+        <p class="section-copy">
+          The 48-hour service is intentionally focused so the delivery promise stays reliable.
+        </p>
+
+        <div class="faq-list">
+          <article class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span>When does the 48-hour delivery period begin?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+              <div>
+                <p>
+                  The delivery period begins after payment, onboarding, required
+                  content, product information, brand assets, and account access
+                  have all been received and approved.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span>Does the package include a Shopify theme?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+              <div>
+                <p>
+                  Theme installation and configuration are included. Any paid
+                  Shopify theme license is purchased separately by the client.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span>How many products are included?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+              <div>
+                <p>
+                  The package includes setup for up to 10 products and up to
+                  3 collections. Additional catalog work can be quoted separately.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span>Do you guarantee sales or conversion rates?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+              <div>
+                <p>
+                  No. The store will be built using established Shopify, user
+                  experience, and conversion principles, but revenue depends on
+                  your products, offer, traffic, pricing, and operations.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span>Can you build custom Shopify functionality?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+              <div>
+                <p>
+                  Yes, but advanced custom features, large migrations, subscriptions,
+                  bundles, B2B, or app development may require a separate scope
+                  and a longer timeline.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span>What happens after launch?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+              <div>
+                <p>
+                  The package includes 14 days of technical support for issues
+                  related to the agreed implementation. New features and expanded
+                  work can be handled separately.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section--tight final-cta">
+      <div class="container">
+        <div class="cta-panel">
+          <div>
+            <h2>Stop Waiting. Start Selling.</h2>
+            <p>Get a professional Shopify store built in 48 hours by a trusted expert.</p>
+          </div>
+
+          <button class="button button--primary js-open-modal" type="button">
+            Check If Your Store Qualifies
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M5 12h14M13 6l6 6-6 6"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#top">
+          <span class="brand__mark">MJ</span>
+          <span class="brand__text">
+            <strong>Mark Jason Nastor</strong>
+            <span>Shopify Developer</span>
+          </span>
+        </a>
+
+        <p>
+          Senior Shopify Developer, Shopify Select Partner, and Shopify App
+          Founder helping brands launch faster and convert better.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="footer-title">Services</h3>
+        <div class="footer-links">
+          <a href="#package">48-Hour Launch Sprint</a>
+          <a href="#included">Shopify Store Setup</a>
+          <a href="https://shoptimizepro.io" target="_blank" rel="noopener noreferrer">CRO Optimization</a>
+          <a href="https://shopifydev-mj.github.io/shopify/" target="_blank" rel="noopener noreferrer">Portfolio</a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="footer-title">Company</h3>
+        <div class="footer-links">
+          <a href="#process">How It Works</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#faq">FAQ</a>
+          <a href="https://www.linkedin.com/in/markjasonnastor-shopify/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="footer-title">Let's Build Your Store</h3>
+        <div class="footer-links">
+          <a href="mailto:support@shoptimizepro.io">support@shoptimizepro.io</a>
+          <button
+            class="button button--primary js-open-modal"
+            type="button"
+            style="margin-top:8px;"
+          >
+            Start Your Project
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>© <span id="current-year"></span> Mark Jason Nastor. All rights reserved.</span>
+      <span>Shopify Select Partner · Shopify App Founder</span>
+    </div>
+  </footer>
+
+  <div class="mobile-sticky-cta">
+    <button class="button button--primary button--full js-open-modal" type="button">
+      Check If Your Store Qualifies
+    </button>
+  </div>
+
+  <div
+    class="modal"
+    id="qualification-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="qualification-title"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <button class="modal-close" type="button" aria-label="Close form">×</button>
+
+      <h2 id="qualification-title">Check If Your Store Qualifies</h2>
+
+      <p>
+        Share a few details about your project. This standalone demo form can be
+        connected to Formspree, Zapier, Shopify Forms, or your preferred CRM.
+      </p>
+
+      <form id="qualification-form">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+          </div>
+
+          <div class="form-field">
+            <label for="email">Business email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="form-field">
+            <label for="brand">Brand name</label>
+            <input id="brand" name="brand" type="text" autocomplete="organization" required>
+          </div>
+
+          <div class="form-field">
+            <label for="website">Current website or Shopify URL</label>
+            <input id="website" name="website" type="url" placeholder="https://">
+          </div>
+
+          <div class="form-field">
+            <label for="project-type">Project type</label>
+            <select id="project-type" name="project_type" required>
+              <option value="">Select one</option>
+              <option>Launching my first Shopify store</option>
+              <option>Replacing an existing website</option>
+              <option>Redesigning an existing Shopify store</option>
+              <option>Launching a new product or brand</option>
+              <option>Agency or white-label project</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="products">Products needed at launch</label>
+            <select id="products" name="products" required>
+              <option value="">Select one</option>
+              <option>1–5 products</option>
+              <option>6–10 products</option>
+              <option>11–20 products</option>
+              <option>More than 20 products</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="assets">Are your assets ready?</label>
+            <select id="assets" name="assets" required>
+              <option value="">Select one</option>
+              <option>Yes, everything is ready</option>
+              <option>Mostly ready</option>
+              <option>Some content is missing</option>
+              <option>No, I need help creating it</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="launch-date">Target launch timing</label>
+            <select id="launch-date" name="launch_timing" required>
+              <option value="">Select one</option>
+              <option>As soon as possible</option>
+              <option>Within one week</option>
+              <option>Within one month</option>
+              <option>Still planning</option>
+            </select>
+          </div>
+
+          <div class="form-field form-field--full">
+            <label for="details">Tell us about your products and goals</label>
+            <textarea
+              id="details"
+              name="details"
+              placeholder="What are you selling, what needs to be built, and what is your target launch date?"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-field form-field--full">
+            <button class="button button--primary button--full" type="submit">
+              Submit Project Details
+            </button>
+          </div>
+        </div>
+
+        <p class="form-note">
+          Demo behavior only. Connect this form to your preferred form service before publishing.
+        </p>
+      </form>
+
+      <div class="form-success" id="form-success" role="status">
+        Thank you. Your project details have been captured in this demo.
+        Connect the form to your preferred service before publishing the page.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const body = document.body;
+      const menuToggle = document.querySelector(".menu-toggle");
+      const nav = document.querySelector(".site-nav");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      const modal = document.getElementById("qualification-modal");
+      const openModalButtons = document.querySelectorAll(".js-open-modal");
+      const closeModalButton = modal.querySelector(".modal-close");
+      const form = document.getElementById("qualification-form");
+      const success = document.getElementById("form-success");
+
+      let lastFocusedElement = null;
+
+      const setMenuState = (isOpen) => {
+        body.classList.toggle("menu-open", isOpen);
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+      };
+
+      menuToggle.addEventListener("click", () => {
+        const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+        setMenuState(!isOpen);
+      });
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", () => setMenuState(false));
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 900) {
+          setMenuState(false);
+        }
+      });
+
+      document.querySelectorAll(".faq-question").forEach((button) => {
+        button.addEventListener("click", () => {
+          const item = button.closest(".faq-item");
+          const isOpen = button.getAttribute("aria-expanded") === "true";
+
+          document.querySelectorAll(".faq-item").forEach((faqItem) => {
+            faqItem.classList.remove("is-open");
+            faqItem.querySelector(".faq-question").setAttribute("aria-expanded", "false");
+          });
+
+          if (!isOpen) {
+            item.classList.add("is-open");
+            button.setAttribute("aria-expanded", "true");
+          }
+        });
+      });
+
+      const openModal = () => {
+        lastFocusedElement = document.activeElement;
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+        body.classList.add("modal-open");
+
+        window.setTimeout(() => {
+          modal.querySelector("input")?.focus();
+        }, 50);
+      };
+
+      const closeModal = () => {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        body.classList.remove("modal-open");
+        lastFocusedElement?.focus();
+      };
+
+      openModalButtons.forEach((button) => {
+        button.addEventListener("click", openModal);
+      });
+
+      closeModalButton.addEventListener("click", closeModal);
+
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && modal.classList.contains("is-open")) {
+          closeModal();
+        }
+
+        if (event.key === "Escape" && body.classList.contains("menu-open")) {
+          setMenuState(false);
+        }
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        form.style.display = "none";
+        success.classList.add("is-visible");
+      });
+
+      document.getElementById("current-year").textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>
