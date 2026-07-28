@@ -629,6 +629,7 @@
         <li><a href="#services" class="nav-link hover:text-white transition">Services</a></li>
         <li><a href="#journey" class="nav-link hover:text-white transition">Experience</a></li>
         <li><a href="#projects" class="nav-link hover:text-white transition">Selected Work</a></li>
+        <li><a href="#case-studies" class="nav-link hover:text-white transition">Case Studies</a></li>
         <li><a href="#reviews" class="nav-link hover:text-white transition">Reviews</a></li>
         <li><a href="#contact" class="nav-link hover:text-white transition">Contact</a></li>
         <li><a href="https://drive.google.com/file/d/1oArjEMBSO7ao9t7XoZEjfMmA8hevNay-/view" target="_blank" rel="noopener noreferrer" class="nav-link hover:text-white transition">Download CV</a></li>
@@ -658,6 +659,7 @@
         <li><a href="#stack" class="block">Stack</a></li>
         <li><a href="#journey" class="block">Experience</a></li>
         <li><a href="#projects" class="block">Selected Work</a></li>
+        <li><a href="#case-studies" class="block">Case Studies</a></li>
         <li><a href="#reviews" class="block">Reviews</a></li>
         <li><a href="#faq" class="block">FAQ</a></li>
         <li><a href="#contact" class="block">Contact</a></li>
@@ -1400,21 +1402,44 @@
           </article>
 
           <!-- 04 — Padel & Co. Retreats -->
-          <article class="work-card" data-card>
-            <div class="work-thumb" aria-hidden="true">
+          <article class="work-card" data-card data-case="padelco">
+            <button type="button" class="work-thumb work-thumb-btn" data-open-case aria-label="Open Padel and Co Retreats case study">
               <img src="images/website/project/padle-and-co.jpg" alt="" width="1280" height="800" loading="lazy" decoding="async" />
-            </div>
+            </button>
             <div class="work-meta">
-              <div class="work-label">Booking Journey · Custom Shopify Development</div>
+              <div class="work-label">Built from Scratch · Booking Journey</div>
               <h3 class="work-title"><a href="https://padelcoretreats.com/" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">Padel &amp; Co. Retreats</a></h3>
               <p class="work-desc">Booking-focused Shopify experience supporting retreat discovery, schedules, pricing, destinations, and lead capture.</p>
               <div class="work-actions">
-                <a href="https://padelcoretreats.com/" target="_blank" rel="noopener noreferrer" class="work-case-btn">Visit site</a>
+                <button type="button" class="work-case-btn" data-open-case>Case Study</button>
                 <a href="https://padelcoretreats.com/" target="_blank" rel="noopener noreferrer" class="work-arrow" aria-label="Open Padel and Co Retreats live site">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg>
                 </a>
               </div>
             </div>
+            <template data-case-content>
+              <div class="case-study">
+                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Built from Scratch · Booking Journey</div>
+                <h3 class="font-sans text-3xl md:text-4xl font-bold text-white tracking-tight">Padel &amp; Co. Retreats</h3>
+                <a href="https://padelcoretreats.com/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm text-neutral-400 hover:text-brand transition">padelcoretreats.com <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+                <h4>Overview</h4>
+                <p class="text-neutral-300 leading-relaxed">A Shopify storefront built to sell curated, all-inclusive padel-tennis retreats — multi-day trips combining coaching, match play, and travel across destinations including Mexico City and Playa del Carmen.</p>
+                <h4>What I delivered</h4>
+                <ul>
+                  <li><span>Destination pages for each retreat location with schedules and open/limited availability status.</span></li>
+                  <li><span>Package and pricing presentation across standard and luxury accommodation tiers.</span></li>
+                  <li><span>Lead-capture signup flow for early-bird offers and new retreat announcements.</span></li>
+                  <li><span>A responsive booking journey built around discovery-to-inquiry, not a traditional product catalog.</span></li>
+                </ul>
+                <h4>Tech used</h4>
+                <div class="case-chips">
+                  <span class="chip">Liquid</span>
+                  <span class="chip">OS 2.0 Sections</span>
+                  <span class="chip">Custom Forms</span>
+                </div>
+                <a href="https://padelcoretreats.com/" target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand text-ink-950 font-semibold text-sm hover:bg-brand-light transition">Visit live site <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+              </div>
+            </template>
           </article>
 
           <!-- 05 — Lil Cactus -->
@@ -1472,21 +1497,36 @@
           </article>
 
           <!-- 08 — Malani Perfumes -->
-          <article class="work-card" data-card>
-            <div class="work-thumb" aria-hidden="true">
+          <article class="work-card" data-card data-case="malani">
+            <button type="button" class="work-thumb work-thumb-btn" data-open-case aria-label="Open Malani Perfumes case study">
               <img src="images/website/project/malani.jpg" alt="" width="1280" height="800" loading="lazy" decoding="async" />
-            </div>
+            </button>
             <div class="work-meta">
-              <div class="work-label">Custom Shopify Development</div>
+              <div class="work-label">Built from Scratch · Fragrance Retail</div>
               <h3 class="work-title"><a href="https://malaniperfumes.com/" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">Malani Perfumes</a></h3>
               <p class="work-desc">Shopify storefront project for a fragrance brand.</p>
               <div class="work-actions">
-                <a href="https://malaniperfumes.com/" target="_blank" rel="noopener noreferrer" class="work-case-btn">Visit site</a>
+                <button type="button" class="work-case-btn" data-open-case>Case Study</button>
                 <a href="https://malaniperfumes.com/" target="_blank" rel="noopener noreferrer" class="work-arrow" aria-label="Open Malani Perfumes live site">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg>
                 </a>
               </div>
             </div>
+            <template data-case-content>
+              <div class="case-study">
+                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Built from Scratch · Fragrance Retail</div>
+                <h3 class="font-sans text-3xl md:text-4xl font-bold text-white tracking-tight">Malani Perfumes</h3>
+                <a href="https://malaniperfumes.com/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm text-neutral-400 hover:text-brand transition">malaniperfumes.com <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+                <h4>Overview</h4>
+                <p class="text-neutral-300 leading-relaxed">A Shopify storefront for an authenticated designer fragrance retailer, built around a large multi-brand catalog spanning men's, women's, and unisex lines.</p>
+                <h4>Tech used</h4>
+                <div class="case-chips">
+                  <span class="chip">Liquid</span>
+                  <span class="chip">Custom Shopify Development</span>
+                </div>
+                <a href="https://malaniperfumes.com/" target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand text-ink-950 font-semibold text-sm hover:bg-brand-light transition">Visit live site <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+              </div>
+            </template>
           </article>
 
           <!-- 09 — DNA Packaging -->
@@ -1511,14 +1551,15 @@
       </div>
     </section>
 
-    <!-- MORE WORK / ARCHIVE -->
-    <section id="more-work" class="relative px-6 lg:px-10 py-20 md:py-32 border-t border-white/[0.06]">
+    <!-- CASE STUDIES -->
+    <section id="case-studies" class="relative px-6 lg:px-10 py-20 md:py-32 border-t border-white/[0.06]">
       <div class="max-w-7xl mx-auto">
         <div class="mb-12">
-          <span class="eyebrow reveal">More Work</span>
+          <span class="eyebrow reveal">Case Studies</span>
           <h2 class="mt-6 font-sans text-3xl md:text-5xl font-bold text-white tracking-tight max-w-3xl reveal">
-            A few more from the archive.
+            CRO builds, ground-up storefronts, and conversion-focused redesigns.
           </h2>
+          <p class="mt-4 text-neutral-400 max-w-2xl reveal">A closer look at the scope, decisions, and delivery behind select projects.</p>
         </div>
 
         <div class="archive-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-6 reveal-stagger">
@@ -1528,7 +1569,7 @@
               <img src="images/website/sb.jpg" alt="ScentButler storefront" width="1280" height="800" loading="lazy" decoding="async" />
             </button>
             <div class="work-meta">
-              <div class="work-label">Shopify · AI Commerce</div>
+              <div class="work-label">Conversion-Improvement · AI Commerce</div>
               <h3 class="work-title">ScentButler</h3>
               <p class="work-desc">AI-driven fragrance commerce — custom PDP, recommendation flows, and Klaviyo automations.</p>
               <div class="work-actions">
@@ -1540,7 +1581,7 @@
             </div>
             <template data-case-content>
               <div class="case-study">
-                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Shopify · AI Commerce</div>
+                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Conversion-Improvement · AI Commerce</div>
                 <h3 class="font-sans text-3xl md:text-4xl font-bold text-white tracking-tight">ScentButler</h3>
                 <a href="https://scentbutler.com/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm text-neutral-400 hover:text-brand transition">scentbutler.com <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
                 <h4>Overview</h4>
@@ -1572,7 +1613,7 @@
               <img src="images/website/nb.jpg" alt="The Normal Brand storefront" width="1280" height="800" loading="lazy" decoding="async" />
             </button>
             <div class="work-meta">
-              <div class="work-label">Shopify · Apparel</div>
+              <div class="work-label">CRO-Focused · Apparel</div>
               <h3 class="work-title">The Normal Brand</h3>
               <p class="work-desc">Rugged apparel for men &amp; women. Theme customization, collection UX, and CRO improvements.</p>
               <div class="work-actions">
@@ -1584,7 +1625,7 @@
             </div>
             <template data-case-content>
               <div class="case-study">
-                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Shopify · Apparel</div>
+                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">CRO-Focused · Apparel</div>
                 <h3 class="font-sans text-3xl md:text-4xl font-bold text-white tracking-tight">The Normal Brand</h3>
                 <a href="https://thenormalbrand.com/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm text-neutral-400 hover:text-brand transition">thenormalbrand.com <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
                 <h4>Overview</h4>
@@ -1614,7 +1655,7 @@
               <img src="images/website/a1.jpg" alt="A1 Foam and Fabrics storefront" width="1280" height="800" loading="lazy" decoding="async" />
             </button>
             <div class="work-meta">
-              <div class="work-label">Shopify · Industrial</div>
+              <div class="work-label">Built from Scratch · Industrial</div>
               <h3 class="work-title">A1 Foam &amp; Fabrics</h3>
               <p class="work-desc">Premier supplier of foam and upholstery products. Full storefront build with quote and sample flows.</p>
               <div class="work-actions">
@@ -1626,7 +1667,7 @@
             </div>
             <template data-case-content>
               <div class="case-study">
-                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Shopify · Industrial</div>
+                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Built from Scratch · Industrial</div>
                 <h3 class="font-sans text-3xl md:text-4xl font-bold text-white tracking-tight">A1 Foam &amp; Fabrics</h3>
                 <a href="https://a1foamandfabrics.com/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm text-neutral-400 hover:text-brand transition">a1foamandfabrics.com <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
                 <h4>Overview</h4>
@@ -1656,7 +1697,7 @@
               <img src="images/website/anyt.jpg" alt="Anytime Baseball Supply storefront" width="1280" height="800" loading="lazy" decoding="async" />
             </button>
             <div class="work-meta">
-              <div class="work-label">Shopify · Sports</div>
+              <div class="work-label">Conversion-Improvement · Sports</div>
               <h3 class="work-title">Anytime Baseball Supply</h3>
               <p class="work-desc">Baseball gear, kits &amp; nets. Catalog architecture, configurator, and speed pass.</p>
               <div class="work-actions">
@@ -1668,7 +1709,7 @@
             </div>
             <template data-case-content>
               <div class="case-study">
-                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Shopify · Sports</div>
+                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Conversion-Improvement · Sports</div>
                 <h3 class="font-sans text-3xl md:text-4xl font-bold text-white tracking-tight">Anytime Baseball Supply</h3>
                 <a href="https://www.anytimebaseballsupply.com/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm text-neutral-400 hover:text-brand transition">anytimebaseballsupply.com <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
                 <h4>Overview</h4>
@@ -1698,7 +1739,7 @@
               <img src="images/website/ff.jpg" alt="Floorfix PRO storefront" width="1280" height="800" loading="lazy" decoding="async" />
             </button>
             <div class="work-meta">
-              <div class="work-label">Shopify · Home Repair</div>
+              <div class="work-label">Built from Scratch · Home Repair</div>
               <h3 class="work-title">Floorfix PRO</h3>
               <p class="work-desc">Squeaky-floor repair kits. Storefront built from scratch with bundle pricing and an education hub.</p>
               <div class="work-actions">
@@ -1710,7 +1751,7 @@
             </div>
             <template data-case-content>
               <div class="case-study">
-                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Shopify · Home Repair</div>
+                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Built from Scratch · Home Repair</div>
                 <h3 class="font-sans text-3xl md:text-4xl font-bold text-white tracking-tight">Floorfix PRO</h3>
                 <a href="https://floorfixpro.com/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm text-neutral-400 hover:text-brand transition">floorfixpro.com <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
                 <h4>Overview</h4>
@@ -1740,7 +1781,7 @@
               <img src="images/website/keeva.jpg" alt="Keeva Organics storefront" width="1280" height="800" loading="lazy" decoding="async" />
             </button>
             <div class="work-meta">
-              <div class="work-label">Shopify · Beauty</div>
+              <div class="work-label">Conversion-Improvement · Beauty</div>
               <h3 class="work-title">Keeva Organics</h3>
               <p class="work-desc">All-natural acne &amp; beauty. Theme refresh, PDP redesign, and subscription setup.</p>
               <div class="work-actions">
@@ -1752,7 +1793,7 @@
             </div>
             <template data-case-content>
               <div class="case-study">
-                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Shopify · Beauty</div>
+                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Conversion-Improvement · Beauty</div>
                 <h3 class="font-sans text-3xl md:text-4xl font-bold text-white tracking-tight">Keeva Organics</h3>
                 <a href="https://keevaorganics.com/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm text-neutral-400 hover:text-brand transition">keevaorganics.com <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
                 <h4>Overview</h4>
