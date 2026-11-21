@@ -848,6 +848,26 @@
 
     /* Earlier experience one-line descriptions */
     .earlier-desc { margin-top: .35rem; color: #737373; line-height: 1.6; }
+
+    /* Earlier experience accordion (closed by default) */
+    .earlier-summary {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      cursor: pointer; list-style: none;
+    }
+    .earlier-summary::-webkit-details-marker { display: none; }
+    .earlier-toggle {
+      display: inline-flex; align-items: center; gap: .5rem; flex-shrink: 0;
+      padding: .45rem 1rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 999px;
+      background: rgba(255,255,255,0.02);
+      font-size: .75rem; font-weight: 500; color: #d4d4d4; transition: all .3s ease;
+    }
+    .earlier-summary:hover .earlier-toggle,
+    .earlier-acc[open] .earlier-toggle { border-color: rgba(150,191,71,0.4); color: #96bf47; background: rgba(150,191,71,0.05); }
+    .earlier-toggle .label-less { display: none; }
+    .earlier-acc[open] .earlier-toggle .label-more { display: none; }
+    .earlier-acc[open] .earlier-toggle .label-less { display: inline; }
+    .earlier-acc[open] .earlier-toggle .exp-chev { transform: rotate(180deg); }
+    .earlier-acc[open] .earlier-list { margin-top: 1.5rem; animation: expFade .4s ease both; }
   </style>
 </head>
 <body class="font-sans antialiased grain">
@@ -1585,9 +1605,16 @@
           </article>
 
           <!-- Earlier web development experience -->
-          <div class="reveal rounded-2xl border border-white/10 bg-ink-900/40 p-6 md:p-8">
-            <h3 class="text-sm uppercase tracking-[0.2em] text-neutral-500 mb-5">Earlier web development experience</h3>
-            <ul class="space-y-4 text-sm">
+          <details class="reveal earlier-acc rounded-2xl border border-white/10 bg-ink-900/40 p-6 md:p-8">
+            <summary class="earlier-summary">
+              <h3 class="text-sm uppercase tracking-[0.2em] text-neutral-500">Earlier web development experience</h3>
+              <span class="earlier-toggle">
+                <span class="label-more">Show more</span>
+                <span class="label-less">Show less</span>
+                <svg class="exp-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </span>
+            </summary>
+            <ul class="earlier-list space-y-4 text-sm">
               <li class="border-b border-white/5 pb-4">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
                   <span class="text-white font-medium">Senior Web Developer <span class="text-neutral-500 font-normal">· TMDC IT Solutions</span></span>
@@ -1624,7 +1651,7 @@
                 <p class="earlier-desc">Supported website and web application development, testing, debugging, and implementation.</p>
               </li>
             </ul>
-          </div>
+          </details>
         </div>
       </div>
     </section>
