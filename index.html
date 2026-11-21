@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#08090a" />
   <meta name="color-scheme" content="dark" />
- <title>Mark Jason Nastor | Senior Shopify Developer &amp; Shopify Select Partner</title>
-  <meta name="description" content="Senior Shopify Developer, Shopify Select Partner, and Shopify app founder with 10+ years of experience across 300+ Shopify stores. Specializing in Shopify Plus, Liquid, CRO, performance, migrations, and custom storefront development.">
+  <title>Mark Jason Nastor | Senior Shopify Developer, Shopify Select Partner &amp; CRO Specialist</title>
+  <meta name="description" content="Senior Shopify Developer, Shopify Select Partner, and AI application developer with 10+ years of web development experience and 300+ Shopify stores supported worldwide. Specializing in Shopify Plus, CRO, site speed optimization, custom theme and app development, and LLM integrations.">
   <link rel="canonical" href="https://shopifydev-mj.github.io/shopify/" />
-  <meta property="og:title" content="Mark Jason Nastor — Senior Shopify Developer" />
-  <meta property="og:description" content="Shopify Select Partner and Shopify app founder specializing in Shopify Plus, Liquid, CRO, performance, and scalable storefront development." />
+  <meta property="og:title" content="Mark Jason Nastor — Senior Shopify Developer &amp; Shopify Select Partner" />
+  <meta property="og:description" content="Shopify Select Partner, CRO specialist, and creator of ShoptimizePro. 10+ years of web development and 300+ Shopify stores supported worldwide." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://shopifydev-mj.github.io/shopify/" />
   <meta property="og:image" content="images/jason-portrait.jpg" />
@@ -40,6 +40,9 @@
   "sameAs": [
     "https://www.linkedin.com/in/markjasonnastor-shopify",
     "https://www.shopify.com/partners/directory/partner/mark54",
+    "https://seowill.com/pages/partner/mark-nastor",
+    "https://glood.ai/shopify-experts/mark-ecommerce-growth-strategist-web-designer-developer",
+    "https://www.shopdigest.com/mark54",
     "https://shoptimizepro.io",
     "https://apps.shopify.com/shoptimize-pro"
   ],
@@ -48,9 +51,14 @@
     "Shopify Plus",
     "Shopify Liquid",
     "Online Store 2.0",
+    "Checkout Extensibility",
+    "Shopify Functions",
     "Conversion Rate Optimization",
+    "Site Speed Optimization",
     "Core Web Vitals",
-    "Shopify App Development"
+    "Shopify App Development",
+    "LLM Integration",
+    "AI-Assisted Software Engineering"
   ]
 }
 </script>
@@ -112,7 +120,7 @@
     .reveal-stagger.in > *:nth-child(12) { transition-delay: .88s; }
 
     /* Hero name letter reveal */
-    .hero-name { font-size: clamp(5rem, 22vw, 20rem); }
+    .hero-name { font-size: clamp(5rem, min(20vw, 30vh), 18rem); }
     .hero-line { display: block; overflow: hidden; }
     .hero-line span { display: inline-block; transform: translateY(110%); transition: transform 1.2s cubic-bezier(.22,1,.36,1); }
     .hero-line.in span { transform: translateY(0); }
@@ -122,9 +130,10 @@
     .hero-hey-wrap { position: relative; display: inline-block; }
     .hero-hey {
       position: absolute;
-      top: -2vw;
-      left: -3.5vw;
-      font-size: clamp(2rem, 7vw, 6rem);
+      /* em-based so "Hey!" scales with the JSON wordmark (which now also scales with viewport height) */
+      top: -.36em;
+      left: -.62em;
+      font-size: .32em;
       z-index: 1;
       opacity: 0;
       animation: heyAppear .9s cubic-bezier(.68,-0.55,.27,1.55) 1.4s forwards;
@@ -172,59 +181,140 @@
       transform: translateY(-2px);
     }
 
-    /* Hero trust badges */
-    .trust-badge {
-      display: inline-flex; align-items: center; gap: .85rem;
-      padding: .25rem .5rem;
+    /* Hero headline: two fixed lines on desktop, balanced wrap on smaller screens */
+    .hero-title { font-size: clamp(1.875rem, 4vw, 3.75rem); line-height: 1.08; max-width: 72rem; text-wrap: balance; }
+    @media (min-width: 1024px) { .hero-title-line { display: block; white-space: nowrap; } }
+    /* About heading: same two-line treatment */
+    .about-title { font-size: clamp(1.875rem, 4.2vw, 3.75rem); line-height: 1.05; text-wrap: balance; }
+
+    /* Hero key numbers */
+    .hero-stats {
+      margin: 3.5rem auto 0; max-width: 760px;
+      display: grid; grid-template-columns: repeat(3, 1fr);
     }
-    .trust-mark {
-      flex-shrink: 0;
-      width: 52px; height: 52px;
-      display: grid; place-items: center;
+    .hero-stat { position: relative; padding: .25rem 1rem; text-align: center; display: block; }
+    .hero-stat + .hero-stat::before {
+      content: ''; position: absolute; left: 0; top: 10%; bottom: 10%; width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.14), transparent);
+    }
+    .hero-stat-num {
+      display: inline-flex; align-items: center;
+      font-size: clamp(1.75rem, 3.2vw, 2.5rem); font-weight: 700; line-height: 1;
+      color: #fff; letter-spacing: -0.03em;
+    }
+    .hero-stat-num .plus { color: #96bf47; }
+    .hero-stat-num svg { width: .55em; height: .55em; margin-left: .3em; color: #96bf47; }
+    .hero-stat-label {
+      margin-top: .65rem; font-size: .7rem; line-height: 1.4;
+      letter-spacing: .16em; text-transform: uppercase; color: #737373;
+      transition: color .3s ease;
+    }
+    a.hero-stat:hover .hero-stat-label { color: #96bf47; }
+
+    /* Hero section spacing (tightened so the trust bar fits on the first screen) */
+    .hero-section { padding-top: 6.5rem; padding-bottom: 3rem; }
+
+    /* Hero "Recognized by" trust bar */
+    .hero-featured { margin-top: 2.75rem; display: flex; justify-content: center; }
+    .trust-bar {
+      position: relative; overflow: hidden;
+      display: inline-flex; align-items: center; justify-content: center; flex-wrap: wrap;
+      padding: .8rem 1.1rem;
       border-radius: 999px;
-      position: relative;
+      border: 1px solid rgba(150,191,71,0.28);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 20px 60px -24px rgba(150,191,71,0.45);
+      opacity: 0; transform: translateY(14px);
+      animation: trustIn .9s cubic-bezier(.22,1,.36,1) 1.1s forwards;
     }
-    .trust-mark-ring {
-      width: 52px; height: 52px;
-      border-radius: 999px;
-      border: 1.5px solid rgba(212, 175, 55, 0.5);
-      background: radial-gradient(circle at 30% 30%, rgba(212,175,55,0.18), rgba(212,175,55,0.02));
+    /* One-time light sweep after the logos land */
+    .trust-bar::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(105deg, transparent 35%, rgba(184,219,111,0.16) 50%, transparent 65%);
+      transform: translateX(-100%);
+      animation: trustSweep 1.4s ease-in-out 2.3s forwards;
     }
-    .trust-mark-square {
-      width: 52px; height: 52px;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.1);
-      flex-shrink: 0;
+    .trust-label {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: 0 1.3rem 0 .45rem;
+      font-size: .68rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+      color: #b8db6f; white-space: nowrap;
     }
-    .trust-mark-square img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
+    .trust-label svg { color: #96bf47; flex-shrink: 0; }
+    .trust-logos { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; }
+    .hero-logo {
+      position: relative; display: inline-flex; align-items: center; gap: .55rem;
+      padding: .35rem 1.4rem;
+      opacity: 0; transform: translateY(8px);
+      animation: logoIn .7s cubic-bezier(.22,1,.36,1) forwards;
     }
-    .trust-mark-flag {
-      width: 56px; height: 52px;
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
+    .trust-logos .hero-logo:nth-child(1) { animation-delay: 1.45s; }
+    .trust-logos .hero-logo:nth-child(2) { animation-delay: 1.57s; }
+    .trust-logos .hero-logo:nth-child(3) { animation-delay: 1.69s; }
+    .trust-logos .hero-logo:nth-child(4) { animation-delay: 1.81s; }
+    .hero-logo::before {
+      content: ''; position: absolute; left: 0; top: 18%; bottom: 18%; width: 1px;
+      background: rgba(255,255,255,0.12);
     }
-    .trust-mark-flag img {
-      width: 56px; height: 32px;
-      border-radius: 3px;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.12);
-      object-fit: cover;
-      display: block;
+    .hero-logo img, .hero-logo-text { opacity: .9; transition: opacity .3s ease, transform .3s ease; }
+    .hero-logo:hover img, .hero-logo:hover .hero-logo-text,
+    .hero-logo:focus-visible img, .hero-logo:focus-visible .hero-logo-text { opacity: 1; transform: translateY(-1px); }
+    .hero-logo { flex-shrink: 0; }
+    .hero-logo img { display: block; height: 22px; width: auto; max-width: none; }
+    .hero-logo .logo-tall { height: 26px; }
+    .hero-logo .logo-sd { height: 28px; }
+    .hero-logo-text { color: #fff; font-weight: 600; font-size: .95rem; letter-spacing: -0.01em; white-space: nowrap; }
+    @keyframes trustIn { to { opacity: 1; transform: none; } }
+    @keyframes logoIn { to { opacity: 1; transform: none; } }
+    @keyframes trustSweep { to { transform: translateX(100%); } }
+    @media (prefers-reduced-motion: reduce) {
+      .trust-bar, .hero-logo { opacity: 1; transform: none; animation: none; }
+      .trust-bar::after { display: none; }
     }
-    .trust-divider {
-      height: 36px; width: 1px;
-      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.15), transparent);
+    /* Marquee wrappers: inert on desktop, scrolling one-liner on tablet/mobile */
+    .trust-viewport, .trust-track { display: flex; align-items: center; }
+    .trust-dup, .trust-label-mobile { display: none; }
+    @keyframes trustMarquee { to { transform: translateX(-50%); } }
+
+    /* Tablet / mobile: label above, one-line pill with auto-scrolling logos */
+    @media (max-width: 899px) {
+      .hero-featured { flex-direction: column; align-items: center; gap: .85rem; }
+      .trust-label-mobile { display: inline-flex; padding: 0; opacity: 0; animation: trustIn .9s cubic-bezier(.22,1,.36,1) 1.1s forwards; }
+      .trust-bar .trust-label { display: none; }
+      .trust-bar { display: block; width: 100%; max-width: 34rem; padding: .7rem 0; }
+      .trust-viewport {
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+        mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+      }
+      .trust-track { width: max-content; animation: trustMarquee 20s linear infinite; }
+      .trust-viewport:hover .trust-track, .trust-viewport:active .trust-track { animation-play-state: paused; }
+      .trust-dup { display: flex; }
+      .trust-logos { flex-wrap: nowrap; }
+      .hero-logo { padding: .3rem 1.25rem; }
     }
-    .trust-years-num {
-      position: absolute;
-      color: #d4af37;
-      font-weight: 700;
-      font-size: 1.1rem;
-      line-height: 1;
+    @media (max-width: 899px) and (prefers-reduced-motion: reduce) {
+      .trust-label-mobile { opacity: 1; animation: none; }
+      .trust-track { animation: none; }
+      .trust-viewport { overflow-x: auto; }
     }
-    .trust-years-num .plus { opacity: 0.7; }
+
+    @media (min-width: 640px) { .br-mobile { display: none; } }
+
+    /* Make transparent SVG logos render as solid white (used on dark surfaces) */
+    .logo-white { filter: brightness(0) invert(1); }
+
+    @media (max-width: 640px) {
+      .hero-stats { margin-top: 2.75rem; }
+      .hero-stat { padding: .25rem .5rem; }
+      .hero-stat-label { letter-spacing: .08em; font-size: .62rem; }
+      .hero-logo { padding: .3rem 1.1rem; }
+      .hero-logo-text { font-size: .85rem; }
+      .hero-logo img { height: 18px; }
+      .hero-logo .logo-tall { height: 22px; }
+      .hero-logo .logo-sd { height: 24px; }
+    }
 
     /* Nav link underline */
     .nav-link { position: relative; }
@@ -611,6 +701,117 @@
 
     /* Decorative serif accent */
     .accent-serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: #b8db6f; }
+
+    /* About proof badges (under the portrait) */
+    .about-badges {
+      margin-top: 1.75rem;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 1rem;
+      background: rgba(255,255,255,0.015);
+    }
+    .about-badge { position: relative; padding: 1.25rem 1rem 1.2rem; display: block; transition: background .3s ease; }
+    .about-badge + .about-badge::before {
+      content: ''; position: absolute; left: 0; top: 18%; bottom: 18%; width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.14), transparent);
+    }
+    a.about-badge:hover { background: rgba(150,191,71,0.04); }
+    a.about-badge:hover .about-badge-kicker { color: #96bf47; }
+    .about-badge-tile, .about-badge-ring { width: 48px; height: 48px; margin-bottom: .9rem; }
+    .about-badge-tile { border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+    .about-badge-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .about-badge-ring {
+      display: grid; place-items: center; border-radius: 999px;
+      border: 1.5px solid rgba(212,175,55,0.5);
+      background: radial-gradient(circle at 30% 30%, rgba(212,175,55,0.18), rgba(212,175,55,0.02));
+      color: #d4af37; font-weight: 700; font-size: 1.05rem; line-height: 1;
+    }
+    .about-badge-ring .plus { opacity: .7; }
+    .about-badge-kicker { font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: #737373; line-height: 1.3; transition: color .3s ease; }
+    .about-badge-text { margin-top: .3rem; font-size: .8rem; font-weight: 600; color: #fff; line-height: 1.3; letter-spacing: -0.01em; }
+    @media (max-width: 400px) { .about-badge { padding: 1rem .7rem; } .about-badge-text { font-size: .74rem; } }
+
+    /* About featured testimonial */
+    .about-quote {
+      position: relative; margin-top: 2.5rem; padding: 2rem 2rem 1.6rem;
+      border-radius: 1.25rem; border: 1px solid rgba(150,191,71,0.2);
+      background: linear-gradient(160deg, rgba(150,191,71,0.07) 0%, rgba(150,191,71,0.015) 55%, transparent 100%);
+      overflow: hidden;
+    }
+    .about-quote-mark { color: rgba(150,191,71,0.35); margin-bottom: .9rem; }
+    .about-quote-text {
+      font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
+      font-size: clamp(1.35rem, 2vw, 1.75rem); line-height: 1.35; color: #f5f5f5;
+    }
+    .about-quote-footer {
+      margin-top: 1.6rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .about-quote-rating {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-size: .78rem; color: #a3a3a3; transition: color .3s ease;
+    }
+    .about-quote-rating svg:first-child { color: #96bf47; }
+    .about-quote-rating:hover { color: #96bf47; }
+    @media (max-width: 640px) { .about-quote { padding: 1.5rem 1.25rem 1.25rem; } }
+
+    /* Recognition / partner cards (About) — equal-size cards, white logos */
+    .recog-grid { display: grid; gap: .75rem; grid-template-columns: repeat(2, 1fr); }
+    .recog-card {
+      position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: .9rem;
+      min-height: 96px; padding: 1.1rem 1.15rem;
+      border-radius: .9rem; border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.015);
+      transition: border-color .3s ease, background .3s ease;
+    }
+    .recog-card:hover { border-color: rgba(150,191,71,0.35); background: rgba(150,191,71,0.03); }
+    .recog-card:last-child:nth-child(odd) { grid-column: 1 / -1; }  /* odd count: last card spans full row */
+    .recog-card-logo { display: flex; align-items: center; gap: .5rem; height: 26px; padding-right: 1.4rem; opacity: .85; transition: opacity .3s ease; }
+    .recog-card:hover .recog-card-logo { opacity: 1; }
+    .recog-card-logo img { display: block; height: 20px; width: auto; }
+    .recog-card-logo .logo-tall { height: 24px; }
+    .recog-card-logo .logo-sd { height: 22px; }
+    .recog-card-logo .hero-logo-text { font-size: .9rem; }
+    .recog-card-role { color: #737373; font-size: .75rem; line-height: 1.35; }
+    .recog-card .ext-arrow { position: absolute; top: 1.1rem; right: 1.1rem; color: #525252; transition: transform .3s ease, color .3s ease; }
+    .recog-card:hover .ext-arrow { color: #96bf47; transform: translate(2px, -2px); }
+
+    /* Expertise groups (Tech stack) */
+    .expertise-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; text-align: left; }
+    @media (min-width: 640px) { .expertise-grid { grid-template-columns: repeat(2, 1fr); } .expertise-card-wide { grid-column: span 2; } }
+    @media (min-width: 1024px) { .expertise-grid { grid-template-columns: repeat(3, 1fr); } .expertise-card-wide { grid-column: span 3; } }
+    .expertise-card {
+      padding: 1.6rem 1.5rem; border-radius: 1rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.015);
+      transition: border-color .3s ease, background .3s ease;
+    }
+    .expertise-card:hover { border-color: rgba(150,191,71,0.3); background: rgba(255,255,255,0.025); }
+    .expertise-card h3 {
+      display: flex; align-items: center; gap: .65rem;
+      font-size: .7rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase;
+      color: #96bf47; margin-bottom: .9rem;
+    }
+    .expertise-card h3::before { content: ''; width: 18px; height: 1px; background: #96bf47; display: block; flex-shrink: 0; }
+    .expertise-card p { color: #a3a3a3; font-size: .9rem; line-height: 1.7; }
+
+    /* More Shopify work (compact list under Case Studies) */
+    .more-work { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+    @media (min-width: 640px) { .more-work { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .more-work { grid-template-columns: repeat(3, 1fr); } }
+    .more-work-item {
+      display: block; padding: 1.35rem 1.5rem; border-radius: 1rem;
+      border: 1px solid rgba(255,255,255,0.06); background: #0a0b0c;
+      transition: border-color .3s ease, transform .3s ease;
+    }
+    .more-work-item:hover { border-color: rgba(150,191,71,0.35); transform: translateY(-2px); }
+    .more-work-name { display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: #fff; font-weight: 600; }
+    .more-work-name svg { color: #737373; flex-shrink: 0; transition: transform .3s ease, color .3s ease; }
+    .more-work-item:hover .more-work-name svg { color: #96bf47; transform: translate(2px, -2px); }
+    .more-work-desc { margin-top: .5rem; color: #a3a3a3; font-size: .875rem; line-height: 1.6; }
+    .more-work-url { display: block; margin-top: .75rem; color: #96bf47; font-size: .72rem; letter-spacing: .03em; }
+
+    /* Earlier experience one-line descriptions */
+    .earlier-desc { margin-top: .35rem; color: #737373; line-height: 1.6; }
   </style>
 </head>
 <body class="font-sans antialiased grain">
@@ -632,7 +833,7 @@
         <li><a href="#case-studies" class="nav-link hover:text-white transition">Case Studies</a></li>
         <li><a href="#reviews" class="nav-link hover:text-white transition">Reviews</a></li>
         <li><a href="#contact" class="nav-link hover:text-white transition">Contact</a></li>
-        <li><a href="https://drive.google.com/file/d/1oArjEMBSO7ao9t7XoZEjfMmA8hevNay-/view" target="_blank" rel="noopener noreferrer" class="nav-link hover:text-white transition">Download CV</a></li>
+        <li><a href="cv/mark-jason-nastor-cv-2026.pdf" target="_blank" rel="noopener noreferrer" class="nav-link hover:text-white transition">Download CV</a></li>
       </ul>
 
       <div class="flex items-center gap-3">
@@ -663,7 +864,7 @@
         <li><a href="#reviews" class="block">Reviews</a></li>
         <li><a href="#faq" class="block">FAQ</a></li>
         <li><a href="#contact" class="block">Contact</a></li>
-        <li><a href="https://drive.google.com/file/d/1oArjEMBSO7ao9t7XoZEjfMmA8hevNay-/view" target="_blank" rel="noopener noreferrer" class="block">Download CV · Updated July 2026</a></li>
+        <li><a href="cv/mark-jason-nastor-cv-2026.pdf" target="_blank" rel="noopener noreferrer" class="block">Download CV · Updated November 2026</a></li>
         <li class="pt-2 mt-2 border-t border-white/5"><a href="#contact" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand text-ink-950 font-semibold">Discuss Your Project →</a></li>
       </ul>
     </div>
@@ -672,20 +873,11 @@
   <main id="top">
 
     <!-- HERO -->
-    <section class="relative min-h-screen flex flex-col justify-center px-6 lg:px-10 pt-28 md:pt-32 pb-20 overflow-hidden">
+    <section class="hero-section relative min-h-screen flex flex-col justify-center px-6 lg:px-10 overflow-hidden">
       <div class="absolute inset-0 bg-grid bg-grid-fade"></div>
       <div id="spotlight" class="spotlight"></div>
 
       <div class="relative max-w-7xl mx-auto w-full">
-        <div class="flex justify-center mb-8 reveal">
-          <span class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/10 bg-white/[0.02] backdrop-blur-sm text-[11px] uppercase tracking-[0.25em] text-neutral-400">
-            <span class="relative flex h-1.5 w-1.5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-brand"></span>
-            </span>
-            Shopify Select Partner · Shopify App Founder
-          </span>
-        </div>
 
         <p class="hero-name font-sans font-bold leading-[0.82] tracking-tightest text-center" aria-hidden="true">
           <span class="hero-hey-wrap">
@@ -696,91 +888,14 @@
           </span>
         </p>
 
-        <h1 class="mt-8 font-sans text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.08] max-w-4xl mx-auto tracking-tight text-center reveal">
-          Senior Shopify Developer for Faster, <span class="accent-serif">Higher-Converting</span> Shopify Stores
+        <h1 class="hero-title mt-6 font-sans font-bold text-white mx-auto tracking-tight text-center reveal">
+          <span class="hero-title-line">Senior Shopify Developer for Faster,</span>
+          <span class="hero-title-line"><span class="accent-serif">Higher-Converting</span> Shopify Stores</span>
         </h1>
 
-        <div class="mt-8 flex items-center justify-center gap-3 reveal">
-          <a href="https://www.linkedin.com/in/markjasonnastor-shopify" target="_blank" rel="noopener noreferrer" aria-label="Connect with Mark Jason Nastor on LinkedIn" class="social-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-          </a>
-          <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" aria-label="View Shopify Partner profile" class="social-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          </a>
-        </div>
-
-        <p class="mt-8 text-center text-base md:text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed reveal">
-          I help global brands, agencies, and e-commerce teams build scalable Shopify and Shopify Plus storefronts through custom development, conversion-focused UX, performance optimization, and reliable technical delivery.
+        <p class="mt-6 text-center text-base md:text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed reveal">
+          I build and optimize Shopify and Shopify Plus stores that load fast, convert more visitors, and stay easy for your team to manage.
         </p>
-
-        <p class="mt-4 text-center text-sm text-neutral-500 reveal">
-          10+ years of web development · 300+ Shopify stores supported · 5.0 rating across 33 Shopify Partner reviews
-        </p>
-
-        <!-- Proof bar -->
-        <div class="mt-10 flex flex-wrap items-center justify-center gap-6 md:gap-8 reveal">
-
-          <!-- 10+ Years -->
-          <div class="trust-badge">
-            <div class="trust-mark trust-mark-ring" aria-hidden="true">
-              <span class="trust-years-num">10<span class="plus">+</span></span>
-            </div>
-            <div class="text-left">
-              <div class="text-[10px] uppercase tracking-[0.22em] text-neutral-500 leading-tight">10+ Years</div>
-              <div class="text-xs font-semibold text-white tracking-tight leading-tight mt-0.5">Web development experience</div>
-            </div>
-          </div>
-
-          <div class="trust-divider hidden sm:block"></div>
-
-          <!-- 300+ Stores -->
-          <div class="trust-badge">
-            <div class="trust-mark-square" aria-hidden="true">
-              <img src="images/shopifypartners_icon.jpg" alt="" width="52" height="52" loading="lazy" decoding="async" />
-            </div>
-            <div class="text-left">
-              <div class="text-[10px] uppercase tracking-[0.22em] text-neutral-500 leading-tight">300+ Stores</div>
-              <div class="text-xs font-semibold text-white tracking-tight leading-tight mt-0.5">Shopify projects supported</div>
-            </div>
-          </div>
-
-          <div class="trust-divider hidden sm:block"></div>
-
-          <!-- 5.0 Rating -->
-          <div class="trust-badge">
-            <div class="trust-mark-flag grid place-items-center" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="#96BF47" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-            </div>
-            <div class="text-left">
-              <div class="text-[10px] uppercase tracking-[0.22em] text-brand leading-tight">5.0 Rating</div>
-              <div class="text-xs font-semibold text-white tracking-tight leading-tight mt-0.5">Across 33 Partner reviews</div>
-            </div>
-          </div>
-
-          <div class="trust-divider hidden sm:block"></div>
-
-          <!-- Select Partner -->
-          <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="trust-badge hover:opacity-80 transition">
-            <div class="trust-mark-square" aria-hidden="true">
-              <img src="images/shopifypartners_icon.jpg" alt="" width="52" height="52" loading="lazy" decoding="async" />
-            </div>
-            <div class="text-left">
-              <div class="text-[10px] uppercase tracking-[0.22em] text-neutral-500 leading-tight">Select Partner</div>
-              <div class="text-xs font-semibold text-white tracking-tight leading-tight mt-0.5">Shopify Partner since 2021</div>
-            </div>
-          </a>
-
-        </div>
-
-        <div class="mt-10 flex justify-center reveal">
-          <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 text-[11px] text-neutral-400">
-            <span class="relative flex h-1.5 w-1.5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-brand"></span>
-            </span>
-            Available for select Shopify projects
-          </span>
-        </div>
 
         <div class="mt-8 flex flex-wrap items-center justify-center gap-3 reveal">
           <a href="#projects" class="magnetic inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-ink-950 font-semibold text-sm hover:bg-brand transition">
@@ -791,11 +906,48 @@
             Discuss Your Project
           </a>
         </div>
-      </div>
 
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-neutral-600 text-[10px] uppercase tracking-[0.3em]">
-        <span>Scroll</span>
-        <span class="block w-px h-10 bg-gradient-to-b from-neutral-500 to-transparent"></span>
+        <!-- Recognized by (trust bar) -->
+        <div class="hero-featured">
+          <span class="trust-label trust-label-mobile"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Recognized by</span>
+          <div class="trust-bar">
+            <span class="trust-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Recognized by</span>
+            <div class="trust-viewport">
+              <div class="trust-track">
+                <div class="trust-logos">
+                  <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="hero-logo" aria-label="Shopify Select Partner profile">
+                    <img src="images/logos/shopify-bag-white.png" alt="" width="26" height="26" class="logo-tall" decoding="async" />
+                    <span class="hero-logo-text">Shopify Select Partner</span>
+                  </a>
+                  <a href="https://seowill.com/pages/partner/mark-nastor" target="_blank" rel="noopener noreferrer" class="hero-logo" aria-label="SEOWILL official agency partner profile">
+                    <img src="images/logos/seowill.svg" alt="SEOWILL" width="117" height="22" class="logo-white" decoding="async" />
+                  </a>
+                  <a href="https://glood.ai/shopify-experts/mark-ecommerce-growth-strategist-web-designer-developer" target="_blank" rel="noopener noreferrer" class="hero-logo" aria-label="Glood.AI Shopify Experts Directory profile">
+                    <img src="images/logos/glood-ai.svg" alt="Glood.AI" width="76" height="26" class="logo-white logo-tall" decoding="async" />
+                  </a>
+                  <a href="https://www.shopdigest.com/mark54" target="_blank" rel="noopener noreferrer" class="hero-logo" aria-label="ShopDigest featured expert profile">
+                    <img src="images/logos/shopdigest-white.png" alt="ShopDigest" width="149" height="28" class="logo-sd" decoding="async" />
+                  </a>
+                </div>
+                <div class="trust-logos trust-dup" aria-hidden="true">
+                  <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="hero-logo" tabindex="-1">
+                    <img src="images/logos/shopify-bag-white.png" alt="" width="26" height="26" class="logo-tall" decoding="async" />
+                    <span class="hero-logo-text">Shopify Select Partner</span>
+                  </a>
+                  <a href="https://seowill.com/pages/partner/mark-nastor" target="_blank" rel="noopener noreferrer" class="hero-logo" tabindex="-1">
+                    <img src="images/logos/seowill.svg" alt="" width="117" height="22" class="logo-white" decoding="async" />
+                  </a>
+                  <a href="https://glood.ai/shopify-experts/mark-ecommerce-growth-strategist-web-designer-developer" target="_blank" rel="noopener noreferrer" class="hero-logo" tabindex="-1">
+                    <img src="images/logos/glood-ai.svg" alt="" width="76" height="26" class="logo-white logo-tall" decoding="async" />
+                  </a>
+                  <a href="https://www.shopdigest.com/mark54" target="_blank" rel="noopener noreferrer" class="hero-logo" tabindex="-1">
+                    <img src="images/logos/shopdigest-white.png" alt="" width="149" height="28" class="logo-sd" decoding="async" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -804,8 +956,9 @@
       <div class="max-w-7xl mx-auto">
         <div class="mb-16">
           <span class="eyebrow reveal">Who I am</span>
-          <h2 class="mt-6 font-sans text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.05] max-w-4xl tracking-tight reveal">
-            Shopify Development Built Around <span class="accent-serif">Performance, Usability, and Growth</span>
+          <h2 class="about-title mt-6 font-sans font-bold text-white tracking-tight reveal">
+            <span class="hero-title-line">Shopify Development Built Around</span>
+            <span class="hero-title-line accent-serif">Performance, Usability, and Growth</span>
           </h2>
         </div>
 
@@ -840,7 +993,7 @@
                 </div>
 
                 <!-- Download CV -->
-                <a href="https://drive.google.com/file/d/1oArjEMBSO7ao9t7XoZEjfMmA8hevNay-/view" target="_blank" rel="noopener noreferrer" class="info-card info-card-overlay group">
+                <a href="cv/mark-jason-nastor-cv-2026.pdf" target="_blank" rel="noopener noreferrer" class="info-card info-card-overlay group">
                   <div class="flex items-center justify-between mb-2.5">
                     <div class="info-card-icon">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -853,41 +1006,69 @@
                   </div>
                   <div class="text-white font-semibold text-xs mb-1">Download CV</div>
                   <div class="text-[10px] text-neutral-500 leading-tight">Format: PDF</div>
-                  <div class="text-[10px] text-neutral-500 leading-tight">Updated July 2026</div>
+                  <div class="text-[10px] text-neutral-500 leading-tight">Updated November 2026</div>
                 </a>
 
               </div>
             </div>
-          </div>
 
-          <!-- Description + stats -->
-          <div class="lg:col-span-7 reveal">
-            <h3 class="text-sm uppercase tracking-[0.2em] text-neutral-500 mb-4">Senior Shopify Developer · Shopify Select Partner · Shopify App Founder</h3>
-            <p class="text-neutral-400 leading-relaxed mb-6">
-              I&rsquo;m Mark Jason Nastor, a Senior Shopify Developer, Shopify Select Partner, and Shopify app founder with 10+ years of web development experience.
-            </p>
-            <p class="text-neutral-400 leading-relaxed mb-6">
-              I&rsquo;ve delivered Shopify and Shopify Plus development, redesign, migration, CRO, performance optimization, and ongoing support across 300+ stores for international brands, agencies, and growth-stage businesses.
-            </p>
-            <p class="text-neutral-400 leading-relaxed mb-10">
-              My work combines Liquid architecture, Online Store 2.0, Checkout Extensibility, Shopify Functions, APIs, Core Web Vitals, and conversion-focused UX to create storefronts that are scalable, merchant-editable, and easier to maintain.
-            </p>
-
-            <!-- Stats grid -->
-            <div class="grid grid-cols-3 gap-4 border-t border-white/10 pt-8">
-              <div>
-                <div class="font-bold text-4xl md:text-5xl text-white tracking-tight">10<span class="text-brand">+</span></div>
-                <div class="text-xs uppercase tracking-wider text-neutral-500 mt-2">Years</div>
+            <!-- Proof badges -->
+            <div class="about-badges">
+              <div class="about-badge">
+                <div class="about-badge-tile" aria-hidden="true">
+                  <img src="images/shopifypartners_icon.jpg" alt="" width="48" height="48" loading="lazy" decoding="async" />
+                </div>
+                <div class="about-badge-kicker">300+ Stores</div>
+                <div class="about-badge-text">Shopify projects supported</div>
               </div>
-              <div>
-                <div class="font-bold text-4xl md:text-5xl text-white tracking-tight">300<span class="text-brand">+</span></div>
-                <div class="text-xs uppercase tracking-wider text-neutral-500 mt-2">Stores</div>
-              </div>
-              <div>
-                <div class="font-bold text-4xl md:text-5xl text-white tracking-tight">5.0</div>
-                <div class="text-xs uppercase tracking-wider text-neutral-500 mt-2">Rating</div>
+              <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="about-badge">
+                <div class="about-badge-tile" aria-hidden="true">
+                  <img src="images/shopifypartners_icon.jpg" alt="" width="48" height="48" loading="lazy" decoding="async" />
+                </div>
+                <div class="about-badge-kicker">Select Partner</div>
+                <div class="about-badge-text">Shopify Partner since 2021</div>
+              </a>
+              <div class="about-badge">
+                <div class="about-badge-ring" aria-hidden="true"><span>10<span class="plus">+</span></span></div>
+                <div class="about-badge-kicker">10+ Years</div>
+                <div class="about-badge-text">Web development experience</div>
               </div>
             </div>
+
+            <!-- Recognition / partners -->
+            <div class="mt-10 pt-8 border-t border-white/10">
+              <div class="text-xs uppercase tracking-wider text-neutral-500 mb-4">Featured &amp; partner with</div>
+              <div class="recog-grid">
+                <a href="https://seowill.com/pages/partner/mark-nastor" target="_blank" rel="noopener noreferrer" class="recog-card">
+                  <span class="recog-card-logo"><img src="images/logos/seowill.svg" alt="SEOWILL" width="107" height="20" class="logo-white" loading="lazy" decoding="async" /></span>
+                  <span class="recog-card-role">Official Agency Partner</span>
+                  <svg class="ext-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+                <a href="https://glood.ai/shopify-experts/mark-ecommerce-growth-strategist-web-designer-developer" target="_blank" rel="noopener noreferrer" class="recog-card">
+                  <span class="recog-card-logo"><img src="images/logos/glood-ai.svg" alt="Glood.AI" width="71" height="24" class="logo-white logo-tall" loading="lazy" decoding="async" /></span>
+                  <span class="recog-card-role">Shopify Experts Directory</span>
+                  <svg class="ext-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+                <a href="https://www.shopdigest.com/mark54" target="_blank" rel="noopener noreferrer" class="recog-card">
+                  <span class="recog-card-logo"><img src="images/logos/shopdigest-white.png" alt="ShopDigest" width="128" height="24" class="logo-sd" loading="lazy" decoding="async" /></span>
+                  <span class="recog-card-role">Featured Shopify Expert</span>
+                  <svg class="ext-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="lg:col-span-7 reveal">
+            <p class="text-neutral-400 leading-relaxed mb-6">
+              I&rsquo;m Mark Jason Nastor, a Senior Shopify Developer, Shopify Select Partner, and AI Application Developer with 10+ years of web development experience and 300+ Shopify stores supported worldwide.
+            </p>
+            <p class="text-neutral-400 leading-relaxed mb-6">
+              I specialize in Shopify Plus, conversion rate optimization (CRO), site speed optimization, and custom theme and app development, along with AI-assisted software engineering, LLM integrations, and SaaS architecture. I&rsquo;m also the creator of <a href="https://apps.shopify.com/shoptimize-pro" target="_blank" rel="noopener noreferrer" class="text-white hover:text-brand transition">ShoptimizePro: CRO Roadmap</a>, a publicly launched AI-powered Shopify app.
+            </p>
+            <p class="text-neutral-400 leading-relaxed mb-10">
+              I&rsquo;ve delivered development, redesigns, migrations, CRO, and ongoing support for international brands, agencies, and growth-stage businesses, turning complex eCommerce and business requirements into scalable, production-ready storefronts that merchants can edit and maintain.
+            </p>
 
             <!-- Expertise -->
             <div class="mt-10 pt-8 border-t border-white/10">
@@ -900,37 +1081,76 @@
                 <span class="chip"><span class="chip-dot"></span>Shopify Functions</span>
                 <span class="chip"><span class="chip-dot"></span>Shopify APIs</span>
                 <span class="chip"><span class="chip-dot"></span>CRO</span>
-                <span class="chip"><span class="chip-dot"></span>Core Web Vitals</span>
+                <span class="chip"><span class="chip-dot"></span>Site Speed &amp; Core Web Vitals</span>
                 <span class="chip"><span class="chip-dot"></span>Technical SEO</span>
-                <span class="chip"><span class="chip-dot"></span>Theme architecture</span>
+                <span class="chip"><span class="chip-dot"></span>Theme &amp; App Development</span>
+                <span class="chip"><span class="chip-dot"></span>AI &amp; LLM Integrations</span>
               </div>
             </div>
+
+            <!-- Featured testimonial -->
+            <figure class="about-quote">
+              <svg class="about-quote-mark" width="44" height="44" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.6 5C6.4 6.4 4 9.6 4 13.6V19h6v-6H7.2c0-2.6 1.4-4.6 3.6-5.6L9.6 5Zm10 0c-3.2 1.4-5.6 4.6-5.6 8.6V19h6v-6h-2.8c0-2.6 1.4-4.6 3.6-5.6L19.6 5Z"/></svg>
+              <blockquote class="about-quote-text">
+                Jason isn&rsquo;t just a technical wizard &mdash; he&rsquo;s a conversion optimization mastermind with an eye for design. His work across our brands has boosted conversions and improved UX.
+              </blockquote>
+              <figcaption class="about-quote-footer">
+                <div class="flex items-center gap-3">
+                  <img src="review/ezriel.jpeg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
+                  <div>
+                    <div class="text-white font-semibold text-sm">Ezriel P.</div>
+                    <a href="https://www.fameschocolate.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">fameschocolate.com</a>
+                  </div>
+                </div>
+                <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="about-quote-rating">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
+                  5.0 from 33 Shopify Partner reviews
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TECH STACK - pill chips in centered rows -->
+    <!-- TECH STACK - grouped expertise (mirrors CV "Core Shopify & Technical Expertise") -->
     <section id="stack" class="relative px-6 lg:px-10 py-20 md:py-32 border-t border-white/[0.06]">
       <div class="max-w-6xl mx-auto text-center">
-        <span class="eyebrow reveal">Tech stack</span>
+        <span class="eyebrow reveal">Tech stack &amp; expertise</span>
         <h2 class="mt-6 font-sans text-3xl md:text-5xl font-bold text-white tracking-tight reveal max-w-3xl mx-auto">
           Tools I reach for to ship <span class="accent-serif">fast</span>, clean, and conversion-ready stores.
         </h2>
 
-        <div class="mt-14 flex flex-wrap gap-3 justify-center reveal-stagger">
-          <span class="chip"><span class="chip-dot"></span>Shopify</span>
-          <span class="chip"><span class="chip-dot"></span>Liquid</span>
-          <span class="chip"><span class="chip-dot"></span>JavaScript</span>
-          <span class="chip"><span class="chip-dot"></span>TypeScript</span>
-          <span class="chip"><span class="chip-dot"></span>HTML &amp; CSS</span>
-          <span class="chip"><span class="chip-dot"></span>Tailwind</span>
-          <span class="chip"><span class="chip-dot"></span>Alpine.js</span>
-          <span class="chip"><span class="chip-dot"></span>React</span>
-          <span class="chip"><span class="chip-dot"></span>Hydrogen</span>
-          <span class="chip"><span class="chip-dot"></span>GraphQL</span>
-          <span class="chip"><span class="chip-dot"></span>Klaviyo</span>
-          <span class="chip"><span class="chip-dot"></span>GA4 &amp; Meta Pixel</span>
+        <div class="mt-14 expertise-grid reveal-stagger">
+          <div class="expertise-card">
+            <h3>Shopify development</h3>
+            <p>Shopify Liquid, custom themes, Online Store 2.0, JSON templates, sections and blocks, snippets, metafields, metaobjects, dynamic sources, product and collection templates, AJAX cart, predictive search, Shopify CLI, Theme Check.</p>
+          </div>
+          <div class="expertise-card">
+            <h3>Shopify Plus &amp; commerce</h3>
+            <p>Shopify Plus, Checkout Extensibility, Shopify Functions, Flow, Launchpad, Shopify Scripts (legacy), B2B, Markets, checkout optimization, subscriptions, bundles, and merchandising workflows.</p>
+          </div>
+          <div class="expertise-card">
+            <h3>Performance &amp; CRO</h3>
+            <p>Core Web Vitals, Lighthouse, PageSpeed Insights, GTmetrix, app audits, lazy loading, image and JavaScript optimization, technical SEO, UX audits, product-page optimization, and funnel reviews.</p>
+          </div>
+          <div class="expertise-card">
+            <h3>Shopify apps &amp; integrations</h3>
+            <p>Shopify app product development, Admin API, Storefront API, GraphQL, REST, webhooks, third-party APIs, ERP/CRM/fulfillment integrations, Zapier, and Node.js middleware workflows.</p>
+          </div>
+          <div class="expertise-card">
+            <h3>AI &amp; LLM engineering</h3>
+            <p>AI-assisted application development, prompt engineering, LLM API integration, structured JSON outputs, AI-powered analysis and recommendations, workflow automation, model evaluation, and token-cost optimization.</p>
+          </div>
+          <div class="expertise-card">
+            <h3>Frontend engineering</h3>
+            <p>HTML5, CSS3, Sass, JavaScript ES6+, TypeScript, Alpine.js, Tailwind CSS, jQuery, responsive and mobile-first UI, cross-browser testing, and accessibility-aware implementation.</p>
+          </div>
+          <div class="expertise-card expertise-card-wide">
+            <h3>Workflow</h3>
+            <p>Git, GitHub, Trello, Asana, VS Code, Figma, Adobe, and collaborative QA workflows.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -1001,7 +1221,7 @@
               <span class="text-xs uppercase tracking-[0.25em] text-neutral-500">Scroll to explore</span>
             </div>
             <div class="mt-10 text-xs text-neutral-600">
-              <span data-counter-current>01</span> <span class="opacity-50">/ <span data-counter-total>06</span></span>
+              <span data-counter-current>01</span> <span class="opacity-50">/ <span data-counter-total>07</span></span>
             </div>
           </aside>
 
@@ -1016,14 +1236,14 @@
             <div class="service-progress" aria-hidden="true"></div>
             <div>
               <p class="text-neutral-400 leading-relaxed max-w-sm">
-                Custom storefronts, theme architecture, Online Store 2.0 sections, Liquid components, metafields, metaobjects, and merchant-editable templates.
+                Custom themes, Online Store 2.0 architecture, Liquid components, metafields, metaobjects, and merchant-editable templates, plus Shopify Plus capabilities like Checkout Extensibility, Functions, Flow, B2B, and Markets.
               </p>
               <div class="mt-6 flex flex-wrap gap-2">
                 <span class="chip">Liquid</span>
                 <span class="chip">OS 2.0 Sections</span>
-                <span class="chip">Shopify Plus</span>
-                <span class="chip">Metafields</span>
-                <span class="chip">Custom Themes</span>
+                <span class="chip">Checkout Extensibility</span>
+                <span class="chip">Shopify Functions</span>
+                <span class="chip">B2B &amp; Markets</span>
               </div>
             </div>
           </article>
@@ -1108,14 +1328,14 @@
             <div class="service-progress" aria-hidden="true"></div>
             <div>
               <p class="text-neutral-400 leading-relaxed max-w-sm">
-                Shopify APIs, GraphQL, webhooks, app integrations, marketing tools, subscriptions, automation, and middleware workflows.
+                Shopify app development, Admin and Storefront APIs, GraphQL, REST, webhooks, ERP/CRM/fulfillment integrations, Zapier, and Node.js middleware workflows.
                </p>
               <div class="mt-6 flex flex-wrap gap-2">
-                <span class="chip">REST &amp; GraphQL API</span>
+                <span class="chip">Admin &amp; Storefront API</span>
+                <span class="chip">GraphQL</span>
                 <span class="chip">Webhooks</span>
-                <span class="chip">Automation</span>
-                <span class="chip">Klaviyo</span>
-                <span class="chip">Middleware</span>
+                <span class="chip">ERP / CRM</span>
+                <span class="chip">Node.js</span>
               </div>
             </div>
           </article>
@@ -1123,6 +1343,29 @@
           <!-- Card 06 -->
           <article class="service-card" data-card>
             <div class="service-num">06</div>
+            <div>
+              <h3 class="font-sans font-bold text-3xl md:text-4xl text-white tracking-tight leading-tight max-w-xs">
+                AI &amp; LLM Integrations
+              </h3>
+            </div>
+            <div class="service-progress" aria-hidden="true"></div>
+            <div>
+              <p class="text-neutral-400 leading-relaxed max-w-sm">
+                AI-powered features and workflows for commerce teams: LLM API integrations, structured outputs, AI-driven analysis and recommendations, and workflow automation. It&rsquo;s the same approach behind ShoptimizePro.
+              </p>
+              <div class="mt-6 flex flex-wrap gap-2">
+                <span class="chip">LLM APIs</span>
+                <span class="chip">Prompt Engineering</span>
+                <span class="chip">Structured JSON</span>
+                <span class="chip">AI Automation</span>
+                <span class="chip">Token-Cost Optimization</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 07 -->
+          <article class="service-card" data-card>
+            <div class="service-num">07</div>
             <div>
               <h3 class="font-sans font-bold text-3xl md:text-4xl text-white tracking-tight leading-tight max-w-xs">
                 Ongoing Shopify Support
@@ -1167,7 +1410,7 @@
             <div class="grid md:grid-cols-12 gap-6">
               <div class="md:col-span-3">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand/10 border border-brand/20 text-brand text-xs font-mono">2026 — Present</div>
-                <div class="mt-3 text-sm text-neutral-500">Remote</div>
+                <div class="mt-3 text-sm text-neutral-500">Shopify App &amp; AI-Powered CRO Platform</div>
               </div>
               <div class="md:col-span-9">
                 <h3 class="text-2xl font-bold text-white">Creator &amp; Lead Developer <span class="text-neutral-500 font-normal">· ShoptimizePro</span></h3>
@@ -1178,9 +1421,10 @@
                     <svg class="exp-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
                   </summary>
                   <ul class="mt-4 space-y-2 text-neutral-400 leading-relaxed">
-                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Built and launched ShoptimizePro: CRO Roadmap, an AI-powered Shopify app that audits home, collection, product, and content pages for conversion issues.</span></li>
-                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Developed the CRO framework covering UX, trust, messaging, CTAs, mobile usability, navigation, content clarity, and performance friction.</span></li>
-                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Led product strategy, app development, interface design, Shopify App Store launch, documentation, reporting, PDF exports, and ongoing improvements.</span></li>
+                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Architected, developed, and launched ShoptimizePro: CRO Roadmap, an AI-powered Shopify application for analyzing storefront conversion issues.</span></li>
+                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Implemented AI-assisted audit workflows to generate structured CRO recommendations, prioritized action plans, and suggested copy improvements.</span></li>
+                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Developed Shopify-integrated application features, reporting dashboards, audit history, and downloadable PDF reports.</span></li>
+                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Led the full SaaS product lifecycle, including technical architecture, UI/UX, Shopify App Store deployment, and ongoing improvements.</span></li>
                   </ul>
                 </details>
               </div>
@@ -1206,7 +1450,7 @@
                     <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Delivered development, redesign, migration, CRO, performance optimization, and ongoing support across 300+ Shopify and Shopify Plus stores.</span></li>
                     <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Built reusable Online Store 2.0 sections, Liquid components, JSON templates, metafield-driven pages, cart drawers, predictive search, and responsive collection experiences.</span></li>
                     <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Developed conversion-focused features including sticky add-to-cart bars, variant selectors, subscriptions, bundles, quick-buy tools, product galleries, and trust-building UI.</span></li>
-                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Managed the full delivery lifecycle from discovery and architecture through integrations, QA, launch, troubleshooting, and ongoing optimization.</span></li>
+                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Managed the full delivery lifecycle, from discovery and architecture through development, integrations, QA, launch, troubleshooting, and ongoing optimization.</span></li>
                   </ul>
                 </details>
               </div>
@@ -1230,8 +1474,8 @@
                   </summary>
                   <ul class="mt-4 space-y-2 text-neutral-400 leading-relaxed">
                     <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Developed and maintained custom Shopify themes for agency clients using Liquid, Online Store 2.0, HTML, CSS, and JavaScript.</span></li>
-                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Converted Figma designs into responsive pages and reusable Theme Editor sections, blocks, and templates.</span></li>
-                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Resolved theme defects, app conflicts, responsive issues, checkout frontend problems, and performance bottlenecks while supporting QA and releases.</span></li>
+                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Converted Figma designs into responsive, production-ready pages and reusable Theme Editor sections, blocks, and templates.</span></li>
+                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Resolved theme defects, app conflicts, responsive issues, checkout frontend problems, and performance bottlenecks while supporting QA, releases, and post-launch updates.</span></li>
                   </ul>
                 </details>
               </div>
@@ -1255,8 +1499,8 @@
                   </summary>
                   <ul class="mt-4 space-y-2 text-neutral-400 leading-relaxed">
                     <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Supported ongoing Shopify development for a high-volume fashion and lifestyle brand.</span></li>
-                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Built custom Liquid sections, campaign pages, product-page enhancements, collection templates, and responsive components.</span></li>
-                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Supported product launches and merchandising updates through reusable Theme Editor components.</span></li>
+                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Built custom Liquid sections, campaign pages, product-page enhancements, collection templates, and responsive storefront components.</span></li>
+                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Supported product launches and merchandising updates by creating reusable Theme Editor components for recurring campaigns and content changes.</span></li>
                   </ul>
                 </details>
               </div>
@@ -1280,7 +1524,7 @@
                   </summary>
                   <ul class="mt-4 space-y-2 text-neutral-400 leading-relaxed">
                     <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Consulted on Shopify theme customization, product-page improvements, app setup, merchandising, and e-commerce UX.</span></li>
-                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Implemented Liquid, CSS, and JavaScript updates and supported maintenance, bug fixes, responsive improvements, and post-launch work.</span></li>
+                    <li class="flex gap-3"><span class="text-brand mt-2">▸</span><span>Implemented Liquid, CSS, and JavaScript updates and supported store maintenance, bug fixes, responsiveness, and post-launch improvements.</span></li>
                   </ul>
                 </details>
               </div>
@@ -1291,29 +1535,40 @@
           <div class="reveal rounded-2xl border border-white/10 bg-ink-900/40 p-6 md:p-8">
             <h3 class="text-sm uppercase tracking-[0.2em] text-neutral-500 mb-5">Earlier web development experience</h3>
             <ul class="space-y-4 text-sm">
-              <li class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 border-b border-white/5 pb-4">
-                <span class="text-white font-medium">Senior Web Developer <span class="text-neutral-500 font-normal">· TMDC IT Solutions</span></span>
-                <span class="text-neutral-500 font-mono text-xs">Mar 2019 — Dec 2019</span>
+              <li class="border-b border-white/5 pb-4">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                  <span class="text-white font-medium">Senior Web Developer <span class="text-neutral-500 font-normal">· TMDC IT Solutions</span></span>
+                  <span class="text-neutral-500 font-mono text-xs">Mar 2019 — Dec 2019</span>
+                </div>
+                <p class="earlier-desc">Developed responsive websites, custom frontend and backend solutions, and CMS platforms.</p>
               </li>
-              <li class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 border-b border-white/5 pb-4">
-                <span class="text-white font-medium">Web Application Developer <span class="text-neutral-500 font-normal">· Primo Collab</span></span>
-                <span class="text-neutral-500 font-mono text-xs">Apr 2018 — Dec 2018</span>
+              <li class="border-b border-white/5 pb-4">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                  <span class="text-white font-medium">Web Application Developer <span class="text-neutral-500 font-normal">· Primo Collab</span></span>
+                  <span class="text-neutral-500 font-mono text-xs">Apr 2018 — Dec 2018</span>
+                </div>
+                <p class="earlier-desc">Built responsive web applications and supported debugging, improvements, and project delivery.</p>
               </li>
-              <li class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 border-b border-white/5 pb-4">
-                <span class="text-white font-medium">Senior Backend Developer <span class="text-neutral-500 font-normal">· iPhiTech IT and Digital Solutions</span></span>
-                <span class="text-neutral-500 font-mono text-xs">Jan 2018 — May 2018</span>
+              <li class="border-b border-white/5 pb-4">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                  <span class="text-white font-medium">Senior Backend Developer <span class="text-neutral-500 font-normal">· iPhiTech IT and Digital Solutions</span></span>
+                  <span class="text-neutral-500 font-mono text-xs">Jan 2018 — May 2018</span>
+                </div>
+                <p class="earlier-desc">Developed database-driven systems, backend functionality, APIs, and administrative tools.</p>
               </li>
-              <li class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 border-b border-white/5 pb-4">
-                <span class="text-white font-medium">Software Developer <span class="text-neutral-500 font-normal">· Medisource Healthcare Solutions</span></span>
-                <span class="text-neutral-500 font-mono text-xs">Dec 2016 — Mar 2018</span>
+              <li class="border-b border-white/5 pb-4">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                  <span class="text-white font-medium">Software Developer <span class="text-neutral-500 font-normal">· Medisource Healthcare Solutions</span></span>
+                  <span class="text-neutral-500 font-mono text-xs">Dec 2016 — Mar 2018</span>
+                </div>
+                <p class="earlier-desc">Maintained healthcare software features, backend logic, databases, testing, and system reliability.</p>
               </li>
-              <li class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 border-b border-white/5 pb-4">
-                <span class="text-white font-medium">Software Developer <span class="text-neutral-500 font-normal">· Geeksnest Inc.</span></span>
-                <span class="text-neutral-500 font-mono text-xs">Nov 2016 — Dec 2016</span>
-              </li>
-              <li class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                <span class="text-white font-medium">Junior Software Developer <span class="text-neutral-500 font-normal">· Sunrays Networking Agency</span></span>
-                <span class="text-neutral-500 font-mono text-xs">Sep 2016 — Nov 2016</span>
+              <li>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                  <span class="text-white font-medium">Software Developer <span class="text-neutral-500 font-normal">· Geeksnest Inc.</span></span>
+                  <span class="text-neutral-500 font-mono text-xs">Nov 2016 — Dec 2016</span>
+                </div>
+                <p class="earlier-desc">Supported website and web application development, testing, debugging, and implementation.</p>
               </li>
             </ul>
           </div>
@@ -1373,7 +1628,7 @@
             <div class="work-meta">
               <div class="work-label">International Commerce · Online Store 2.0</div>
               <h3 class="work-title"><a href="https://offsetyoyo.com/" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">OFFSET YoYo</a></h3>
-              <p class="work-desc">Global Shopify storefront supporting multilingual shopping, product discovery, merchandising, educational content, and tutorials.</p>
+              <p class="work-desc">Global yo-yo storefront with multilingual shopping, product discovery, quick-add merchandising, educational content, and tutorials.</p>
               <div class="work-actions">
                 <a href="https://offsetyoyo.com/" target="_blank" rel="noopener noreferrer" class="work-case-btn">Visit site</a>
                 <a href="https://offsetyoyo.com/" target="_blank" rel="noopener noreferrer" class="work-arrow" aria-label="Open OFFSET YoYo live site">
@@ -1391,7 +1646,7 @@
             <div class="work-meta">
               <div class="work-label">International Commerce · Theme Architecture</div>
               <h3 class="work-title"><a href="https://viaartists.com/" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">Via Artists</a></h3>
-              <p class="work-desc">Artist-led fashion and accessories storefront with a large catalog, collaboration-focused navigation, and international shopping.</p>
+              <p class="work-desc">Artist-led fashion and accessories storefront with a large catalog, collaboration-based navigation, and multi-currency shopping.</p>
               <div class="work-actions">
                 <a href="https://viaartists.com/" target="_blank" rel="noopener noreferrer" class="work-case-btn">Visit site</a>
                 <a href="https://viaartists.com/" target="_blank" rel="noopener noreferrer" class="work-arrow" aria-label="Open Via Artists live site">
@@ -1409,7 +1664,7 @@
             <div class="work-meta">
               <div class="work-label">Built from Scratch · Booking Journey</div>
               <h3 class="work-title"><a href="https://padelcoretreats.com/" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">Padel &amp; Co. Retreats</a></h3>
-              <p class="work-desc">Booking-focused Shopify experience supporting retreat discovery, schedules, pricing, destinations, and lead capture.</p>
+              <p class="work-desc">Booking-focused Shopify experience for premium padel retreats, with destination discovery, schedules, pricing, and lead capture.</p>
               <div class="work-actions">
                 <button type="button" class="work-case-btn" data-open-case>Case Study</button>
                 <a href="https://padelcoretreats.com/" target="_blank" rel="noopener noreferrer" class="work-arrow" aria-label="Open Padel and Co Retreats live site">
@@ -1450,7 +1705,7 @@
             <div class="work-meta">
               <div class="work-label">CRO · Custom Shopify Development</div>
               <h3 class="work-title"><a href="https://www.lilcactus.com/" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">Lil Cactus</a></h3>
-              <p class="work-desc">Children&rsquo;s apparel storefront with seasonal collections, promotional merchandising, customer reviews, and cart incentives.</p>
+              <p class="work-desc">Children&rsquo;s apparel storefront with extensive seasonal collections, promotional merchandising, cart incentives, and customer reviews.</p>
               <div class="work-actions">
                 <a href="https://www.lilcactus.com/" target="_blank" rel="noopener noreferrer" class="work-case-btn">Visit site</a>
                 <a href="https://www.lilcactus.com/" target="_blank" rel="noopener noreferrer" class="work-arrow" aria-label="Open Lil Cactus live site">
@@ -1468,7 +1723,7 @@
             <div class="work-meta">
               <div class="work-label">Subscriptions · Custom Shopify Development</div>
               <h3 class="work-title"><a href="https://www.cowboykennycoffee.com/" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">Cowboy Kenny Coffee</a></h3>
-              <p class="work-desc">Coffee storefront supporting product options, subscriptions, local pickup, promotions, tracking, and brand-led product education.</p>
+              <p class="work-desc">Coffee storefront supporting product formats, subscriptions, local pickup, promotions, and brand-led product education.</p>
               <div class="work-actions">
                 <a href="https://www.cowboykennycoffee.com/" target="_blank" rel="noopener noreferrer" class="work-case-btn">Visit site</a>
                 <a href="https://www.cowboykennycoffee.com/" target="_blank" rel="noopener noreferrer" class="work-arrow" aria-label="Open Cowboy Kenny Coffee live site">
@@ -1486,7 +1741,7 @@
             <div class="work-meta">
               <div class="work-label">Product Customization · Custom Shopify Development</div>
               <h3 class="work-title"><a href="https://gordonthreadpainting.com/" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">Gordon Thread Painting</a></h3>
-              <p class="work-desc">Personalized thread-art storefront supporting complex product choices, design discovery, custom text, dates, frame options, and gifting.</p>
+              <p class="work-desc">Handcrafted thread-art and personalized-gift storefront with collection-led merchandising and customization pathways.</p>
               <div class="work-actions">
                 <a href="https://gordonthreadpainting.com/" target="_blank" rel="noopener noreferrer" class="work-case-btn">Visit site</a>
                 <a href="https://gordonthreadpainting.com/" target="_blank" rel="noopener noreferrer" class="work-arrow" aria-label="Open Gordon Thread Painting live site">
@@ -1502,9 +1757,9 @@
               <img src="images/website/project/malani.jpg" alt="" width="1280" height="800" loading="lazy" decoding="async" />
             </button>
             <div class="work-meta">
-              <div class="work-label">Built from Scratch · Fragrance Retail</div>
+              <div class="work-label">Built from Scratch · B2B &amp; B2C Fragrance</div>
               <h3 class="work-title"><a href="https://malaniperfumes.com/" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">Malani Perfumes</a></h3>
-              <p class="work-desc">Shopify storefront project for a fragrance brand.</p>
+              <p class="work-desc">Shopify storefront for a fragrance brand with a combined B2B and B2C setup.</p>
               <div class="work-actions">
                 <button type="button" class="work-case-btn" data-open-case>Case Study</button>
                 <a href="https://malaniperfumes.com/" target="_blank" rel="noopener noreferrer" class="work-arrow" aria-label="Open Malani Perfumes live site">
@@ -1514,15 +1769,16 @@
             </div>
             <template data-case-content>
               <div class="case-study">
-                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Built from Scratch · Fragrance Retail</div>
+                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Built from Scratch · B2B &amp; B2C Fragrance</div>
                 <h3 class="font-sans text-3xl md:text-4xl font-bold text-white tracking-tight">Malani Perfumes</h3>
                 <a href="https://malaniperfumes.com/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm text-neutral-400 hover:text-brand transition">malaniperfumes.com <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
                 <h4>Overview</h4>
-                <p class="text-neutral-300 leading-relaxed">A Shopify storefront for an authenticated designer fragrance retailer, built around a large multi-brand catalog spanning men's, women's, and unisex lines.</p>
+                <p class="text-neutral-300 leading-relaxed">A Shopify storefront for an authenticated designer fragrance retailer, built around a large multi-brand catalog spanning men's, women's, and unisex lines, with a setup that serves both B2B and B2C customers.</p>
                 <h4>Tech used</h4>
                 <div class="case-chips">
                   <span class="chip">Liquid</span>
                   <span class="chip">Custom Shopify Development</span>
+                  <span class="chip">B2B</span>
                 </div>
                 <a href="https://malaniperfumes.com/" target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand text-ink-950 font-semibold text-sm hover:bg-brand-light transition">Visit live site <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
               </div>
@@ -1535,9 +1791,9 @@
               <img src="images/website/project/dna.jpg" alt="" width="1280" height="800" loading="lazy" decoding="async" />
             </div>
             <div class="work-meta">
-              <div class="work-label">B2B · Custom Shopify Development</div>
+              <div class="work-label">Design &amp; Build · UK Packaging</div>
               <h3 class="work-title"><a href="https://dnapackaging.co.uk/" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">DNA Packaging</a></h3>
-              <p class="work-desc">Shopify storefront project for a UK packaging business.</p>
+              <p class="work-desc">Website mockups, custom visual design, and responsive layouts delivering a consistent, user-friendly storefront for a UK packaging business.</p>
               <div class="work-actions">
                 <a href="https://dnapackaging.co.uk/" target="_blank" rel="noopener noreferrer" class="work-case-btn">Visit site</a>
                 <a href="https://dnapackaging.co.uk/" target="_blank" rel="noopener noreferrer" class="work-arrow" aria-label="Open DNA Packaging live site">
@@ -1864,7 +2120,6 @@
             </template>
           </article>
 
-          <!-- PLACEHOLDER: confirm real deliverables/tech with Mark, then replace generic bullets below -->
           <!-- Pippets (Pip Eats) -->
           <article class="work-card" data-card data-case="pippets">
             <button type="button" class="work-thumb work-thumb-btn" data-open-case aria-label="Open Pippets case study">
@@ -1874,9 +2129,9 @@
               </div>
             </button>
             <div class="work-meta">
-              <div class="work-label">CRO-Focused · Pet Food</div>
+              <div class="work-label">CRO-Focused Build · Pet Food</div>
               <h3 class="work-title">Pippets</h3>
-              <p class="work-desc">Premium fresh dog food brand offering vet-formulated, single-protein meals with a personalized meal-plan quiz.</p>
+              <p class="work-desc">Conversion-focused storefront for a premium fresh dog food brand, with custom UX/UI, a subscription flow, and product education.</p>
               <div class="work-actions">
                 <button type="button" class="work-case-btn" data-open-case>Case Study</button>
                 <a href="https://pippets.au/" target="_blank" rel="noopener noreferrer" class="work-arrow" aria-label="Open Pippets live site">
@@ -1886,30 +2141,30 @@
             </div>
             <template data-case-content>
               <div class="case-study">
-                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">CRO-Focused · Pet Food</div>
+                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">CRO-Focused Build · Pet Food</div>
                 <h3 class="font-sans text-3xl md:text-4xl font-bold text-white tracking-tight">Pippets</h3>
                 <a href="https://pippets.au/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm text-neutral-400 hover:text-brand transition">pippets.au <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
                 <h4>Overview</h4>
-                <p class="text-neutral-300 leading-relaxed">A Shopify storefront for Pippets, a premium fresh dog food brand offering vet-formulated, single-protein meals with a personalized meal-plan quiz.</p>
+                <p class="text-neutral-300 leading-relaxed">Built a conversion-focused Shopify storefront for Pippets, a premium fresh dog food brand offering vet-formulated, single-protein meals with a personalized meal-plan quiz.</p>
                 <h4>What I delivered</h4>
                 <ul>
-                  <li><span>Conversion-focused work on the meal-plan quiz and personalized recommendation flow.</span></li>
-                  <li><span>PDP and trust-signal support &mdash; testimonials, media mentions.</span></li>
-                  <li><span>Subscription flow refinements.</span></li>
-                  <li><span>Ongoing Shopify development and support.</span></li>
+                  <li><span>Custom UX/UI design across the storefront.</span></li>
+                  <li><span>Subscription flow for recurring orders.</span></li>
+                  <li><span>Product education content built into the shopping experience.</span></li>
+                  <li><span>Mobile-first design and performance optimization.</span></li>
                 </ul>
                 <h4>Tech used</h4>
                 <div class="case-chips">
                   <span class="chip">Liquid</span>
                   <span class="chip">Custom JS</span>
                   <span class="chip">Subscriptions</span>
+                  <span class="chip">Performance</span>
                 </div>
                 <a href="https://pippets.au/" target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand text-ink-950 font-semibold text-sm hover:bg-brand-light transition">Visit live site <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
               </div>
             </template>
           </article>
 
-          <!-- PLACEHOLDER: confirm real deliverables/tech with Mark, then replace generic bullets below -->
           <!-- Fiesta Furnishings -->
           <article class="work-card" data-card data-case="fiestafurnishings">
             <button type="button" class="work-thumb work-thumb-btn" data-open-case aria-label="Open Fiesta Furnishings case study">
@@ -1919,9 +2174,9 @@
               </div>
             </button>
             <div class="work-meta">
-              <div class="work-label">Conversion-Improvement · Furniture &amp; Home</div>
+              <div class="work-label">Redesign &amp; Migration · Furniture &amp; Home</div>
               <h3 class="work-title">Fiesta Furnishings</h3>
-              <p class="work-desc">Southwestern and rustic-style furniture retailer serving the Scottsdale, Arizona market with a large room-by-room catalog.</p>
+              <p class="work-desc">Website redesign and eCommerce migration to Shopify for a Southwestern and rustic-style furniture retailer in Scottsdale, Arizona.</p>
               <div class="work-actions">
                 <button type="button" class="work-case-btn" data-open-case>Case Study</button>
                 <a href="https://fiestafurnishings.com/" target="_blank" rel="noopener noreferrer" class="work-arrow" aria-label="Open Fiesta Furnishings live site">
@@ -1931,22 +2186,24 @@
             </div>
             <template data-case-content>
               <div class="case-study">
-                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Conversion-Improvement · Furniture &amp; Home</div>
+                <div class="text-xs uppercase tracking-[0.25em] text-brand mb-3">Redesign &amp; Migration · Furniture &amp; Home</div>
                 <h3 class="font-sans text-3xl md:text-4xl font-bold text-white tracking-tight">Fiesta Furnishings</h3>
                 <a href="https://fiestafurnishings.com/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm text-neutral-400 hover:text-brand transition">fiestafurnishings.com <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
                 <h4>Overview</h4>
-                <p class="text-neutral-300 leading-relaxed">A Shopify storefront for Fiesta Furnishings, a Southwestern and rustic-style furniture retailer serving the Scottsdale, Arizona market with a large room-by-room catalog.</p>
+                <p class="text-neutral-300 leading-relaxed">Led the website redesign and eCommerce migration to Shopify for Fiesta Furnishings, a Southwestern and rustic-style furniture retailer serving the Scottsdale, Arizona market with a large room-by-room catalog.</p>
                 <h4>What I delivered</h4>
                 <ul>
-                  <li><span>Collection and navigation improvements across room type and furniture category.</span></li>
-                  <li><span>Merchandising support for best-sellers, new arrivals, and curated collections.</span></li>
-                  <li><span>PDP and trust-signal refinements.</span></li>
-                  <li><span>Ongoing Shopify support.</span></li>
+                  <li><span>Led the website redesign and the eCommerce migration to Shopify.</span></li>
+                  <li><span>CRO improvements as part of the new storefront.</span></li>
+                  <li><span>Technical SEO for the migration.</span></li>
+                  <li><span>Pre-launch speed optimization.</span></li>
                 </ul>
                 <h4>Tech used</h4>
                 <div class="case-chips">
                   <span class="chip">Liquid</span>
-                  <span class="chip">Custom Sections</span>
+                  <span class="chip">Shopify Migration</span>
+                  <span class="chip">Technical SEO</span>
+                  <span class="chip">Speed Optimization</span>
                 </div>
                 <a href="https://fiestafurnishings.com/" target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand text-ink-950 font-semibold text-sm hover:bg-brand-light transition">Visit live site <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
               </div>
@@ -1997,14 +2254,49 @@
           </article>
         </div>
 
-        <p class="mt-10 text-sm text-neutral-500 reveal">Also shipped &mdash; details and live links to add: Pippets, Honeyskin, Body Good Studio, Stojo, Autrefois Clothing.</p>
+        <!-- More Shopify work (from CV "Selected Shopify & CRO Work"; no screenshots yet) -->
+        <div class="mt-14">
+          <h3 class="text-sm uppercase tracking-[0.2em] text-neutral-500 mb-5 reveal">More Shopify work</h3>
+          <div class="more-work reveal-stagger">
+            <a href="https://autrefoisclothing.com/" target="_blank" rel="noopener noreferrer" class="more-work-item">
+              <span class="more-work-name">Autrefois Clothing <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+              <p class="more-work-desc">Custom streetwear storefront with branded UI, dynamic product grids, advanced filtering, animations, and Klaviyo integration.</p>
+              <span class="more-work-url">autrefoisclothing.com</span>
+            </a>
+            <a href="https://honeyskin.com/" target="_blank" rel="noopener noreferrer" class="more-work-item">
+              <span class="more-work-name">Honeyskin <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+              <p class="more-work-desc">Custom skincare storefront with product storytelling, frequently-bought-together bundles, subscription functionality, and performance optimization.</p>
+              <span class="more-work-url">honeyskin.com</span>
+            </a>
+            <a href="https://joinbodygood.com/" target="_blank" rel="noopener noreferrer" class="more-work-item">
+              <span class="more-work-name">Body Good Studio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+              <p class="more-work-desc">Wellness storefront with educational content, product bundling, subscription logic, and mobile-first UX.</p>
+              <span class="more-work-url">joinbodygood.com</span>
+            </a>
+            <a href="https://stojo.earth/" target="_blank" rel="noopener noreferrer" class="more-work-item">
+              <span class="more-work-name">Stojo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+              <p class="more-work-desc">Sustainable-lifestyle storefront focused on storytelling, product education, mobile usability, and faster load times.</p>
+              <span class="more-work-url">stojo.earth</span>
+            </a>
+            <a href="https://junotenders.com/" target="_blank" rel="noopener noreferrer" class="more-work-item">
+              <span class="more-work-name">Juno Tenders <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+              <p class="more-work-desc">Custom &ldquo;Build Your Boat&rdquo; function, plus ongoing maintenance, technical support, performance optimization, bug fixes, and development planning.</p>
+              <span class="more-work-url">junotenders.com</span>
+            </a>
+            <a href="https://roam-socks.com/" target="_blank" rel="noopener noreferrer" class="more-work-item">
+              <span class="more-work-name">Roam Socks <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+              <p class="more-work-desc">Ongoing maintenance, technical support, performance monitoring, speed optimization, responsive design improvements, and troubleshooting.</p>
+              <span class="more-work-url">roam-socks.com</span>
+            </a>
+          </div>
+        </div>
 
         <div class="mt-10 flex flex-wrap gap-3 reveal">
           <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="btn-download">
             Shopify Partner Profile
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg>
           </a>
-          <a href="https://drive.google.com/file/d/1oArjEMBSO7ao9t7XoZEjfMmA8hevNay-/view" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+          <a href="cv/mark-jason-nastor-cv-2026.pdf" target="_blank" rel="noopener noreferrer" class="btn-ghost">
             Download CV
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
           </a>
@@ -2126,7 +2418,7 @@
               <img src="review/linda.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
               <div>
                 <div class="text-white font-semibold text-sm">Dr. Linda</div>
-                <span class="text-xs text-neutral-500">Join Body Good</span>
+                <a href="https://joinbodygood.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">joinbodygood.com</a>
               </div>
             </figcaption>
           </figure>
@@ -2158,7 +2450,7 @@
               <span>What makes Mark Jason Nastor a Senior Shopify Developer?</span>
               <span class="faq-icon text-brand text-2xl leading-none">+</span>
             </summary>
-            <p class="text-neutral-400 mt-4 leading-relaxed">Mark Jason Nastor is a Philippines-based Senior Shopify Developer and Shopify Select Partner with 10+ years of web development experience across 300+ Shopify stores. He specializes in custom Shopify storefronts, Liquid development, CRO, performance optimization, app integrations, and ongoing Shopify support for local and international brands.</p>
+            <p class="text-neutral-400 mt-4 leading-relaxed">Mark Jason Nastor is a Philippines-based Senior Shopify Developer, Shopify Select Partner, and AI Application Developer with 10+ years of web development experience and 300+ Shopify stores supported worldwide, backed by a 5.0 client rating. He specializes in Shopify Plus, CRO, site speed optimization, custom theme and app development, and LLM integrations, and he created ShoptimizePro, a publicly launched AI-powered Shopify app.</p>
           </details>
           <details class="reveal rounded-2xl border border-white/10 bg-ink-900/40 p-6 open:border-brand/40">
             <summary class="flex items-center justify-between text-white font-semibold text-lg">
@@ -2193,7 +2485,7 @@
               <span>What Shopify services do you offer?</span>
               <span class="faq-icon text-brand text-2xl leading-none">+</span>
             </summary>
-            <p class="text-neutral-400 mt-4 leading-relaxed">I offer custom Shopify theme development, Shopify OS 2.0 sections, product page optimization, collection page improvements, speed optimization, Klaviyo setup, Shopify app integrations, custom Liquid development, migrations, and monthly maintenance.</p>
+            <p class="text-neutral-400 mt-4 leading-relaxed">I offer custom Shopify and Shopify Plus development (including Checkout Extensibility and Shopify Functions), Online Store 2.0 sections, redesigns and migrations, CRO and product-page optimization, site speed and Core Web Vitals work, Shopify app and API integrations, AI and LLM integrations, and ongoing monthly support.</p>
           </details>
           <details class="reveal rounded-2xl border border-white/10 bg-ink-900/40 p-6 open:border-brand/40">
             <summary class="flex items-center justify-between text-white font-semibold text-lg">

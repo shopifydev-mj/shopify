@@ -1,7 +1,7 @@
 {
   "name": "heyjson",
   "version": "1.0.0",
-  "description": "Jason Nastor — Shopify Storefront Developer portfolio",
+  "description": "Mark Jason Nastor — Senior Shopify Developer portfolio",
   "private": true,
   "scripts": {
     "build:css": "npx -y tailwindcss@3 -c tailwind.config.js -i css/tailwind.input.css -o css/tailwind.css --minify",
