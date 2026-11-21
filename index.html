@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="image" href="images/jason-portrait.jpg" fetchpriority="high" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300..900;1,400..700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/tailwind.css" />
 
@@ -74,6 +74,7 @@
     /* Larger mobile tap targets for nav menu */
     @media (max-width: 768px) {
       #mobileMenu a { padding: .65rem 0; font-size: 1rem; }
+      #mobileMenu a.bg-brand { padding: .65rem 1.25rem; }
     }
 
     /* Subtle grid background */
@@ -131,18 +132,19 @@
     .hero-hey {
       position: absolute;
       /* em-based so "Hey!" scales with the JSON wordmark (which now also scales with viewport height) */
-      top: -.36em;
-      left: -.62em;
-      font-size: .32em;
+      top: -.3em;
+      left: -.95em;
+      font-size: .26em;
       z-index: 1;
       opacity: 0;
       animation: heyAppear .9s cubic-bezier(.68,-0.55,.27,1.55) 1.4s forwards;
     }
     .hero-hey-inner {
       display: inline-block;
-      font-family: 'Instrument Serif', serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-style: italic;
-      font-weight: 400;
+      font-weight: 700;
+      letter-spacing: 0;
       color: #96bf47;
       line-height: 1;
       letter-spacing: normal;
@@ -699,8 +701,9 @@
     .eyebrow { display: inline-flex; align-items: center; gap: .75rem; font-size: .7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #96bf47; }
     .eyebrow::before { content: ''; width: 28px; height: 1px; background: #96bf47; display: block; }
 
-    /* Decorative serif accent */
-    .accent-serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: #b8db6f; }
+    /* Accent words: Playfair Display Bold Italic, brand green */
+    .accent-serif { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 700; color: #b8db6f; letter-spacing: 0; padding-right: .04em; }
+    .font-serif { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
 
     /* About proof badges (under the portrait) */
     .about-badges {
@@ -739,8 +742,8 @@
     }
     .about-quote-mark { color: rgba(150,191,71,0.35); margin-bottom: .9rem; }
     .about-quote-text {
-      font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
-      font-size: clamp(1.35rem, 2vw, 1.75rem); line-height: 1.35; color: #f5f5f5;
+      font-style: italic; font-weight: 500; letter-spacing: -0.01em;
+      font-size: clamp(1.15rem, 1.6vw, 1.4rem); line-height: 1.5; color: #f5f5f5;
     }
     .about-quote-footer {
       margin-top: 1.6rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.08);
@@ -753,6 +756,17 @@
     .about-quote-rating svg:first-child { color: #96bf47; }
     .about-quote-rating:hover { color: #96bf47; }
     @media (max-width: 640px) { .about-quote { padding: 1.5rem 1.25rem 1.25rem; } }
+    /* About featured testimonials: cross-fade */
+    .aq-stage { display: grid; }
+    .aq-slide { grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(6px);
+      transition: opacity .8s ease, transform .8s ease, visibility 0s linear .8s; }
+    .aq-slide.is-active { opacity: 1; visibility: visible; transform: none;
+      transition: opacity .9s ease .45s, transform .9s ease .45s, visibility 0s; }
+    .aq-dots { position: absolute; top: 2.1rem; right: 2rem; display: flex; gap: .45rem; }
+    .aq-dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,0.2); transition: width .4s ease, background .4s ease; }
+    .aq-dot:hover { background: rgba(150,191,71,0.6); }
+    .aq-dot.is-active { width: 24px; background: #96bf47; }
+    @media (max-width: 640px) { .aq-dots { top: 1.6rem; right: 1.25rem; } }
 
     /* About "Featured & partner with": same look as the hero trust bar.
        Static row when the column is wide enough; scrolling one-liner when it isn't. */
@@ -803,8 +817,8 @@
       margin-bottom: 1.2rem;
     }
     .help-quote {
-      font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
-      font-size: clamp(1.45rem, 2.1vw, 1.8rem); line-height: 1.25; color: #fff;
+      font-style: italic; font-weight: 600; letter-spacing: -0.015em;
+      font-size: clamp(1.25rem, 1.8vw, 1.5rem); line-height: 1.3; color: #fff;
     }
     .help-fix {
       margin-top: 1rem; display: inline-flex; align-items: center; gap: .55rem;
@@ -847,6 +861,101 @@
     .more-work-url { display: block; margin-top: .75rem; color: #96bf47; font-size: .72rem; letter-spacing: .03em; }
 
     /* Earlier experience one-line descriptions */
+    /* Shopify Partners review carousel */
+    .rv-carousel { position: relative; max-width: 68rem; margin: 0 auto; padding: 0 4.5rem; }
+    .rv-viewport { overflow: hidden; border-radius: 1.75rem; transition: height .6s cubic-bezier(.22,1,.36,1); }
+    .rv-track { display: flex; align-items: flex-start; transition: transform .8s cubic-bezier(.22,1,.36,1); }
+    .rv-slide { flex: 0 0 100%; min-width: 0; }
+    .rv-card {
+      display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3rem; align-items: center;
+      padding: 3rem 3.25rem; border-radius: 1.75rem;
+      background: radial-gradient(ellipse 80% 70% at 0% 0%, rgba(150,191,71,0.12), transparent 60%), #1b2716;
+      border: 1px solid rgba(150,191,71,0.18);
+    }
+    .rv-quote { display: block; height: 2.6rem; font-size: 5.5rem; font-weight: 800; line-height: .8; color: #96bf47; }
+    .rv-verified { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.25rem; font-size: .66rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: #b8db6f; }
+    .rv-store { margin-top: .8rem; font-size: clamp(1.6rem, 2.6vw, 2.3rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; color: #fff; overflow-wrap: anywhere; }
+    .rv-stars { display: flex; gap: .2rem; margin-top: 1rem; }
+    .rv-stars .on { fill: #f5c542; }
+    .rv-stars .off { fill: rgba(255,255,255,0.2); }
+    .rv-scores { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin-top: 1.25rem; font-size: .85rem; color: #a3a3a3; }
+    .rv-scores div { display: flex; gap: .4rem; }
+    .rv-scores dd { color: #fff; font-weight: 600; }
+    .rv-shot { margin: 0; }
+    .rv-shot img { display: block; width: 450px; max-width: 100%; height: auto; border-radius: 1rem; background: #fff; box-shadow: 0 30px 60px -25px rgba(0,0,0,0.75); }
+    .rv-nav {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+      display: grid; place-items: center; width: 48px; height: 48px; border-radius: 999px;
+      background: #fff; color: #08090a; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.6);
+      transition: background .3s ease, transform .3s ease;
+    }
+    .rv-nav:hover, .rv-nav:focus-visible { background: #96bf47; }
+    .rv-prev { left: 0; }
+    .rv-next { right: 0; }
+    .rv-meta { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.75rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .75rem; color: #737373; }
+    .rv-meta b { color: #fff; font-weight: 600; }
+    .rv-progress { width: 160px; height: 2px; border-radius: 2px; background: rgba(255,255,255,0.1); overflow: hidden; }
+    .rv-progress span { display: block; height: 100%; width: 0; background: #96bf47; transition: width .2s linear; }
+    @media (max-width: 900px) {
+      .rv-carousel { padding: 0; }
+      .rv-card { grid-template-columns: 1fr; gap: 1.75rem; padding: 2rem 1.25rem; }
+      .rv-quote { font-size: 5rem; height: 2rem; }
+      .rv-shot img { margin: 0 auto; }
+      .rv-nav { top: auto; bottom: 0; transform: none; width: 42px; height: 42px; }
+      .rv-meta { height: 42px; }
+    }
+    /* Book a Free Consultation popup */
+    .book-modal { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 1rem; }
+    .book-modal[hidden] { display: none; }
+    .book-backdrop { position: absolute; inset: 0; background: rgba(4,5,4,0.75); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); opacity: 0; transition: opacity .35s ease; }
+    .book-panel {
+      position: relative; display: grid; grid-template-columns: 1fr 1fr;
+      width: 75vw; height: 75vh; min-height: min(620px, 94vh); max-width: 1400px;
+      border-radius: 1.5rem; overflow: hidden; background: #0c0e0a;
+      border: 1px solid rgba(150,191,71,0.22);
+      box-shadow: 0 40px 120px -30px rgba(0,0,0,0.85), 0 0 90px -30px rgba(150,191,71,0.4);
+      opacity: 0; transform: translateY(18px) scale(.98);
+      transition: opacity .4s ease, transform .5s cubic-bezier(.22,1,.36,1);
+    }
+    .book-modal.open .book-backdrop { opacity: 1; }
+    .book-modal.open .book-panel { opacity: 1; transform: none; }
+    .book-close {
+      position: absolute; top: 1rem; right: 1rem; z-index: 3; display: grid; place-items: center;
+      width: 40px; height: 40px; border-radius: 999px; color: #fff;
+      background: rgba(8,9,7,0.7); border: 1px solid rgba(255,255,255,0.18); transition: background .3s ease, color .3s ease;
+    }
+    .book-close:hover, .book-close:focus-visible { background: #96bf47; color: #08090a; }
+    .book-cal { position: relative; background: #0c0e0a; border-right: 1px solid rgba(255,255,255,0.06); }
+    .book-cal iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity .5s ease; }
+    .book-cal.loaded iframe { opacity: 1; }
+    .book-cal-loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .9rem; font-size: .85rem; color: #a3a3a3; }
+    .book-cal.loaded .book-cal-loading { display: none; }
+    .book-spinner { width: 28px; height: 28px; border-radius: 999px; border: 2px solid rgba(150,191,71,0.25); border-top-color: #96bf47; animation: bookSpin .8s linear infinite; }
+    @keyframes bookSpin { to { transform: rotate(360deg); } }
+    .book-info { position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: center; overflow-y: auto;
+      background: radial-gradient(ellipse 90% 60% at 100% 0%, rgba(150,191,71,0.16), transparent 65%), radial-gradient(ellipse 70% 50% at 0% 100%, rgba(150,191,71,0.08), transparent 70%), #0c0e0a; }
+    .book-info-body { padding: 3rem 3rem 2.5rem; }
+    .book-title { margin-top: 0; font-size: clamp(1.6rem, 2.3vw, 2.4rem); font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; color: #fff; text-wrap: balance; }
+    .book-lead { margin-top: 1rem; color: #b5b5b5; line-height: 1.65; font-size: .95rem; }
+    .book-proof { margin-top: 1.25rem; display: grid; gap: .6rem; font-size: .88rem; color: #e5e5e5; }
+    .book-proof li { display: flex; gap: .6rem; align-items: flex-start; }
+    .book-proof svg { flex-shrink: 0; margin-top: .15rem; color: #96bf47; }
+    .book-sign { margin-top: 1.5rem; color: #d4d4d4; font-size: .95rem; }
+    .book-sign .accent-serif { display: block; margin-top: .35rem; padding: 0; background: none; color: #96bf47; font-size: 1.15rem; font-weight: 700; }
+    .book-alt { margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: .8rem; color: #8a8a8a; }
+    .book-alt a { color: #b8db6f; text-decoration: underline; text-underline-offset: 3px; }
+    .book-alt a:hover { color: #fff; }
+    @media (max-width: 900px) {
+      .book-modal { padding: .6rem; }
+      .book-panel { width: 100%; height: calc(100dvh - 1.2rem); min-height: 0; grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+      .book-info { order: -1; overflow: visible; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .book-lead, .book-proof, .book-sign, .book-alt { display: none; }
+      .book-info-body { padding: 1.1rem 3.75rem 1rem 1.1rem; }
+      .book-title { font-size: 1.2rem; }
+      .book-cal { border-right: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { .book-panel, .book-backdrop { transition: none; } .book-spinner { animation: none; } }
+    #services[hidden], .reviews-masonry[hidden] { display: none !important; }
     .earlier-desc { margin-top: .35rem; color: #737373; line-height: 1.6; }
 
     /* Earlier experience accordion (closed by default) */
@@ -869,6 +978,7 @@
     .earlier-acc[open] .earlier-toggle .exp-chev { transform: rotate(180deg); }
     .earlier-acc[open] .earlier-list { margin-top: 1.5rem; animation: expFade .4s ease both; }
   </style>
+  <link rel="stylesheet" href="css/agency-skin.css">
 </head>
 <body class="font-sans antialiased grain">
 
@@ -882,16 +992,16 @@
       </a>
 
       <ul class="hidden md:flex items-center gap-6 md:gap-8 text-[13px] text-neutral-400">
-        <li><a href="#services" class="nav-link hover:text-white transition">Services</a></li>
+        <!-- Services hidden for now: <li><a href="#services" class="nav-link hover:text-white transition">Services</a></li> -->
+        <li><a href="#reviews" class="nav-link hover:text-white transition">Reviews</a></li>
         <li><a href="#projects" class="nav-link hover:text-white transition">Selected Work</a></li>
         <li><a href="#case-studies" class="nav-link hover:text-white transition">Case Studies</a></li>
-        <li><a href="#reviews" class="nav-link hover:text-white transition">Reviews</a></li>
         <li><a href="#contact" class="nav-link hover:text-white transition">Contact</a></li>
       </ul>
 
       <div class="flex items-center gap-3">
         <a href="#contact" class="hidden md:inline-flex items-center gap-2 text-[13px] px-4 py-2 rounded-full bg-white text-ink-950 font-semibold hover:bg-brand transition">
-          Discuss Your Project
+          Book a Free Consultation
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
         <button type="button" id="mobileToggle" class="md:hidden text-neutral-300" aria-label="Menu">
@@ -901,12 +1011,12 @@
     </nav>
     <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-ink-950">
       <ul class="px-6 py-3 space-y-1 text-sm text-neutral-300">
-        <li><a href="#services" class="block">Services</a></li>
+        <!-- Services hidden for now: <li><a href="#services" class="block">Services</a></li> -->
+        <li><a href="#reviews" class="block">Reviews</a></li>
         <li><a href="#projects" class="block">Selected Work</a></li>
         <li><a href="#case-studies" class="block">Case Studies</a></li>
-        <li><a href="#reviews" class="block">Reviews</a></li>
         <li><a href="#contact" class="block">Contact</a></li>
-        <li class="pt-2 mt-2 border-t border-white/5"><a href="#contact" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand text-ink-950 font-semibold">Discuss Your Project →</a></li>
+        <li class="pt-2 mt-2 border-t border-white/5"><a href="#contact" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand text-ink-950 font-semibold">Book a Free Consultation →</a></li>
       </ul>
     </div>
   </header>
@@ -944,7 +1054,7 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
           <a href="#contact" class="magnetic inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/15 text-neutral-200 text-sm hover:border-brand hover:text-brand transition">
-            Discuss Your Project
+            Book a Free Consultation
           </a>
         </div>
 
@@ -996,10 +1106,9 @@
     <section id="about" class="relative px-6 lg:px-10 py-20 md:py-32 border-t border-white/[0.06]">
       <div class="max-w-7xl mx-auto">
         <div class="mb-16">
-          <span class="eyebrow reveal">Who I am</span>
-          <h2 class="about-title mt-6 font-sans font-bold text-white tracking-tight reveal">
+          <h2 class="about-title font-sans font-bold text-white tracking-tight reveal">
             <span class="hero-title-line">Shopify Development Built Around</span>
-            <span class="hero-title-line accent-serif">Performance, Usability, and Growth</span>
+            <span class="hero-title-line"><span class="accent-serif">Performance, Usability, and Growth</span></span>
           </h2>
         </div>
 
@@ -1140,27 +1249,70 @@
               </div>
             </div>
 
-            <!-- Featured testimonial -->
-            <figure class="about-quote">
+            <!-- Featured testimonials: fade between 3 reviews every 40 seconds -->
+            <div class="about-quote" data-aq data-interval="40000" role="region" aria-roledescription="carousel" aria-label="Featured client testimonials">
               <svg class="about-quote-mark" width="44" height="44" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.6 5C6.4 6.4 4 9.6 4 13.6V19h6v-6H7.2c0-2.6 1.4-4.6 3.6-5.6L9.6 5Zm10 0c-3.2 1.4-5.6 4.6-5.6 8.6V19h6v-6h-2.8c0-2.6 1.4-4.6 3.6-5.6L19.6 5Z"/></svg>
-              <blockquote class="about-quote-text">
-                Jason isn&rsquo;t just a technical wizard &mdash; he&rsquo;s a conversion optimization mastermind with an eye for design. His work across our brands has boosted conversions and improved UX.
-              </blockquote>
-              <figcaption class="about-quote-footer">
-                <div class="flex items-center gap-3">
-                  <img src="review/ezriel.jpeg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
-                  <div>
-                    <div class="text-white font-semibold text-sm">Ezriel P.</div>
-                    <a href="https://www.fameschocolate.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">fameschocolate.com</a>
+              <div class="aq-dots"><button type="button" class="aq-dot is-active" data-aq-dot="0" aria-label="Show review from Ezriel P." aria-current="true"></button><button type="button" class="aq-dot" data-aq-dot="1" aria-label="Show review from Joe M."></button><button type="button" class="aq-dot" data-aq-dot="2" aria-label="Show review from Abe A."></button></div>
+              <div class="aq-stage">
+                <div class="aq-slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 3">
+                  <blockquote class="about-quote-text">
+                    Jason isn&rsquo;t just a technical wizard &mdash; he&rsquo;s a conversion optimization mastermind with an eye for design. His work across our brands has boosted conversions and improved UX.
+                  </blockquote>
+                  <div class="about-quote-footer">
+                    <div class="flex items-center gap-3">
+                      <img src="review/ezriel.jpeg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
+                      <div>
+                        <div class="text-white font-semibold text-sm">Ezriel P.</div>
+                        <a href="https://www.fameschocolate.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">fameschocolate.com</a>
+                      </div>
+                    </div>
+                    <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="about-quote-rating">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
+                      5.0 from 34 Shopify Partner reviews
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                    </a>
                   </div>
                 </div>
-                <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="about-quote-rating">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-                  5.0 from 33 Shopify Partner reviews
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                </a>
-              </figcaption>
-            </figure>
+                <div class="aq-slide" role="group" aria-roledescription="slide" aria-label="2 of 3" aria-hidden="true" inert>
+                  <blockquote class="about-quote-text">
+                    Jason created our entire website from scratch and maintains it. His prompt response to our needs is what we love most. He is our go-to guy for everything website.
+                  </blockquote>
+                  <div class="about-quote-footer">
+                    <div class="flex items-center gap-3">
+                      <img src="review/joe.jpeg" alt="" width="44" height="44" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
+                      <div>
+                        <div class="text-white font-semibold text-sm">Joe M.</div>
+                        <a href="https://www.livelures.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">livelures.com</a>
+                      </div>
+                    </div>
+                    <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="about-quote-rating">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
+                      5.0 from 34 Shopify Partner reviews
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                    </a>
+                  </div>
+                </div>
+                <div class="aq-slide" role="group" aria-roledescription="slide" aria-label="3 of 3" aria-hidden="true" inert>
+                  <blockquote class="about-quote-text">
+                    Jason developed my Shopify store for a cosmetic brand. Communication was excellent, designs were always great. He worked very well and very quickly.
+                  </blockquote>
+                  <div class="about-quote-footer">
+                    <div class="flex items-center gap-3">
+                      <img src="review/abe.jpg" alt="" width="44" height="44" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
+                      <div>
+                        <div class="text-white font-semibold text-sm">Abe A.</div>
+                        <a href="https://kisscosofficial.com.au/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">kisscosofficial.com.au</a>
+                      </div>
+                    </div>
+                    <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="about-quote-rating">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
+                      5.0 from 34 Shopify Partner reviews
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1170,8 +1322,7 @@
     <section id="stack" class="relative px-6 lg:px-10 py-20 md:py-32 border-t border-white/[0.06]">
       <div class="max-w-6xl mx-auto">
         <div class="text-center">
-          <span class="eyebrow reveal">How I can help</span>
-          <h2 class="mt-6 font-sans text-3xl md:text-5xl font-bold text-white tracking-tight reveal max-w-3xl mx-auto">
+          <h2 class="font-sans text-3xl md:text-5xl font-bold text-white tracking-tight reveal max-w-3xl mx-auto">
             Sound familiar? Here&rsquo;s how I <span class="accent-serif">fix it</span>.
           </h2>
         </div>
@@ -1263,8 +1414,9 @@
                   View on Shopify App Store
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg>
                 </a>
-                <a href="https://shoptimizepro.io" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 text-neutral-200 text-sm hover:border-brand hover:text-brand transition">
-                  Visit ShoptimizePro
+                <a href="#contact" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 text-neutral-200 text-sm hover:border-brand hover:text-brand transition">
+                  Get Free CRO Audit Now
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
                 </a>
               </div>
             </div>
@@ -1273,8 +1425,736 @@
       </div>
     </section>
 
+    <!-- REVIEWS -->
+    <section id="reviews" class="relative px-6 lg:px-10 py-20 md:py-32 border-t border-white/[0.06]">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="font-sans text-3xl md:text-5xl font-bold text-white tracking-tight max-w-3xl mx-auto reveal">
+            Trusted by <span class="accent-serif">Shopify Merchants</span> Worldwide
+          </h2>
+          <p class="mt-5 text-neutral-400 max-w-xl mx-auto reveal">
+            <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">5.0 average rating across 34 verified Shopify Partner reviews.</a>
+          </p>
+        </div>
+
+        <!-- Review cards hidden for now (remove the hidden attribute to bring them back) -->
+        <div class="reviews-masonry" data-reviews-masonry hidden>
+
+          <!-- 1 -->
+          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
+            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
+            <blockquote class="relative text-neutral-200 leading-relaxed">Jason is very nice to work with. Great English and communication. Quick to respond — I can tell he wants the best possible outcome for my projects.</blockquote>
+            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
+              <img src="review/candice.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
+              <div>
+                <div class="text-white font-semibold text-sm">Candice C.</div>
+                <a href="https://leivip.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">leivip.com</a>
+              </div>
+            </figcaption>
+          </figure>
+
+          <!-- 2 -->
+          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
+            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
+            <blockquote class="relative text-neutral-200 leading-relaxed">Jason isn't just a technical wizard — he's a conversion optimization mastermind with an eye for design. His work across our brands has boosted conversions and improved UX.</blockquote>
+            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
+              <img src="review/ezriel.jpeg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
+              <div>
+                <div class="text-white font-semibold text-sm">Ezriel P.</div>
+                <a href="https://www.fameschocolate.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">fameschocolate.com</a>
+              </div>
+            </figcaption>
+          </figure>
+
+          <!-- 3 -->
+          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
+            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
+            <blockquote class="relative text-neutral-200 leading-relaxed">Jason created our entire website from scratch and maintains it. His prompt response to our needs is what we love most. He is our go-to guy for everything website.</blockquote>
+            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
+              <img src="review/joe.jpeg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
+              <div>
+                <div class="text-white font-semibold text-sm">Joe M.</div>
+                <a href="https://www.livelures.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">livelures.com</a>
+              </div>
+            </figcaption>
+          </figure>
+
+          <!-- 4 -->
+          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
+            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
+            <blockquote class="relative text-neutral-200 leading-relaxed">Explaining my requirements was effortless. Jason quickly understood everything and suggested additional insights to make the site more effective. Highly recommend.</blockquote>
+            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
+              <img src="review/rj.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
+              <div>
+                <div class="text-white font-semibold text-sm">RJ Corbeta</div>
+                <a href="https://floorfixpro.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">floorfixpro.com</a>
+              </div>
+            </figcaption>
+          </figure>
+
+          <!-- 5 -->
+          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
+            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
+            <blockquote class="relative text-neutral-200 leading-relaxed">Out of 50+ applicants, I'm very happy I chose Jason. Polite, prompt, no fuss — he created my site with ease. I look forward to hiring him again.</blockquote>
+            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
+              <img src="review/michelle.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
+              <div>
+                <div class="text-white font-semibold text-sm">Michelle P.</div>
+                <a href="https://www.soleildor.co/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">soleildor.co</a>
+              </div>
+            </figcaption>
+          </figure>
+
+          <!-- 6 -->
+          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
+            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
+            <blockquote class="relative text-neutral-200 leading-relaxed">Jason developed my Shopify store for a cosmetic brand. Communication was excellent, designs were always great. He worked very well and very quickly.</blockquote>
+            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
+              <img src="review/abe.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
+              <div>
+                <div class="text-white font-semibold text-sm">Abe A.</div>
+                <a href="https://kisscosofficial.com.au/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">kisscosofficial.com.au</a>
+              </div>
+            </figcaption>
+          </figure>
+
+          <!-- 7 -->
+          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
+            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
+            <blockquote class="relative text-neutral-200 leading-relaxed">I've worked with him for 3+ years and there's never been a task he couldn't complete. Fast, communicative, dependable.</blockquote>
+            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
+              <img src="review/kevin.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
+              <div>
+                <div class="text-white font-semibold text-sm">Kevin K.</div>
+                <span class="text-xs text-neutral-500">Anytime Baseball Supply</span>
+              </div>
+            </figcaption>
+          </figure>
+
+          <!-- 8 -->
+          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
+            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
+            <blockquote class="relative text-neutral-200 leading-relaxed">We've worked together on several projects over the years. Brilliant, hardworking, and consistently creative.</blockquote>
+            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
+              <img src="review/linda.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
+              <div>
+                <div class="text-white font-semibold text-sm">Dr. Linda</div>
+                <a href="https://joinbodygood.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">joinbodygood.com</a>
+              </div>
+            </figcaption>
+          </figure>
+
+        </div>
+
+        <!-- Shopify Partners review carousel (screenshots in images/reviews/partners/) -->
+        <div class="rv-carousel reveal" data-rv data-interval="35000" aria-roledescription="carousel" aria-label="Shopify Partners client reviews">
+          <button type="button" class="rv-nav rv-prev" data-rv-prev aria-label="Previous review">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <div class="rv-viewport" data-rv-viewport>
+            <div class="rv-track" data-rv-track aria-live="polite">
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="1 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Kia and George Pet Kitchen</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img src="images/reviews/partners/review-27.webp" alt="Shopify Partners review from Kia and George Pet Kitchen: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="2 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Alien Power</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-30.webp" alt="Shopify Partners review from Alien Power: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="3 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Full2Mastii</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-23.webp" alt="Shopify Partners review from Full2Mastii: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="4 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">BM</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-10.webp" alt="Shopify Partners review from BM: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="5 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Pip Eats</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-06.webp" alt="Shopify Partners review from Pip Eats: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="6 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Stojo Products Inc.</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-08.webp" alt="Shopify Partners review from Stojo Products Inc.: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="7 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Cowboy Kenny Coffee</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-26.webp" alt="Shopify Partners review from Cowboy Kenny Coffee: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="8 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Malani Perfumes</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-01.webp" alt="Shopify Partners review from Malani Perfumes: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="9 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Gordon - Thread Painting</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-33.webp" alt="Shopify Partners review from Gordon - Thread Painting: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="10 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Homestead Supplier</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-11.webp" alt="Shopify Partners review from Homestead Supplier: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="11 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Paw Prestige Pet Store</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-24.webp" alt="Shopify Partners review from Paw Prestige Pet Store: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="12 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">noon-chi-skincare</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-25.webp" alt="Shopify Partners review from noon-chi-skincare: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="13 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">The Daily Wellness</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-18.webp" alt="Shopify Partners review from The Daily Wellness: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="14 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Anytime Baseball Supply</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-17.webp" alt="Shopify Partners review from Anytime Baseball Supply: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="15 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Soleil D&#39;or Collective</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-31.webp" alt="Shopify Partners review from Soleil D&#39;or Collective: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="16 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Cove Home</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-19.webp" alt="Shopify Partners review from Cove Home: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="17 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">rockystail</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-02.webp" alt="Shopify Partners review from rockystail: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="18 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">acecase.store</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-07.webp" alt="Shopify Partners review from acecase.store: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="19 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Autrefoisclothing</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-05.webp" alt="Shopify Partners review from Autrefoisclothing: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="20 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Fiesta Furnishings</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-32.webp" alt="Shopify Partners review from Fiesta Furnishings: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="21 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Yin &amp; Yang Superfoods</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-14.webp" alt="Shopify Partners review from Yin &amp; Yang Superfoods: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="22 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">TraumaPet</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-28.webp" alt="Shopify Partners review from TraumaPet: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="23 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">TraumaPet Nederland</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-35.webp" alt="Shopify Partners review from TraumaPet Nederland: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="24 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Future Fans</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 4.5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="off"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>4/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-16.webp" alt="Shopify Partners review from Future Fans: Communication 5 out of 5, Quality of Work 4 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="25 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Esme And Arlo</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-20.webp" alt="Shopify Partners review from Esme And Arlo: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="26 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Divine Purpose</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-21.webp" alt="Shopify Partners review from Divine Purpose: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="27 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Luminance Milano</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-09.webp" alt="Shopify Partners review from Luminance Milano: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="28 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Sapphire Salt</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-22.webp" alt="Shopify Partners review from Sapphire Salt: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="29 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">FurSentials®</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-13.webp" alt="Shopify Partners review from FurSentials®: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="30 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Skin O2</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-29.webp" alt="Shopify Partners review from Skin O2: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="31 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Tea Industries</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-15.webp" alt="Shopify Partners review from Tea Industries: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="32 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Talons</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-12.webp" alt="Shopify Partners review from Talons: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="33 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">Lucia Gray</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-04.webp" alt="Shopify Partners review from Lucia Gray: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            <div class="rv-slide" role="group" aria-roledescription="slide" aria-label="34 of 34">
+              <div class="rv-card">
+                <div class="rv-info">
+                  <span class="rv-quote" aria-hidden="true">&ldquo;</span>
+                  <span class="rv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Verified Shopify Partners review</span>
+                  <h3 class="rv-store">SISU Plunge</h3>
+                  <div class="rv-stars" role="img" aria-label="Rated 5 out of 5"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class="on"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></div>
+                  <dl class="rv-scores">
+                    <div><dt>Communication</dt><dd>5/5</dd></div>
+                    <div><dt>Quality of work</dt><dd>5/5</dd></div>
+                  </dl>
+                </div>
+                <figure class="rv-shot">
+                  <img data-src="images/reviews/partners/review-03.webp" alt="Shopify Partners review from SISU Plunge: Communication 5 out of 5, Quality of Work 5 out of 5" width="450" decoding="async" />
+                </figure>
+              </div>
+            </div>
+            </div>
+          </div>
+          <button type="button" class="rv-nav rv-next" data-rv-next aria-label="Next review">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+          <div class="rv-meta">
+            <span class="rv-count"><b data-rv-current>01</b> / 34</span>
+            <span class="rv-progress" aria-hidden="true"><span data-rv-bar></span></span>
+          </div>
+        </div>
+
+        <!-- "Read all 33 reviews" button hidden for now (remove the hidden attribute to bring it back) -->
+        <div class="mt-10 text-center" hidden>
+          <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 text-neutral-200 text-sm hover:border-brand hover:text-brand transition">
+            Read all 33 reviews on Shopify Partners
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- WHAT I DO — pinned horizontal scroll -->
-    <section id="services" class="services-pin border-t border-white/[0.06]" aria-label="What I do" data-pin>
+    <!-- WHAT I DO: hidden for now (remove the hidden attribute to bring it back) -->
+    <section id="services" class="services-pin border-t border-white/[0.06]" aria-label="What I do" data-pin hidden>
       <div class="services-sticky">
         <div class="services-track" data-track>
 
@@ -1457,7 +2337,7 @@
                 <span class="chip">Discovery</span>
               </div>
               <a href="#contact" class="btn-ghost mt-6 inline-flex">
-                Discuss Your Project
+                Book a Free Consultation
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
               </a>
             </div>
@@ -1471,8 +2351,7 @@
     <section id="journey" class="relative px-6 lg:px-10 py-20 md:py-32 border-t border-white/[0.06]">
       <div class="max-w-6xl mx-auto">
         <div class="mb-16">
-          <span class="eyebrow reveal">Experience</span>
-          <h2 class="mt-6 font-sans text-3xl md:text-5xl font-bold text-white tracking-tight max-w-3xl reveal">
+          <h2 class="font-sans text-3xl md:text-5xl font-bold text-white tracking-tight max-w-3xl reveal">
             A timeline of my professional <span class="accent-serif">journey</span>, key projects, and milestones.
           </h2>
         </div>
@@ -1663,8 +2542,7 @@
 
           <!-- Aside -->
           <aside class="services-aside flex flex-col justify-center">
-            <span class="eyebrow">Selected Works</span>
-            <h2 class="mt-6 font-sans text-5xl md:text-6xl font-bold text-white tracking-tightest leading-[0.95]">
+            <h2 class="font-sans text-5xl md:text-6xl font-bold text-white tracking-tightest leading-[0.95]">
               SELECTED<br/><span class="accent-serif">WORKS</span>
             </h2>
             <div class="mt-6 w-12 h-px bg-brand"></div>
@@ -1891,8 +2769,7 @@
     <section id="case-studies" class="relative px-6 lg:px-10 py-20 md:py-32 border-t border-white/[0.06]">
       <div class="max-w-7xl mx-auto">
         <div class="mb-12">
-          <span class="eyebrow reveal">Case Studies</span>
-          <h2 class="mt-6 font-sans text-3xl md:text-5xl font-bold text-white tracking-tight max-w-3xl reveal">
+          <h2 class="font-sans text-3xl md:text-5xl font-bold text-white tracking-tight max-w-3xl reveal">
             CRO builds, ground-up storefronts, and conversion-focused redesigns.
           </h2>
           <p class="mt-4 text-neutral-400 max-w-2xl reveal">A closer look at the scope, decisions, and delivery behind select projects.</p>
@@ -2384,142 +3261,11 @@
       </div>
     </section>
 
-    <!-- REVIEWS -->
-    <section id="reviews" class="relative px-6 lg:px-10 py-20 md:py-32 border-t border-white/[0.06]">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-          <span class="eyebrow reveal mx-auto">Client Stories</span>
-          <h2 class="mt-6 font-sans text-3xl md:text-5xl font-bold text-white tracking-tight max-w-3xl mx-auto reveal">
-            Trusted by <span class="accent-serif">Shopify Merchants</span> Worldwide
-          </h2>
-          <p class="mt-5 text-neutral-400 max-w-xl mx-auto reveal">
-            <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">5.0 average rating across 33 verified Shopify Partner reviews.</a>
-          </p>
-        </div>
-
-        <div class="reviews-masonry" data-reviews-masonry>
-
-          <!-- 1 -->
-          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
-            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
-            <blockquote class="relative text-neutral-200 leading-relaxed">Jason is very nice to work with. Great English and communication. Quick to respond — I can tell he wants the best possible outcome for my projects.</blockquote>
-            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
-              <img src="review/candice.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
-              <div>
-                <div class="text-white font-semibold text-sm">Candice C.</div>
-                <a href="https://leivip.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">leivip.com</a>
-              </div>
-            </figcaption>
-          </figure>
-
-          <!-- 2 -->
-          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
-            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
-            <blockquote class="relative text-neutral-200 leading-relaxed">Jason isn't just a technical wizard — he's a conversion optimization mastermind with an eye for design. His work across our brands has boosted conversions and improved UX.</blockquote>
-            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
-              <img src="review/ezriel.jpeg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
-              <div>
-                <div class="text-white font-semibold text-sm">Ezriel P.</div>
-                <a href="https://www.fameschocolate.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">fameschocolate.com</a>
-              </div>
-            </figcaption>
-          </figure>
-
-          <!-- 3 -->
-          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
-            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
-            <blockquote class="relative text-neutral-200 leading-relaxed">Jason created our entire website from scratch and maintains it. His prompt response to our needs is what we love most. He is our go-to guy for everything website.</blockquote>
-            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
-              <img src="review/joe.jpeg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
-              <div>
-                <div class="text-white font-semibold text-sm">Joe M.</div>
-                <a href="https://www.livelures.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">livelures.com</a>
-              </div>
-            </figcaption>
-          </figure>
-
-          <!-- 4 -->
-          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
-            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
-            <blockquote class="relative text-neutral-200 leading-relaxed">Explaining my requirements was effortless. Jason quickly understood everything and suggested additional insights to make the site more effective. Highly recommend.</blockquote>
-            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
-              <img src="review/rj.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
-              <div>
-                <div class="text-white font-semibold text-sm">RJ Corbeta</div>
-                <a href="https://floorfixpro.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">floorfixpro.com</a>
-              </div>
-            </figcaption>
-          </figure>
-
-          <!-- 5 -->
-          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
-            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
-            <blockquote class="relative text-neutral-200 leading-relaxed">Out of 50+ applicants, I'm very happy I chose Jason. Polite, prompt, no fuss — he created my site with ease. I look forward to hiring him again.</blockquote>
-            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
-              <img src="review/michelle.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
-              <div>
-                <div class="text-white font-semibold text-sm">Michelle P.</div>
-                <a href="https://www.soleildor.co/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">soleildor.co</a>
-              </div>
-            </figcaption>
-          </figure>
-
-          <!-- 6 -->
-          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
-            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
-            <blockquote class="relative text-neutral-200 leading-relaxed">Jason developed my Shopify store for a cosmetic brand. Communication was excellent, designs were always great. He worked very well and very quickly.</blockquote>
-            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
-              <img src="review/abe.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
-              <div>
-                <div class="text-white font-semibold text-sm">Abe A.</div>
-                <a href="https://kisscosofficial.com.au/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">kisscosofficial.com.au</a>
-              </div>
-            </figcaption>
-          </figure>
-
-          <!-- 7 -->
-          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
-            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
-            <blockquote class="relative text-neutral-200 leading-relaxed">I've worked with him for 3+ years and there's never been a task he couldn't complete. Fast, communicative, dependable.</blockquote>
-            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
-              <img src="review/kevin.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
-              <div>
-                <div class="text-white font-semibold text-sm">Kevin K.</div>
-                <span class="text-xs text-neutral-500">Anytime Baseball Supply</span>
-              </div>
-            </figcaption>
-          </figure>
-
-          <!-- 8 -->
-          <figure class="review-card relative p-7 rounded-2xl border border-white/10 bg-ink-900/40 hover:border-brand/30 transition">
-            <div class="absolute top-4 right-6 font-serif text-[6rem] leading-none text-brand/15 select-none">"</div>
-            <blockquote class="relative text-neutral-200 leading-relaxed">We've worked together on several projects over the years. Brilliant, hardworking, and consistently creative.</blockquote>
-            <figcaption class="relative mt-7 flex items-center gap-3 pt-5 border-t border-white/10">
-              <img src="review/linda.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" class="w-11 h-11 rounded-full object-cover ring-1 ring-white/10" />
-              <div>
-                <div class="text-white font-semibold text-sm">Dr. Linda</div>
-                <a href="https://joinbodygood.com/" target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">joinbodygood.com</a>
-              </div>
-            </figcaption>
-          </figure>
-
-        </div>
-
-        <div class="mt-10 text-center">
-          <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 text-neutral-200 text-sm hover:border-brand hover:text-brand transition">
-            Read all 33 reviews on Shopify Partners
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
     <!-- FAQ -->
     <section id="faq" class="relative px-6 lg:px-10 py-20 md:py-32 border-t border-white/[0.06]">
       <div class="max-w-4xl mx-auto">
         <div class="mb-16 text-center">
-          <span class="eyebrow reveal mx-auto">Frequently Asked</span>
-          <h2 class="mt-6 font-sans text-3xl md:text-5xl font-bold text-white tracking-tight reveal">
+          <h2 class="font-sans text-3xl md:text-5xl font-bold text-white tracking-tight reveal">
             Common questions about my <span class="accent-serif">work</span>.
           </h2>
         </div>
@@ -2590,8 +3336,7 @@
       <div class="max-w-7xl mx-auto">
         <div class="grid md:grid-cols-12 gap-12">
           <div class="md:col-span-5">
-            <span class="eyebrow reveal">Let's Connect</span>
-            <h2 class="mt-6 font-sans text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.05] tracking-tight reveal">
+            <h2 class="font-sans text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.05] tracking-tight reveal">
               Let&rsquo;s Build a Faster, <span class="accent-serif">Higher-Converting</span> Shopify Experience
             </h2>
             <p class="text-neutral-400 mt-6 leading-relaxed reveal">Tell me what you&rsquo;re building, what is currently blocking growth, and where you need technical support.</p>
@@ -2674,6 +3419,33 @@
     </section>
 
   </main>
+
+  <!-- Book a Free Consultation popup (opened by every "Book a Free Consultation" button) -->
+  <div class="book-modal" id="bookModal" role="dialog" aria-modal="true" aria-labelledby="bookTitle" hidden>
+    <div class="book-backdrop" data-book-close></div>
+    <div class="book-panel">
+      <button type="button" class="book-close" data-book-close aria-label="Close booking window">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="book-cal">
+        <div class="book-cal-loading" aria-hidden="true"><span class="book-spinner"></span>Loading available times&hellip;</div>
+        <iframe title="Pick a time for a free 30-minute call with Mark Jason (Calendly)" data-src="https://calendly.com/shopifydev-mj/30min?hide_gdpr_banner=1&amp;background_color=0c0e0a&amp;text_color=f5f5f5&amp;primary_color=96bf47" allow="payment"></iframe>
+      </div>
+      <aside class="book-info">
+        <div class="book-info-body">
+          <h2 id="bookTitle" class="book-title">Ready to take your Shopify store to the <span class="accent-serif">next level?</span></h2>
+          <p class="book-lead">Book a free call and I&rsquo;ll help you uncover what&rsquo;s holding your store back, from slow pages and checkout drop-offs to a theme that&rsquo;s hard to manage, and map out clear next steps.</p>
+          <ul class="book-proof">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>10+ years in web development &middot; 300+ Shopify stores supported</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Shopify Select Partner &middot; 5.0 from 34 client reviews</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Speed, conversion, custom themes and Shopify Plus</span></li>
+          </ul>
+          <p class="book-sign">Looking forward to speaking with you soon!<span class="accent-serif">&mdash; Mark Jason</span></p>
+          <p class="book-alt">Prefer to write? <a href="#contact" data-book-close>Send me a message instead</a></p>
+        </div>
+      </aside>
+    </div>
+  </div>
 
   <!-- Case study modal -->
   <div id="caseModal" class="modal-root" role="dialog" aria-modal="true" aria-labelledby="caseModalTitle" aria-hidden="true">
@@ -2865,8 +3637,149 @@
       onScroll();
     });
 
+    // "Book a Free Consultation" popup: Calendly loads on first open (or on hover, to feel instant)
+    (function () {
+      const modal = document.getElementById('bookModal');
+      if (!modal) return;
+      const cal = modal.querySelector('.book-cal');
+      const iframe = cal.querySelector('iframe[data-src]');
+      const closeBtn = modal.querySelector('.book-close');
+      let lastFocus = null, hideTimer = null;
+      const warm = () => { if (!iframe.src) iframe.src = iframe.dataset.src + '&embed_type=Inline&embed_domain=' + encodeURIComponent(location.hostname || 'localhost'); };
+      iframe.addEventListener('load', () => { if (iframe.src) cal.classList.add('loaded'); });
+      function open() {
+        warm();
+        lastFocus = document.activeElement;
+        clearTimeout(hideTimer);
+        modal.hidden = false;
+        document.documentElement.style.overflow = 'hidden';
+        requestAnimationFrame(() => { modal.classList.add('open'); closeBtn.focus(); });
+      }
+      function close() {
+        modal.classList.remove('open');
+        document.documentElement.style.overflow = '';
+        hideTimer = setTimeout(() => { modal.hidden = true; }, 400);
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+      }
+      document.querySelectorAll('a[href="#contact"]').forEach((a) => {
+        if (!/Book a Free Consultation/i.test(a.textContent)) return;
+        a.setAttribute('aria-haspopup', 'dialog');
+        a.addEventListener('pointerenter', warm, { once: true });
+        a.addEventListener('click', (e) => { e.preventDefault(); open(); });
+      });
+      modal.querySelectorAll('[data-book-close]').forEach((el) => el.addEventListener('click', close));
+      document.addEventListener('keydown', (e) => {
+        if (modal.hidden || !modal.classList.contains('open')) return;
+        if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+        if (e.key === 'Tab') {
+          const items = Array.from(modal.querySelectorAll('button, a[href], iframe')).filter((el) => el.offsetParent !== null);
+          const first = items[0], last = items[items.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      });
+    })();
+
+    // About featured testimonials: fade to the next review every 40s (pauses on hover/focus or when off-screen)
+    (function () {
+      const root = document.querySelector('[data-aq]');
+      if (!root) return;
+      const slides = Array.from(root.querySelectorAll('.aq-slide'));
+      const dots = Array.from(root.querySelectorAll('[data-aq-dot]'));
+      const interval = Number(root.dataset.interval) || 40000;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let idx = 0, elapsed = 0, paused = false, visible = false;
+      function show(i) {
+        idx = (i + slides.length) % slides.length;
+        slides.forEach((s, k) => {
+          const on = k === idx;
+          s.classList.toggle('is-active', on);
+          s.inert = !on;
+          if (on) s.removeAttribute('aria-hidden'); else s.setAttribute('aria-hidden', 'true');
+        });
+        dots.forEach((d, k) => {
+          d.classList.toggle('is-active', k === idx);
+          if (k === idx) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+        });
+        elapsed = 0;
+      }
+      dots.forEach((d) => d.addEventListener('click', () => show(Number(d.dataset.aqDot))));
+      root.addEventListener('mouseenter', () => { paused = true; });
+      root.addEventListener('mouseleave', () => { paused = false; });
+      root.addEventListener('focusin', () => { paused = true; });
+      root.addEventListener('focusout', () => { paused = false; });
+      new IntersectionObserver((en) => { visible = en[0].isIntersecting; }).observe(root);
+      setInterval(() => {
+        if (reduce || paused || !visible || document.hidden) return;
+        elapsed += 250;
+        if (elapsed >= interval) show(idx + 1);
+      }, 250);
+    })();
+
+    // Shopify Partners review carousel: auto-advance, arrows, swipe, keyboard, pause on hover/focus
+    (function () {
+      const root = document.querySelector('[data-rv]');
+      if (!root) return;
+      const track = root.querySelector('[data-rv-track]');
+      const viewport = root.querySelector('[data-rv-viewport]');
+      const slides = Array.from(track.children);
+      const current = root.querySelector('[data-rv-current]');
+      const bar = root.querySelector('[data-rv-bar]');
+      const interval = Number(root.dataset.interval) || 35000;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let idx = 0, elapsed = 0, paused = false, visible = false;
+
+      const fit = () => { viewport.style.height = slides[idx].offsetHeight + 'px'; };
+      const load = (i) => {
+        const img = slides[(i + slides.length) % slides.length].querySelector('img[data-src]');
+        if (!img) return;
+        img.addEventListener('load', fit, { once: true });
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+      };
+      function go(i) {
+        idx = (i + slides.length) % slides.length;
+        track.style.transform = 'translateX(' + (-idx * 100) + '%)';
+        slides.forEach((s, k) => { const off = k !== idx; s.setAttribute('aria-hidden', String(off)); s.inert = off; });
+        current.textContent = String(idx + 1).padStart(2, '0');
+        load(idx); load(idx + 1); load(idx - 1);
+        fit();
+        elapsed = 0; bar.style.width = '0%';
+      }
+      // Light timer (no per-frame loop): advances progress 5x a second, only while visible and not paused
+      function tick() {
+        if (paused || !visible || reduce || document.hidden) return;
+        elapsed += 200;
+        if (elapsed >= interval) go(idx + 1);
+        bar.style.width = Math.min(100, (elapsed / interval) * 100) + '%';
+      }
+
+      root.querySelector('[data-rv-prev]').addEventListener('click', () => go(idx - 1));
+      root.querySelector('[data-rv-next]').addEventListener('click', () => go(idx + 1));
+      root.addEventListener('mouseenter', () => { paused = true; });
+      root.addEventListener('mouseleave', () => { paused = false; });
+      root.addEventListener('focusin', () => { paused = true; });
+      root.addEventListener('focusout', () => { paused = false; });
+      root.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') go(idx - 1);
+        if (e.key === 'ArrowRight') go(idx + 1);
+      });
+      let x0 = null;
+      viewport.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+      viewport.addEventListener('touchend', (e) => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 45) go(idx + (dx < 0 ? 1 : -1));
+        x0 = null;
+      });
+      new IntersectionObserver((en) => { visible = en[0].isIntersecting; }).observe(root);
+      window.addEventListener('resize', fit);
+      go(0);
+      setInterval(tick, 200);
+    })();
+
     // Active nav link based on scroll
-    const sections = ['services','projects','case-studies','reviews','contact'];
+    const sections = ['projects','case-studies','reviews','contact'];
     const navLinks = document.querySelectorAll('.nav-link');
     const navIo = new IntersectionObserver((entries) => {
       entries.forEach(e => {
