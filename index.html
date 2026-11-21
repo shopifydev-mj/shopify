@@ -754,45 +754,81 @@
     .about-quote-rating:hover { color: #96bf47; }
     @media (max-width: 640px) { .about-quote { padding: 1.5rem 1.25rem 1.25rem; } }
 
-    /* Recognition / partner cards (About) — equal-size cards, white logos */
-    .recog-grid { display: grid; gap: .75rem; grid-template-columns: repeat(2, 1fr); }
-    .recog-card {
-      position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: .9rem;
-      min-height: 96px; padding: 1.1rem 1.15rem;
-      border-radius: .9rem; border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.015);
-      transition: border-color .3s ease, background .3s ease;
+    /* About "Featured & partner with": same look as the hero trust bar.
+       Static row when the column is wide enough; scrolling one-liner when it isn't. */
+    .about-trust { margin-top: 2.25rem; container-type: inline-size; }
+    .about-trust-label {
+      display: flex; justify-content: center; align-items: center; gap: .5rem; margin-bottom: .85rem;
+      font-size: .68rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #b8db6f;
     }
-    .recog-card:hover { border-color: rgba(150,191,71,0.35); background: rgba(150,191,71,0.03); }
-    .recog-card:last-child:nth-child(odd) { grid-column: 1 / -1; }  /* odd count: last card spans full row */
-    .recog-card-logo { display: flex; align-items: center; gap: .5rem; height: 26px; padding-right: 1.4rem; opacity: .85; transition: opacity .3s ease; }
-    .recog-card:hover .recog-card-logo { opacity: 1; }
-    .recog-card-logo img { display: block; height: 20px; width: auto; }
-    .recog-card-logo .logo-tall { height: 24px; }
-    .recog-card-logo .logo-sd { height: 22px; }
-    .recog-card-logo .hero-logo-text { font-size: .9rem; }
-    .recog-card-role { color: #737373; font-size: .75rem; line-height: 1.35; }
-    .recog-card .ext-arrow { position: absolute; top: 1.1rem; right: 1.1rem; color: #525252; transition: transform .3s ease, color .3s ease; }
-    .recog-card:hover .ext-arrow { color: #96bf47; transform: translate(2px, -2px); }
+    .about-trust-label svg { color: #96bf47; flex-shrink: 0; }
+    .about-trust-bar { display: flex; width: 100%; justify-content: center; padding: .75rem .5rem; }
+    .about-trust-bar .hero-logo { padding: .3rem 1.1rem; }
+    .about-trust-bar .hero-logo img { height: 20px; }
+    .about-trust-bar .hero-logo .logo-tall,
+    .about-trust-bar .hero-logo .logo-sd { height: 24px; }
+    .about-trust-bar .trust-logos:not(.trust-dup) .hero-logo:first-child::before { display: none; }
+    @container (max-width: 460px) {
+      .about-trust-bar { display: block; padding: .7rem 0; }
+      .about-trust-bar .trust-viewport {
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+        mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+      }
+      .about-trust-bar .trust-track { width: max-content; animation: trustMarquee 16s linear infinite; }
+      .about-trust-bar .trust-viewport:hover .trust-track,
+      .about-trust-bar .trust-viewport:active .trust-track { animation-play-state: paused; }
+      .about-trust-bar .trust-dup { display: flex; }
+      .about-trust-bar .trust-logos { flex-wrap: nowrap; }
+      .about-trust-bar .trust-logos:not(.trust-dup) .hero-logo:first-child::before { display: block; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .about-trust-bar .trust-track { animation: none !important; }
+      .about-trust-bar .trust-viewport { overflow-x: auto; }
+    }
 
-    /* Expertise groups (Tech stack) */
-    .expertise-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; text-align: left; }
-    @media (min-width: 640px) { .expertise-grid { grid-template-columns: repeat(2, 1fr); } .expertise-card-wide { grid-column: span 2; } }
-    @media (min-width: 1024px) { .expertise-grid { grid-template-columns: repeat(3, 1fr); } .expertise-card-wide { grid-column: span 3; } }
-    .expertise-card {
-      padding: 1.6rem 1.5rem; border-radius: 1rem;
-      border: 1px solid rgba(255,255,255,0.08);
+    /* How I can help (problem → fix cards) */
+    .help-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+    @media (min-width: 768px) { .help-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; } }
+    .help-card {
+      position: relative; padding: 1.9rem 1.75rem 1.75rem;
+      border-radius: 1.1rem; border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.015);
-      transition: border-color .3s ease, background .3s ease;
+      transition: border-color .3s ease, background .3s ease, transform .3s ease;
     }
-    .expertise-card:hover { border-color: rgba(150,191,71,0.3); background: rgba(255,255,255,0.025); }
-    .expertise-card h3 {
-      display: flex; align-items: center; gap: .65rem;
-      font-size: .7rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase;
-      color: #96bf47; margin-bottom: .9rem;
+    .help-card:hover { border-color: rgba(150,191,71,0.35); background: rgba(150,191,71,0.03); transform: translateY(-2px); }
+    .help-icon {
+      width: 42px; height: 42px; border-radius: 999px; display: grid; place-items: center;
+      border: 1px solid rgba(150,191,71,0.3); background: rgba(150,191,71,0.06); color: #96bf47;
+      margin-bottom: 1.2rem;
     }
-    .expertise-card h3::before { content: ''; width: 18px; height: 1px; background: #96bf47; display: block; flex-shrink: 0; }
-    .expertise-card p { color: #a3a3a3; font-size: .9rem; line-height: 1.7; }
+    .help-quote {
+      font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
+      font-size: clamp(1.45rem, 2.1vw, 1.8rem); line-height: 1.25; color: #fff;
+    }
+    .help-fix {
+      margin-top: 1rem; display: inline-flex; align-items: center; gap: .55rem;
+      font-size: .7rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: #96bf47;
+    }
+    .help-fix::before { content: ''; width: 18px; height: 1px; background: #96bf47; display: block; }
+    .help-desc { margin-top: .6rem; color: #a3a3a3; font-size: .95rem; line-height: 1.65; }
+    .help-tools {
+      margin-top: 2.5rem; padding-top: 1.75rem; border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .75rem 1.25rem;
+      text-align: center;
+    }
+    .help-tools-label { font-size: .65rem; letter-spacing: .25em; text-transform: uppercase; color: #737373; }
+    .help-tools-list { color: #d4d4d4; font-size: .9rem; line-height: 1.8; }
+    .help-tools-list i { font-style: normal; color: #525252; margin: 0 .3rem; }
+    .help-tools-cta { flex-basis: 100%; display: flex; justify-content: center; margin-top: .75rem; }
+    .help-tools-link {
+      display: inline-flex; align-items: center; gap: .55rem;
+      padding: .8rem 1.5rem; border-radius: 999px;
+      background: #96bf47; color: #08090a; font-weight: 600; font-size: .9rem;
+      box-shadow: 0 10px 30px -12px rgba(150,191,71,0.55);
+      transition: background .3s ease, transform .3s ease, box-shadow .3s ease;
+    }
+    .help-tools-link:hover { background: #b8db6f; transform: translateY(-2px); box-shadow: 0 14px 34px -12px rgba(150,191,71,0.65); }
 
     /* More Shopify work (compact list under Case Studies) */
     .more-work { display: grid; gap: 1rem; grid-template-columns: 1fr; }
@@ -819,31 +855,21 @@
   <!-- NAV -->
   <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-ink-950/60 border-b border-white/[0.04]">
     <nav class="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-      <a href="#top" class="flex items-center group" aria-label="Jason Nastor — home">
+      <a href="#top" class="flex items-center group" aria-label="Mark Jason Nastor — home">
         <span class="relative w-8 h-8 grid place-items-center shrink-0">
-          <img src="images/jason_logo.png" alt="Jason Nastor" width="32" height="32" decoding="async" fetchpriority="high" class="w-full h-full object-contain group-hover:scale-105 transition" />
+          <img src="images/jason_logo.png" alt="Mark Jason Nastor" width="32" height="32" decoding="async" fetchpriority="high" class="w-full h-full object-contain group-hover:scale-105 transition" />
         </span>
       </a>
 
-      <ul class="hidden md:flex items-center gap-6 text-[13px] text-neutral-400">
-        <li><a href="#about" class="nav-link hover:text-white transition">About</a></li>
+      <ul class="hidden md:flex items-center gap-6 md:gap-8 text-[13px] text-neutral-400">
         <li><a href="#services" class="nav-link hover:text-white transition">Services</a></li>
-        <li><a href="#journey" class="nav-link hover:text-white transition">Experience</a></li>
         <li><a href="#projects" class="nav-link hover:text-white transition">Selected Work</a></li>
         <li><a href="#case-studies" class="nav-link hover:text-white transition">Case Studies</a></li>
         <li><a href="#reviews" class="nav-link hover:text-white transition">Reviews</a></li>
         <li><a href="#contact" class="nav-link hover:text-white transition">Contact</a></li>
-        <li><a href="cv/mark-jason-nastor-cv-2026.pdf" target="_blank" rel="noopener noreferrer" class="nav-link hover:text-white transition">Download CV</a></li>
       </ul>
 
       <div class="flex items-center gap-3">
-        <span class="hidden xl:inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 text-[11px] text-neutral-400">
-          <span class="relative flex h-1.5 w-1.5">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-brand"></span>
-          </span>
-          Available for select Shopify projects
-        </span>
         <a href="#contact" class="hidden md:inline-flex items-center gap-2 text-[13px] px-4 py-2 rounded-full bg-white text-ink-950 font-semibold hover:bg-brand transition">
           Discuss Your Project
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -855,16 +881,11 @@
     </nav>
     <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-ink-950">
       <ul class="px-6 py-3 space-y-1 text-sm text-neutral-300">
-        <li><a href="#about" class="block">About</a></li>
         <li><a href="#services" class="block">Services</a></li>
-        <li><a href="#stack" class="block">Stack</a></li>
-        <li><a href="#journey" class="block">Experience</a></li>
         <li><a href="#projects" class="block">Selected Work</a></li>
         <li><a href="#case-studies" class="block">Case Studies</a></li>
         <li><a href="#reviews" class="block">Reviews</a></li>
-        <li><a href="#faq" class="block">FAQ</a></li>
         <li><a href="#contact" class="block">Contact</a></li>
-        <li><a href="cv/mark-jason-nastor-cv-2026.pdf" target="_blank" rel="noopener noreferrer" class="block">Download CV · Updated November 2026</a></li>
         <li class="pt-2 mt-2 border-t border-white/5"><a href="#contact" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand text-ink-950 font-semibold">Discuss Your Project →</a></li>
       </ul>
     </div>
@@ -1035,25 +1056,36 @@
               </div>
             </div>
 
-            <!-- Recognition / partners -->
-            <div class="mt-10 pt-8 border-t border-white/10">
-              <div class="text-xs uppercase tracking-wider text-neutral-500 mb-4">Featured &amp; partner with</div>
-              <div class="recog-grid">
-                <a href="https://seowill.com/pages/partner/mark-nastor" target="_blank" rel="noopener noreferrer" class="recog-card">
-                  <span class="recog-card-logo"><img src="images/logos/seowill.svg" alt="SEOWILL" width="107" height="20" class="logo-white" loading="lazy" decoding="async" /></span>
-                  <span class="recog-card-role">Official Agency Partner</span>
-                  <svg class="ext-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                </a>
-                <a href="https://glood.ai/shopify-experts/mark-ecommerce-growth-strategist-web-designer-developer" target="_blank" rel="noopener noreferrer" class="recog-card">
-                  <span class="recog-card-logo"><img src="images/logos/glood-ai.svg" alt="Glood.AI" width="71" height="24" class="logo-white logo-tall" loading="lazy" decoding="async" /></span>
-                  <span class="recog-card-role">Shopify Experts Directory</span>
-                  <svg class="ext-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                </a>
-                <a href="https://www.shopdigest.com/mark54" target="_blank" rel="noopener noreferrer" class="recog-card">
-                  <span class="recog-card-logo"><img src="images/logos/shopdigest-white.png" alt="ShopDigest" width="128" height="24" class="logo-sd" loading="lazy" decoding="async" /></span>
-                  <span class="recog-card-role">Featured Shopify Expert</span>
-                  <svg class="ext-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                </a>
+            <!-- Featured & partner with (same look as the hero trust bar) -->
+            <div class="about-trust">
+              <span class="about-trust-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.5 8 11 4.6-1.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Featured &amp; partner with</span>
+              <div class="trust-bar about-trust-bar">
+                <div class="trust-viewport">
+                  <div class="trust-track">
+                    <div class="trust-logos">
+                      <a href="https://seowill.com/pages/partner/mark-nastor" target="_blank" rel="noopener noreferrer" class="hero-logo" aria-label="SEOWILL official agency partner profile">
+                        <img src="images/logos/seowill.svg" alt="SEOWILL" width="107" height="20" class="logo-white" loading="lazy" decoding="async" />
+                      </a>
+                      <a href="https://glood.ai/shopify-experts/mark-ecommerce-growth-strategist-web-designer-developer" target="_blank" rel="noopener noreferrer" class="hero-logo" aria-label="Glood.AI Shopify Experts Directory profile">
+                        <img src="images/logos/glood-ai.svg" alt="Glood.AI" width="71" height="24" class="logo-white logo-tall" loading="lazy" decoding="async" />
+                      </a>
+                      <a href="https://www.shopdigest.com/mark54" target="_blank" rel="noopener noreferrer" class="hero-logo" aria-label="ShopDigest featured expert profile">
+                        <img src="images/logos/shopdigest-white.png" alt="ShopDigest" width="128" height="24" class="logo-sd" loading="lazy" decoding="async" />
+                      </a>
+                    </div>
+                    <div class="trust-logos trust-dup" aria-hidden="true">
+                      <a href="https://seowill.com/pages/partner/mark-nastor" target="_blank" rel="noopener noreferrer" class="hero-logo" tabindex="-1">
+                        <img src="images/logos/seowill.svg" alt="" width="107" height="20" class="logo-white" loading="lazy" decoding="async" />
+                      </a>
+                      <a href="https://glood.ai/shopify-experts/mark-ecommerce-growth-strategist-web-designer-developer" target="_blank" rel="noopener noreferrer" class="hero-logo" tabindex="-1">
+                        <img src="images/logos/glood-ai.svg" alt="" width="71" height="24" class="logo-white logo-tall" loading="lazy" decoding="async" />
+                      </a>
+                      <a href="https://www.shopdigest.com/mark54" target="_blank" rel="noopener noreferrer" class="hero-logo" tabindex="-1">
+                        <img src="images/logos/shopdigest-white.png" alt="" width="128" height="24" class="logo-sd" loading="lazy" decoding="async" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1114,42 +1146,63 @@
       </div>
     </section>
 
-    <!-- TECH STACK - grouped expertise (mirrors CV "Core Shopify & Technical Expertise") -->
+    <!-- HOW I CAN HELP - problem → fix cards for store owners, plus a compact tool line for recruiters -->
     <section id="stack" class="relative px-6 lg:px-10 py-20 md:py-32 border-t border-white/[0.06]">
-      <div class="max-w-6xl mx-auto text-center">
-        <span class="eyebrow reveal">Tech stack &amp; expertise</span>
-        <h2 class="mt-6 font-sans text-3xl md:text-5xl font-bold text-white tracking-tight reveal max-w-3xl mx-auto">
-          Tools I reach for to ship <span class="accent-serif">fast</span>, clean, and conversion-ready stores.
-        </h2>
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center">
+          <span class="eyebrow reveal">How I can help</span>
+          <h2 class="mt-6 font-sans text-3xl md:text-5xl font-bold text-white tracking-tight reveal max-w-3xl mx-auto">
+            Sound familiar? Here&rsquo;s how I <span class="accent-serif">fix it</span>.
+          </h2>
+        </div>
 
-        <div class="mt-14 expertise-grid reveal-stagger">
-          <div class="expertise-card">
-            <h3>Shopify development</h3>
-            <p>Shopify Liquid, custom themes, Online Store 2.0, JSON templates, sections and blocks, snippets, metafields, metaobjects, dynamic sources, product and collection templates, AJAX cart, predictive search, Shopify CLI, Theme Check.</p>
-          </div>
-          <div class="expertise-card">
-            <h3>Shopify Plus &amp; commerce</h3>
-            <p>Shopify Plus, Checkout Extensibility, Shopify Functions, Flow, Launchpad, Shopify Scripts (legacy), B2B, Markets, checkout optimization, subscriptions, bundles, and merchandising workflows.</p>
-          </div>
-          <div class="expertise-card">
-            <h3>Performance &amp; CRO</h3>
-            <p>Core Web Vitals, Lighthouse, PageSpeed Insights, GTmetrix, app audits, lazy loading, image and JavaScript optimization, technical SEO, UX audits, product-page optimization, and funnel reviews.</p>
-          </div>
-          <div class="expertise-card">
-            <h3>Shopify apps &amp; integrations</h3>
-            <p>Shopify app product development, Admin API, Storefront API, GraphQL, REST, webhooks, third-party APIs, ERP/CRM/fulfillment integrations, Zapier, and Node.js middleware workflows.</p>
-          </div>
-          <div class="expertise-card">
-            <h3>AI &amp; LLM engineering</h3>
-            <p>AI-assisted application development, prompt engineering, LLM API integration, structured JSON outputs, AI-powered analysis and recommendations, workflow automation, model evaluation, and token-cost optimization.</p>
-          </div>
-          <div class="expertise-card">
-            <h3>Frontend engineering</h3>
-            <p>HTML5, CSS3, Sass, JavaScript ES6+, TypeScript, Alpine.js, Tailwind CSS, jQuery, responsive and mobile-first UI, cross-browser testing, and accessibility-aware implementation.</p>
-          </div>
-          <div class="expertise-card expertise-card-wide">
-            <h3>Workflow</h3>
-            <p>Git, GitHub, Trello, Asana, VS Code, Figma, Adobe, and collaborative QA workflows.</p>
+        <div class="help-grid mt-14 reveal-stagger">
+          <article class="help-card">
+            <div class="help-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14l4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+            </div>
+            <h3 class="help-quote">&ldquo;My store is slow and visitors leave.&rdquo;</h3>
+            <div class="help-fix">Speed optimization</div>
+            <p class="help-desc">I find what&rsquo;s slowing your store down, like heavy apps, oversized images and extra scripts, and fix it so pages load fast, especially on mobile.</p>
+          </article>
+
+          <article class="help-card">
+            <div class="help-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 7 13.5 15.5 8.5 10.5 2 17"/><path d="M16 7h6v6"/></svg>
+            </div>
+            <h3 class="help-quote">&ldquo;I get traffic, but not enough sales.&rdquo;</h3>
+            <div class="help-fix">Conversion optimization</div>
+            <p class="help-desc">I review your product pages, checkout path and trust signals, then make focused changes that turn more of your visitors into buyers.</p>
+          </article>
+
+          <article class="help-card">
+            <div class="help-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            </div>
+            <h3 class="help-quote">&ldquo;My theme is messy and hard to update.&rdquo;</h3>
+            <div class="help-fix">Rebuilds &amp; redesigns</div>
+            <p class="help-desc">I rebuild your store with clean, flexible sections, so your team can update pages, banners and products without calling a developer.</p>
+          </article>
+
+          <article class="help-card">
+            <div class="help-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <h3 class="help-quote">&ldquo;I need a developer I can actually rely on.&rdquo;</h3>
+            <div class="help-fix">Ongoing support</div>
+            <p class="help-desc">Fast replies, clear timelines and someone who already knows your store, so fixes and improvements happen without the back-and-forth.</p>
+          </article>
+        </div>
+
+        <!-- Compact tool line (full breakdown lives in the CV) -->
+        <div class="help-tools reveal">
+          <span class="help-tools-label">Tools I work with</span>
+          <span class="help-tools-list">Shopify Plus <i>·</i> Liquid <i>·</i> JavaScript <i>·</i> TypeScript <i>·</i> Tailwind <i>·</i> GraphQL <i>·</i> Node.js <i>·</i> Klaviyo <i>·</i> Figma <i>·</i> AI/LLM APIs</span>
+          <div class="help-tools-cta">
+            <a href="cv/mark-jason-nastor-cv-2026.pdf" target="_blank" rel="noopener noreferrer" class="help-tools-link">
+              Full technical breakdown in my CV
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
+            </a>
           </div>
         </div>
       </div>
@@ -2620,11 +2673,6 @@
         </div>
         <div class="flex items-center gap-6 text-sm text-neutral-400">
           <a href="#top" class="hover:text-brand transition">Back to top ↑</a>
-          <a href="launch-sprint/" class="hover:text-brand transition">48-Hour Launch Sprint</a>
-          <a href="mailto:mjnastor.shopifydev@gmail.com" class="hover:text-brand transition">Email</a>
-          <a href="https://www.linkedin.com/in/markjasonnastor-shopify" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">LinkedIn</a>
-          <a href="https://www.shopify.com/partners/directory/partner/mark54" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">Shopify Partner Profile</a>
-          <a href="https://shoptimizepro.io" target="_blank" rel="noopener noreferrer" class="hover:text-brand transition">ShoptimizePro</a>
         </div>
       </div>
       <div class="mt-8 pt-6 border-t border-white/[0.06] flex items-center justify-between text-xs text-neutral-600">
@@ -2791,7 +2839,7 @@
     });
 
     // Active nav link based on scroll
-    const sections = ['about','services','stack','journey','projects','reviews','faq','contact'];
+    const sections = ['services','projects','case-studies','reviews','contact'];
     const navLinks = document.querySelectorAll('.nav-link');
     const navIo = new IntersectionObserver((entries) => {
       entries.forEach(e => {
