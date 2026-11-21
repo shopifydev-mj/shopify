@@ -75,6 +75,8 @@
     @media (max-width: 768px) {
       #mobileMenu a { padding: .65rem 0; font-size: 1rem; }
       #mobileMenu a.bg-brand { padding: .65rem 1.25rem; }
+      .nav-cta { font-size: 12px; padding: .5rem .9rem; }
+      .nav-cta-arrow { display: none; }
     }
 
     /* Subtle grid background */
@@ -337,6 +339,12 @@
     }
     .chip:hover { border-color: rgba(150,191,71,0.4); color: #96bf47; transform: translateY(-2px); }
     .chip-dot { width: 6px; height: 6px; border-radius: 999px; background: #96bf47; }
+    /* Compact expertise pills on phones */
+    @media (max-width: 640px) {
+      .chip-wrap { gap: .35rem !important; }
+      .chip-wrap .chip { gap: .3rem; padding: .3rem .55rem; font-size: .7rem; letter-spacing: -0.01em; }
+      .chip-wrap .chip-dot { width: 4px; height: 4px; }
+    }
 
     /* Services pinned horizontal scroll */
     .services-pin { position: relative; }
@@ -955,6 +963,90 @@
       .book-cal { border-right: 0; }
     }
     @media (prefers-reduced-motion: reduce) { .book-panel, .book-backdrop { transition: none; } .book-spinner { animation: none; } }
+    /* Header: mobile menu icon swap + compact CTA label */
+    .nav-toggle { display: grid; place-items: center; width: 36px; height: 36px; margin-left: -6px; }
+    .nav-toggle .icon-close { display: none; }
+    .nav-toggle[aria-expanded="true"] .icon-open { display: none; }
+    .nav-toggle[aria-expanded="true"] .icon-close { display: block; }
+    @media (min-width: 768px) { .nav-toggle { display: none; } }
+    .nav-cta-short { display: none; }
+    @media (max-width: 379px) { .nav-cta-full { display: none; } .nav-cta-short { display: inline; } }
+    /* About text: "Read more" on phones */
+    .about-desc { position: relative; margin-bottom: 2.5rem; transition: max-height .5s cubic-bezier(.22,1,.36,1); }
+    .readmore-btn { display: inline-flex; align-items: center; gap: .4rem; margin: -.25rem 0 2.5rem; padding: .35rem 0; font-size: .875rem; font-weight: 600; color: #b8db6f; }
+    .readmore-btn:hover { color: #fff; }
+    .readmore-btn svg { transition: transform .3s ease; }
+    .readmore-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+    .readmore-btn[hidden] { display: none; }
+    @media (max-width: 767px) {
+      .about-desc { margin-bottom: 0; overflow: hidden; }
+      .about-desc.clamped:not(.open) {
+        -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 2.4em), transparent);
+        mask-image: linear-gradient(to bottom, #000 calc(100% - 2.4em), transparent);
+      }
+      .about-desc.open + .readmore-btn { margin-top: .75rem; }
+    }
+    /* Hero scroll invitation */
+    .scroll-cue {
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      width: max-content; margin: 2.5rem auto 0; text-decoration: none;
+      opacity: 0; animation: cueIn .9s cubic-bezier(.22,1,.36,1) 2.6s forwards;
+      transition: transform .45s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .invite-kicker { font-size: .62rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(150,191,71,0.8); }
+    .invite { position: relative; display: grid; place-items: center; width: 120px; height: 120px; margin-top: .8rem; }
+    .invite-orbit { position: absolute; inset: 0; border-radius: 999px; border: 1.5px dashed rgba(150,191,71,0.24); animation: orbitSpin 24s linear infinite; }
+    .invite-ring {
+      position: relative; display: grid; place-items: center; width: 78px; height: 78px; border-radius: 999px;
+      background: rgba(150,191,71,0.04); border: 1px solid rgba(150,191,71,0.3);
+    }
+    .invite-core {
+      display: grid; place-items: center; width: 56px; height: 56px; border-radius: 999px;
+      background: linear-gradient(150deg, #a9cf5c 0%, #86ad3d 100%); color: #0b0d08;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 0 0 0 rgba(150,191,71,0.35), 0 8px 24px -10px rgba(150,191,71,0.55);
+      transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease;
+      animation: corePulse 3s ease-out infinite;
+    }
+    .invite-core svg { animation: arrowFloat 2s ease-in-out infinite; transition: transform .35s ease; }
+    .invite-spark { position: absolute; color: rgba(150,191,71,0.7); animation: sparkFloat 4s ease-in-out infinite; }
+    .invite-plus svg { display: block; width: 11px; height: 11px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; fill: none; }
+    .invite-dot { width: 5px; height: 5px; border-radius: 999px; background: rgba(150,191,71,0.75); box-shadow: 0 0 8px rgba(150,191,71,0.55); }
+    .invite-plus.p1 { top: 11px; right: 5px; }
+    .invite-plus.p2 { bottom: 14px; left: 2px; animation-delay: -2s; }
+    .invite-dot.d1 { top: 37px; left: -6px; animation-delay: -1s; }
+    .invite-dot.d2 { bottom: 42px; right: -5px; width: 4px; height: 4px; animation-delay: -3s; }
+    .scroll-cue:hover .invite-core, .scroll-cue:focus-visible .invite-core { transform: scale(1.08); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 0 0 0 rgba(150,191,71,0.35), 0 12px 36px -8px rgba(150,191,71,0.8); }
+    .scroll-cue:hover .invite-core svg, .scroll-cue:focus-visible .invite-core svg { animation-play-state: paused; transform: translateY(4px); }
+    .scroll-cue:hover .invite-orbit, .scroll-cue:focus-visible .invite-orbit { animation-duration: 8s; border-color: rgba(150,191,71,0.45); }
+    .scroll-cue:active .invite-core { transform: scale(.95); }
+    .scroll-cue.is-shown { opacity: 1; animation: none; }
+    .scroll-cue.is-hidden { pointer-events: none; }
+    @keyframes cueIn { to { opacity: 1; } }
+    @keyframes orbitSpin { to { transform: rotate(360deg); } }
+    @keyframes arrowFloat { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(5px); } }
+    @keyframes sparkFloat { 0%, 100% { transform: translateY(0); opacity: .9; } 50% { transform: translateY(-6px); opacity: .45; } }
+    @keyframes corePulse {
+      0% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 0 0 0 rgba(150,191,71,0.32), 0 8px 24px -10px rgba(150,191,71,0.55); }
+      70% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 0 0 14px rgba(150,191,71,0), 0 8px 24px -10px rgba(150,191,71,0.55); }
+      100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 0 0 0 rgba(150,191,71,0), 0 8px 24px -10px rgba(150,191,71,0.55); }
+    }
+    @media (max-width: 640px) {
+      .scroll-cue { margin-top: 2rem; }
+      .invite { width: 102px; height: 102px; margin-top: .7rem; }
+      .invite-ring { width: 67px; height: 67px; }
+      .invite-core { width: 48px; height: 48px; }
+      .invite-core svg { width: 18px; height: 18px; animation-duration: 2.6s; }
+      .invite-plus.p1 { top: 8px; right: 3px; }
+      .invite-dot.d1 { top: 30px; }
+      .invite-dot.d2 { bottom: 34px; }
+      .invite-orbit { animation-duration: 36s; }
+      .invite-core { animation: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-cue { opacity: 1; animation: none; }
+      .invite-orbit, .invite-core, .invite-core svg, .invite-spark { animation: none; }
+    }
     #services[hidden], .reviews-masonry[hidden] { display: none !important; }
     .earlier-desc { margin-top: .35rem; color: #737373; line-height: 1.6; }
 
@@ -985,11 +1077,18 @@
   <!-- NAV -->
   <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-ink-950/60 border-b border-white/[0.04]">
     <nav class="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-      <a href="#top" class="flex items-center group" aria-label="Mark Jason Nastor — home">
-        <span class="relative w-8 h-8 grid place-items-center shrink-0">
-          <img src="images/jason_logo.png" alt="Mark Jason Nastor" width="32" height="32" decoding="async" fetchpriority="high" class="w-full h-full object-contain group-hover:scale-105 transition" />
-        </span>
-      </a>
+      <div class="flex items-center gap-3">
+        <!-- Mobile: menu button on the left, logo beside it -->
+        <button type="button" id="mobileToggle" class="nav-toggle md:hidden text-neutral-300" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <svg class="icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          <svg class="icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+        <a href="#top" class="flex items-center group" aria-label="Mark Jason Nastor — home">
+          <span class="relative w-8 h-8 grid place-items-center shrink-0">
+            <img src="images/jason_logo.png" alt="Mark Jason Nastor" width="32" height="32" decoding="async" fetchpriority="high" class="w-full h-full object-contain group-hover:scale-105 transition" />
+          </span>
+        </a>
+      </div>
 
       <ul class="hidden md:flex items-center gap-6 md:gap-8 text-[13px] text-neutral-400">
         <!-- Services hidden for now: <li><a href="#services" class="nav-link hover:text-white transition">Services</a></li> -->
@@ -1000,13 +1099,10 @@
       </ul>
 
       <div class="flex items-center gap-3">
-        <a href="#contact" class="hidden md:inline-flex items-center gap-2 text-[13px] px-4 py-2 rounded-full bg-white text-ink-950 font-semibold hover:bg-brand transition">
-          Book a Free Consultation
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        <a href="#contact" class="nav-cta inline-flex items-center gap-2 text-[13px] px-4 py-2 rounded-full bg-white text-ink-950 font-semibold hover:bg-brand transition">
+          <span class="nav-cta-full">Book a Free Consultation</span><span class="nav-cta-short">Book a Free Call</span>
+          <svg class="nav-cta-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
-        <button type="button" id="mobileToggle" class="md:hidden text-neutral-300" aria-label="Menu">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-        </button>
       </div>
     </nav>
     <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-ink-950">
@@ -1099,6 +1195,23 @@
             </div>
           </div>
         </div>
+
+        <!-- Scroll invitation: dashed orbit + floating sparkles, green core with floating arrow. Jumps to About; fades as the visitor scrolls -->
+        <a href="#about" class="scroll-cue" data-scroll-cue aria-label="Scroll down to explore my work">
+          <span class="invite-kicker">There&rsquo;s more below</span>
+          <span class="invite">
+            <span class="invite-orbit" aria-hidden="true"></span>
+            <span class="invite-spark invite-plus p1"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v10M1 6h10" /></svg></span>
+            <span class="invite-spark invite-plus p2"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v10M1 6h10" /></svg></span>
+            <span class="invite-spark invite-dot d1"></span>
+            <span class="invite-spark invite-dot d2"></span>
+            <span class="invite-ring">
+              <span class="invite-core">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M5.5 12.5 12 19l6.5-6.5"/></svg>
+              </span>
+            </span>
+          </span>
+        </a>
       </div>
     </section>
 
@@ -1221,20 +1334,27 @@
 
           <!-- Description -->
           <div class="lg:col-span-7 reveal">
+            <div class="about-desc" id="aboutDesc" data-readmore>
             <p class="text-neutral-400 leading-relaxed mb-6">
               I&rsquo;m Mark Jason Nastor, a Senior Shopify Developer, Shopify Select Partner, and AI Application Developer with 10+ years of web development experience and 300+ Shopify stores supported worldwide.
             </p>
             <p class="text-neutral-400 leading-relaxed mb-6">
               I specialize in Shopify Plus, conversion rate optimization (CRO), site speed optimization, and custom theme and app development, along with AI-assisted software engineering, LLM integrations, and SaaS architecture. I&rsquo;m also the creator of <a href="https://apps.shopify.com/shoptimize-pro" target="_blank" rel="noopener noreferrer" class="text-white hover:text-brand transition">ShoptimizePro: CRO Roadmap</a>, a publicly launched AI-powered Shopify app.
             </p>
-            <p class="text-neutral-400 leading-relaxed mb-10">
+            <p class="text-neutral-400 leading-relaxed">
               I&rsquo;ve delivered development, redesigns, migrations, CRO, and ongoing support for international brands, agencies, and growth-stage businesses, turning complex eCommerce and business requirements into scalable, production-ready storefronts that merchants can edit and maintain.
             </p>
+            </div>
+            <!-- Read more (phones only): shows the full About text -->
+            <button type="button" class="readmore-btn" data-readmore-btn aria-controls="aboutDesc" aria-expanded="false" hidden>
+              <span class="readmore-label">Read more</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
 
             <!-- Expertise -->
             <div class="mt-10 pt-8 border-t border-white/10">
               <div class="text-xs uppercase tracking-wider text-neutral-500 mb-4">Areas of expertise</div>
-              <div class="flex flex-wrap gap-2.5">
+              <div class="chip-wrap flex flex-wrap gap-2.5">
                 <span class="chip"><span class="chip-dot"></span>Shopify Liquid</span>
                 <span class="chip"><span class="chip-dot"></span>Shopify Plus</span>
                 <span class="chip"><span class="chip-dot"></span>Online Store 2.0</span>
@@ -3487,8 +3607,13 @@
     // Mobile menu
     const toggle = document.getElementById('mobileToggle');
     const menu = document.getElementById('mobileMenu');
-    toggle?.addEventListener('click', () => menu.classList.toggle('hidden'));
-    menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.add('hidden')));
+    const setMenu = (open) => {
+      menu.classList.toggle('hidden', !open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+    toggle?.addEventListener('click', () => setMenu(menu.classList.contains('hidden')));
+    menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
 
     // Reveal on scroll (handles .reveal, .reveal-stagger, and .hero-line)
     const io = new IntersectionObserver((entries) => {
@@ -3678,6 +3803,63 @@
           else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
         }
       });
+    })();
+
+    // Hero scroll cue: smooth-scroll to About on click, fade away once the visitor starts scrolling
+    (function () {
+      const cue = document.querySelector('[data-scroll-cue]');
+      if (!cue) return;
+      const target = document.getElementById('about');
+      // after the entrance animation, hand opacity over to the scroll fade (animations would otherwise override it)
+      cue.addEventListener('animationend', (e) => { if (e.animationName === 'cueIn') cue.classList.add('is-shown'); });
+      cue.addEventListener('click', (e) => {
+        if (!target) return;
+        e.preventDefault();
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        requestAnimationFrame(() => onScroll());
+        setTimeout(() => onScroll(), 900);
+      });
+      const onScroll = () => {
+        const y = window.scrollY;
+        if (y <= 0) { cue.style.removeProperty('opacity'); cue.style.removeProperty('transform'); cue.classList.remove('is-hidden'); return; }
+        const k = Math.max(0, 1 - y / 220);
+        cue.style.opacity = String(k);
+        cue.style.transform = 'translateY(' + Math.round((1 - k) * 18) + 'px)';
+        cue.classList.toggle('is-hidden', k === 0);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    // About text "Read more" (phones): collapsed after the 2nd line of the 2nd paragraph
+    (function () {
+      const wrap = document.querySelector('[data-readmore]');
+      const btn = document.querySelector('[data-readmore-btn]');
+      if (!wrap || !btn) return;
+      const label = btn.querySelector('.readmore-label');
+      const mq = window.matchMedia('(max-width: 767px)');
+      function update() {
+        if (!mq.matches) { wrap.classList.remove('clamped', 'open'); wrap.style.maxHeight = ''; btn.hidden = true; return; }
+        btn.hidden = false;
+        if (wrap.classList.contains('open')) { wrap.style.maxHeight = wrap.scrollHeight + 'px'; return; }
+        const p2 = wrap.children[1];
+        const lh = parseFloat(getComputedStyle(p2).lineHeight) || 26;
+        wrap.style.maxHeight = Math.round(p2.offsetTop + lh * 2.6) + 'px';
+        wrap.classList.add('clamped');
+      }
+      btn.addEventListener('click', () => {
+        const open = !wrap.classList.contains('open');
+        wrap.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', String(open));
+        label.textContent = open ? 'Read less' : 'Read more';
+        update();
+        if (!open) wrap.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      });
+      mq.addEventListener('change', update);
+      window.addEventListener('resize', update);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
+      update();
     })();
 
     // About featured testimonials: fade to the next review every 40s (pauses on hover/focus or when off-screen)
